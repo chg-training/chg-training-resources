@@ -153,7 +153,7 @@ transcript_summary = (
 	genes_and_transcripts
 	%>% group_by( dataset, gene_id, start, end )
 	%>% summarise(
-		gene_length = ( end - start + 1 ),
+		gene_length = max( end - start + 1 ),
 		number_of_transcripts = n()
 	)
 )
