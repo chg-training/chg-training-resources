@@ -3,6 +3,9 @@ name: deploy-docusaurus
 # Thanks to Evan Tay
 # https://evantay.com/blog/docusaurus-gh-action/
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [main]
