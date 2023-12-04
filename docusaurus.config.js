@@ -9,10 +9,10 @@ const katex = require('rehype-katex');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'The WHG training resources',
+  title: 'The CHG training resources',
   tagline: 'Train in genomics, bioinformatics, statistics and data analysis',
-  url: 'https://well.ox.ac.uk/',
-  baseUrl: '/whg-training-resources/',
+  url: 'https://chg.ox.ac.uk/',
+  baseUrl: '/chg-training-resources/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
@@ -41,7 +41,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/whg-training/whg-training-resources/edit/main',
+            'https://github.com/chg-training/chg-training-resources/edit/main',
           remarkPlugins: [math],
           rehypePlugins: [katex],
         },
@@ -71,8 +71,8 @@ const config = {
         title: 'Training Resources',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/wchg.png',
-          srcDark: 'img/wchg-white.png'
+          src: 'img/CHG_logo_RGB.png',
+          srcDark: 'img/CHG_logo_negative_RGB.png'
         },
         items: [
           {
@@ -82,7 +82,7 @@ const config = {
             label: 'Tutorials home',
           },
           {
-            href: 'https://github.com/whg-training/whg-training-resources',
+            href: 'https://github.com/chg-training/chg-training-resources',
             label: 'GitHub',
             position: 'right',
           },
@@ -105,7 +105,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-	        href: 'https://github.com/whg-training/whg-training-resources',
+	        href: 'https://github.com/chg-training/chg-training-resources',
               },
             ],
           },
