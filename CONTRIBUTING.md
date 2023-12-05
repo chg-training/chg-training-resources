@@ -1,7 +1,7 @@
 # Guidelines for contributors
 
-Contributions to `whg-training-resources` are by invitation - you will need to be part of the
-`whg-training` github organisation or otherwise be given access.
+Contributions to `chg-training-resources` are by invitation - you will need to be part of the
+`chg-training` github organisation or otherwise be given access.
 
 If you have access, there are two ways to make changes to the repository:
 
@@ -70,12 +70,12 @@ module.
 this is working, the commands `node -v` and `npm -v` should tell you the installed versions of node
 and its package manager respectively.
 
-2. On github interface, fork the `whg-training-resources` repository into your own workspace.
+2. On github interface, fork the `chg-training-resources` repository into your own workspace.
 
 3. In the terminal, clone your fork onto your local machine. (You can get the link by clicking the
 'Code' icon near the top of the `github` page, and then type `git clone [github url]`)
 
-4. Change directory into the cloned `whg-training-resources` folder and install the `docusaurus`
+4. Change directory into the cloned `chg-training-resources` folder and install the `docusaurus`
 modules by running `npm install`.
 
 You should now be set up to make local edits.  To get started, run:
@@ -86,6 +86,6 @@ npm run start
 
 This launches a webserver serving the site in your terminal. After a short pause it will open a web
 browser pointed at this local webserver. (The URL will be
-`http://localhost:3000/whg-training-resources/`). Feel free to explore the site (it can take a
+`http://localhost:3000/chg-training-resources/`). Feel free to explore the site (it can take a
 minute or two to become fully responsive.)
 
