@@ -14,11 +14,11 @@ generally *binomial* (count) or *multinomial* (categorical) outcome.
 ## Prerequisites
 
 To get started, download the file 'o_bld_group_data.csv' from [this folder](The data can be found in [this
-folder](https://github.com/whg-training/whg-training-resources/tree/main/docs/statistical_modelling/regression_modelling/data/) - 
+folder](https://github.com/chg-training/chg-training-resources/tree/main/docs/statistical_modelling/regression_modelling/data/) - 
 and place it in your folder.  E.g. from the command line:
 
 ```
-curl -O https://raw.githubusercontent.com/whg-training/whg-training-resources/main/docs/statistical_modelling/regression_modelling/data/o_bld_group_data.tsv
+curl -O https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/regression_modelling/data/o_bld_group_data.tsv
 ```
 
 (Or use the [direct link](./data/o_bld_group_data.tsv).)

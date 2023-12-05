@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Welcome!  This folder contains course materials (practicals, notes and datasets) that were developed for the taught
 statistics component of the [Genomic Medicine and Statistics](https://www.well.ox.ac.uk/study/gms) course at the
-Wellcome Centre for Human Genetics, University of Oxford.  The content is a mixture of training on bioinformatics,
+Centre for Human Genetics, University of Oxford.  The content is a mixture of training on bioinformatics,
 computational and statistical genomics.
 
 Content on this site is publicly available under the terms of the [MIT license](LICENSE.md).

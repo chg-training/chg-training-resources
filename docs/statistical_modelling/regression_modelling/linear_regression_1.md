@@ -22,11 +22,11 @@ cd regression_tutorial
 ```
 
 The data can be found in [this
-folder](https://github.com/whg-training/whg-training-resources/tree/main/docs/statistical_modelling/regression_modelling/data/) -
+folder](https://github.com/chg-training/chg-training-resources/tree/main/docs/statistical_modelling/regression_modelling/data/) -
 download the file `atp2b4_per_gene_data.tsv` and place it in your folder:
 
 ```
-curl -O https://raw.githubusercontent.com/whg-training/whg-training-resources/main/docs/statistical_modelling/regression_modelling/data/atp2b4_per_gene_data.tsv
+curl -O https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/regression_modelling/data/atp2b4_per_gene_data.tsv
 ```
 
 (Or use the [direct link](./data/atp2b4_per_gene_data.tsv).)

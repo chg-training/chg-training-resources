@@ -103,7 +103,7 @@ Have a look at these files now using your preferred method.  They are:
 ### The package metadata
 
 Let's go through these in order.  You can also see a completed version of the package [on
-github](https://github.com/whg-training/whg-training-resources/tree/main/docs/programming/programming_with_gene_annotations3/code/R/gmsgff).
+github](https://github.com/chg-training/chg-training-resources/tree/main/docs/programming/programming_with_gene_annotations3/code/R/gmsgff).
 
 First let's edit `NAMESPACE`, which declares what the package imports (in our case, `readr` and
 `stringr`), and what it "exports" (in our case, the `parse_gff3_to_dataframe()` function.)  It should look like this:
@@ -182,8 +182,8 @@ A bit complicated!
 
 To get this working for this tutorial I suggest just copying the files I quickly made for this:
 
-* [gmsgff-package.Rd](https://raw.githubusercontent.com/whg-training/whg-training-resources/main/docs/programming/programming_with_gene_annotations3/code/R/gmsgff/man/gmsgff-package.Rd)
-* [parse_gff3_to_dataframe.Rd](https://raw.githubusercontent.com/whg-training/whg-training-resources/main/docs/programming/programming_with_gene_annotations3/code/R/gmsgff/man/parse_gff3_to_dataframe.Rd)
+* [gmsgff-package.Rd](https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/programming/programming_with_gene_annotations3/code/R/gmsgff/man/gmsgff-package.Rd)
+* [parse_gff3_to_dataframe.Rd](https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/programming/programming_with_gene_annotations3/code/R/gmsgff/man/parse_gff3_to_dataframe.Rd)
 
 For example you could download these files and replace your original ones.  Please have a look at them and edit anything
 you want to improve.
@@ -238,7 +238,7 @@ You can also read the package help - try
 ### Adding the tests
 
 If you look in [my
-version](https://github.com/whg-training/whg-training-resources/tree/main/docs/programming/programming_with_gene_annotations3/code/R/gmsgff)
+version](https://github.com/chg-training/chg-training-resources/tree/main/docs/programming/programming_with_gene_annotations3/code/R/gmsgff)
 you'll see some additions I made to add the test code.  In short:
 - I added the test function in `tests/test_parse_gff_to_dataframe.R`, with a little bit of boilerplate
 - I added a `Suggests: unittest` line to the `DESCRIPTION` file.

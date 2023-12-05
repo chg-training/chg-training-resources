@@ -7,7 +7,7 @@ sidebar_position: 100
 Let's use [Bayes](./bayes.md) to estimate allele frequencies - quantifying our uncertainty - for a couple of important
 variants in global populations.  Here are the datasets:
 
-1. Data on the O blood group variant (rs8176719): [O blood group data](https://raw.githubusercontent.com/whg-training/whg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_o_blood_group_grouped.tsv)
+1. Data on the O blood group variant (rs8176719): [O blood group data](https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_o_blood_group_grouped.tsv)
 
 rs8176719 has two alleles - the functional 'C' allele, and a deletion allele that results in a
 [frameshift](https://en.wikipedia.org/wiki/Frameshift_mutation).  Individuals that have two copies of the deletion have
@@ -15,7 +15,7 @@ rs8176719 has two alleles - the functional 'C' allele, and a deletion allele tha
 
 2. Data on **rs61028892**, a variant that has been associated with [control of fetal
 haemoglobin](https://www.medrxiv.org/content/10.1101/2023.05.16.23289851v1.full) in individuals with sickle cell
-disease: [rs61028892 data](https://raw.githubusercontent.com/whg-training/whg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_rs61028892_grouped.tsv)
+disease: [rs61028892 data](https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_rs61028892_grouped.tsv)
 
 Both datasets above come from the [1000 Genomes Project Phase 3
 dataset](https://www.internationalgenome.org/data-portal/data-collection/phase-3).
@@ -72,7 +72,7 @@ generate_posterior = function(
 
 For example, for the O blood group data you could apply this to the whole dataset like this:
 ```r
-data = read_tsv( "https://raw.githubusercontent.com/whg-training/whg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_o_blood_group_grouped.tsv" )
+data = read_tsv( "https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_o_blood_group_grouped.tsv" )
 
 overall_counts = (
 	data

@@ -227,7 +227,7 @@ plot.ld( haplotypes[population[G,],] )
 ### Exploring the simulations.
 
 In the file [`simulation_and_visualisation.R`](simulation_and_visualisation.R)
-(also available [on github](https://github.com/whg-training/whg-training-resources/blob/main/docs/population_genetics/simulation_and_visualisation.R))
+(also available [on github](https://github.com/chg-training/chg-training-resources/blob/main/docs/population_genetics/simulation_and_visualisation.R))
 I've wrapped up the above code into two key functions:
 
 * `simulate.population()` which simulates from the model as above.

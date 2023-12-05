@@ -656,12 +656,12 @@ Once you have done this your program will probably look something like this:
 <Tabs groupId="language">
 <TabItem value="R" label="In R">
 
-[The completed R program](https://github.com/whg-training/whg-training-resources/tree/main/docs/programming/programming_with_gene_annotations3/code/gff_to_sqlite.R).  
+[The completed R program](https://github.com/chg-training/chg-training-resources/tree/main/docs/programming/programming_with_gene_annotations3/code/gff_to_sqlite.R).  
  
  </TabItem>
 <TabItem value="python" label="In python">
 
-[The completed python program](https://github.com/whg-training/whg-training-resources/tree/main/docs/programming/programming_with_gene_annotations3/code/gff_to_sqlite.py).
+[The completed python program](https://github.com/chg-training/chg-training-resources/tree/main/docs/programming/programming_with_gene_annotations3/code/gff_to_sqlite.py).
 
 </TabItem>
 </Tabs>

@@ -19,7 +19,7 @@ Now download the gene annotation file from gencode and place it in that folder. 
   you want the 'Comprehensive gene annotation' file in `GFF3` format.
 
 * Or download the copy of the gencode file that I have placed in
-[this folder](https://www.well.ox.ac.uk/~gav/projects/whg-training-resources/data/programming/programming_with_gene_annotations/).
+[this folder](https://www.well.ox.ac.uk/~gav/projects/chg-training-resources/data/programming/programming_with_gene_annotations/).
 
 For example this command should work to do the download:
 ```
