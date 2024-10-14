@@ -15,7 +15,7 @@ const FeatureList = [
       ),
   },
   {
-      title: 'Basic bioinformatics',
+      title: 'Bioinformatics and programming',
       url: 'bioinformatics',
       Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
       //png:  "https://res.cloudinary.com/dwccfildc/c_limit,f_auto,w_1140/v1637151402/prod/4e093e2e53f12df612635bd5bf54ad58.jpg",
@@ -24,16 +24,6 @@ const FeatureList = [
           Get started with some basic tools of the trade.
         </>
       ),
-  },
-  {
-    title: 'Programming',
-    url: 'programming',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Learn how to carry out scientific coding in python, R, and bash.
-      </>
-    ),
   },
   {
     title: 'Data visualisation',
@@ -55,7 +45,16 @@ const FeatureList = [
       </>
     ),
   },
-
+  {
+    title: 'Sequencing data analysis',
+    url: 'sequence_data_analysis',
+    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    description: (
+      <>
+        Learn how to interpret, align, and analyse genomic sequence data.
+      </>
+    ),
+  },
   {
     title: 'Population genetics',
     url: 'population_genetics',
@@ -78,22 +77,12 @@ const FeatureList = [
       </>
     ),
   },
-  {
-    title: 'Sequencing data analysis',
-    url: 'sequence_data_analysis',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Learn how to interpret, align, and analyse genomic sequence data.
-      </>
-    ),
-  },
 
 ];
 
 function Feature({Svg, title, url, description}) {
   return (
-    <div className={clsx('col col--3')}>
+    <div className={clsx('col col--4')}>
       <div className="text--center">
         <Svg className={styles.featureSvg} role="img" />
       </div>
@@ -109,15 +98,21 @@ export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
       <div className="container">
-      {/* First row */}
+        {/* First row */}
         <div className="row">
-          {FeatureList.slice(0,4).map((props, idx) => (
+          {FeatureList.slice(0,3).map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}
         </div>
-      {/* Second row */}
-      <div className="row">
-          {FeatureList.slice(4,8).map((props, idx) => (
+        {/* Second row */}
+        <div className="row">
+          {FeatureList.slice(3,6).map((props, idx) => (
+            <Feature key={idx} {...props} />
+          ))}
+        </div>
+        {/* Third row */}
+        <div className="row">
+          {FeatureList.slice(6,7).map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}
         </div>

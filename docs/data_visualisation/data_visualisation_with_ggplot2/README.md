@@ -6,7 +6,7 @@ date: '2021-10-21'
 
 # More data visualisation in R
 
-**Authors**: Samvida Venkatesh.
+**Author**: Samvida Venkatesh.
 
 Welcome!  In this tutorial we will further explore ways to visualise data using the R packages
 [`dplyr`](https://dplyr.tidyverse.org) and [`ggplot2`](https://ggplot2.tidyverse.org). 

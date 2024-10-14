@@ -59,6 +59,8 @@ image(
 )
 ```
 
+![img](images/haplotypes.png)
+
 Cool!  But a bit noisy.
 
 ## Ordering the haplotype
@@ -75,8 +77,6 @@ distance = dist(
 	method = "manhattan"
 )
 ```
-
-![img](images/haplotypes.png)
 
 Here we've used 'manhattan' distance, that is, the distance between two haplotypes is the number of mutational
 differences between them.

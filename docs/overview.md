@@ -15,12 +15,12 @@ Content on this site is publicly available under the terms of the [MIT license](
 
 |    Module                      |                      Tutorial                          |
 | ------------------------------ | ------------------------------------------------------ |
-| [**Getting started**](/prerequisites)          	| [Setting up your environment](/prerequisites/) |
-| [**Bioinformatics**](/bioinformatics)          	| [Getting started with BASH](/bioinformatics/command_line/) |
-|                               				 	| [Exploring human genes on the command-line](/bioinformatics/exploring_gene_annotations_in_bash/) |
-|                                				 	| [Command-line tips and tricks](/bioinformatics/tips_and_tricks/) |
-| [**Programming**](/programming)                 	| [Introduction to programming in R](/programming/introduction_to_R/) |
-|                                					| [Programming with gene annotation files](/programming/programming_with_gene_annotations3/) |
+| [**Getting started**](/prerequisites)          	      | [Setting up your environment](/prerequisites/) |
+| [**Bioinformatics and programming**](/bioinformatics)   | [Getting started with BASH](/bioinformatics/command_line/) |
+|                                                         | [Introduction to programming in R](/bioinformatics/introduction_to_R/) |
+|                               				 	      | [Exploring gene annotations on the command-line](/bioinformatics/exploring_gene_annotations_in_bash/) |
+|                                					      | [Programming with gene annotation files](/bioinformatics/programming_with_gene_annotations3/) |
+|                                				 	      | [Command-line tips and tricks](/bioinformatics/tips_and_tricks/) |
 | [**Dealing with sequencing data**](/next_generation_sequencing) | [Analysing Sanger sequence data](/sequence_data_analysis/sanger_sequence_data/) |
 |                                                   | [Analysing paired-end sequencing data](/sequence_data_analysis/introduction_to_next_generation_sequencing_data_analysis/) |
 |                                					| [A sequence data pipelining challenge](/sequence_data_analysis/building_an_ngs_pipeline/) |

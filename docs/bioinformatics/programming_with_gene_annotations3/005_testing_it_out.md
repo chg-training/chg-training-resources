@@ -102,7 +102,7 @@ gencode = parse_gff3_to_dataframe( "gencode.v41.annotation.gff3.gz" )
 What about the file downloaded from Ensembl - called something like `Homo_sapiens.GRCh38.107.chr.gff3.gz` or similar -
 does it work? What about the [*P.falciparum* file](./002_What_gene_annotation_data_looks_like.md)?
 
-Use your R skills [from the Introduction to R tutorial](/programming/introduction_to_R/working_with_data.md) or python
+Use your R skills [from the Introduction to R tutorial](/bioinformatics/introduction_to_R/working_with_data.md) or python
 skills to view these files and explore a bit - for example pulling out all gene records, or records pertaining to
 specific genes.  (For example you could look at *FUT2*, which has `ID=ENSG00000176920.13`, or at `PF3D7_1127000` in the
 *P.falciparum* genome).

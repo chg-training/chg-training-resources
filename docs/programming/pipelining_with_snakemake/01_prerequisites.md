@@ -65,7 +65,7 @@ install.packages(
 :::
 
 **Finally**, please download [this R
-script](https://raw.githubusercontent.com/chg-training/whg-training-resources/main/docs/bioinformatics/pipelining_with_snakemake/code/summarise_ensembl_gff.R).
+script](https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/bioinformatics/pipelining_with_snakemake/code/summarise_ensembl_gff.R).
 (For example by copying the link and using `curl -O`).  You should save it as `summarise_ensembl_gff.R` in the current directory.
 
 :::tip Note

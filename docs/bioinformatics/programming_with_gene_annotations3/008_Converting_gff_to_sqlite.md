@@ -656,12 +656,12 @@ Once you have done this your program will probably look something like this:
 <Tabs groupId="language">
 <TabItem value="R" label="In R">
 
-[The completed R program](https://github.com/chg-training/chg-training-resources/tree/main/docs/programming/programming_with_gene_annotations3/code/gff_to_sqlite.R).  
+[The completed R program](https://github.com/chg-training/chg-training-resources/tree/main/docs/bioinformatics/programming_with_gene_annotations3/code/gff_to_sqlite.R).  
  
  </TabItem>
 <TabItem value="python" label="In python">
 
-[The completed python program](https://github.com/chg-training/chg-training-resources/tree/main/docs/programming/programming_with_gene_annotations3/code/gff_to_sqlite.py).
+[The completed python program](https://github.com/chg-training/chg-training-resources/tree/main/docs/bioinformatics/programming_with_gene_annotations3/code/gff_to_sqlite.py).
 
 </TabItem>
 </Tabs>
@@ -672,7 +672,7 @@ And running it should produce nice output, something like this:
 <TabItem value="R" label="In R">
 
 ```
-% Rscript --vanilla ~/Projects/teaching/gms/whg-training-resources/docs/programming/programming_with_gene_annotations3/code/gff_to_sqlite.R --input gencode.v41.annotation.gff3 --output genes.sqlite
+% Rscript --vanilla ~/Projects/teaching/gms/whg-training-resources/docs/bioinformatics/programming_with_gene_annotations3/code/gff_to_sqlite.R --input gencode.v41.annotation.gff3 --output genes.sqlite
 ++ Welcome to gff_to_sqlite.R!
 ++ gff_to_sqlite.R: processing...
 ++ process(): loading data from 'gencode.v41.annotation.gff3'...

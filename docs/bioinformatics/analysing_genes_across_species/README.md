@@ -4,8 +4,6 @@ sidebar_position: 10
 
 # Analysing genes across species
 
-**Warning** this tutorial is still under construction.
-
 Welcome!
 
 In this tutorial we will get back to the [questions about gene

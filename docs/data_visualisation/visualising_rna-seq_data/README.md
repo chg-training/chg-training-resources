@@ -6,7 +6,7 @@ date: "2022-10-04"
 
 # Visualise RNA-seq data in R
 
-**Author**: Eddie Cano-Gamez.
+**Author**: Kiki Cano-Gamez.
 
 Welcome!  This tutorial will show you some of the elementary skills you need to begin visualising RNA-seq
 data (specifically, abundance estimates for gene RNA transcripts) in R. To do so, we will use a

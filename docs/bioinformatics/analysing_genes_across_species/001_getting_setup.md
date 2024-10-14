@@ -58,7 +58,7 @@ If you completed the tutorial you should also have a command-line program `gff_t
 :::tip Note
 
 If you don't thave this program, fear not!  You can download my version at this link:
-[gff_to_sqlite.R](https://github.com/chg-training/chg-training-resources/blob/main/docs/programming/analysing_genes_across_species/code/gff_to_sqlite.R).
+[gff_to_sqlite.R](https://github.com/chg-training/chg-training-resources/blob/main/docs/bioinformatics/analysing_genes_across_species/code/gff_to_sqlite.R).
 
 (This program depends on the `gmsgff` R library above, so make sure to install that first.)
 

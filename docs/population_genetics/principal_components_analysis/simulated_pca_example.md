@@ -42,7 +42,7 @@ X[,] = rnorm( L*N, mean = 0, sd = 0.5 )
 :::tip Note
 
 If you're unsure what this has done, explore the matrix now by [using your R
-skills](/docs/programming/introduction_to_R/README.md) to subset rows and columns, or try `hist(X)` to see a histogram
+skills](/docs/bioinformatics/introduction_to_R/README.md) to subset rows and columns, or try `hist(X)` to see a histogram
 of values.
 
 :::
