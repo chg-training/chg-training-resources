@@ -27,7 +27,7 @@ Copy and paste the function and paste it into a new file, called `gff.R`, in the
 To load this into your R session, you can use the `source()` function:
 ```r
 source( 'gff.R' )
-X = parse_gff_to_dataframe( "gencode.v41.annotation.head.gff" )
+X = read_gff( "gencode.v41.annotation.head.gff" )
 ```
 
 </TabItem>
@@ -240,7 +240,7 @@ You can also read the package help - try
 If you look in [my
 version](https://github.com/chg-training/chg-training-resources/tree/main/docs/bioinformatics/programming_with_gene_annotations3/code/R/gmsgff)
 you'll see some additions I made to add the test code.  In short:
-- I added the test function in `tests/test_parse_gff_to_dataframe.R`, with a little bit of boilerplate
+- I added the test function in `tests/test_read_gff.R`, with a little bit of boilerplate
 - I added a `Suggests: unittest` line to the `DESCRIPTION` file.
 
 It's a good idea to keep the test in the package, so go ahead and add your tests now - then use `R CMD INSTALL` to install it again.
