@@ -57,7 +57,7 @@ write_records = function( data, db, table_name, record_types ) {
 
 process = function( args ) {
 	echo( "++ process(): loading data from '%s'...\n", args$input )
-	data = gmsgff::parse_gff3_to_dataframe( args$input )
+	data = gmsgff::read_gff( args$input )
 	echo( "++ ok, loaded %d rows and %d columns of data.\n", nrow(data), ncol(data) )
 	echo( "first few rows are:\n" )
 	print( head( data ))

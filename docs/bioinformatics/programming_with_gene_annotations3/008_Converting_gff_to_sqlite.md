@@ -12,7 +12,7 @@ utility** - a program you can run on the command-line to do something useful.
 
 Specifically let's write a program to convert a GFF file to the [sqlite database](https://www.sqlite.org) format. There
 are lots of good reasons to do this.  One of them is that `sqlite` will make it easy to load the data from
-almost any language without having to re-write another `parse_gff3_to_dataframe()` function. It will make it easy to
+almost any language without having to re-write another `read_gff()` function. It will make it easy to
 load bits of data we want, solving the issues of using lots of memory that we encountered earlier.
 
 ## How we'll run the program
@@ -244,14 +244,14 @@ This is easy right?  Use your function to do it.  The correct filename is the on
 <TabItem value="R" label="In R">
 
 ```r
-data = gmsgff::parse_gff3_to_dataframe( args$input )
+data = gmsgff::read_gff( args$input )
 ```
 
 </TabItem>
 <TabItem value="python" label="In python">
 
 ```python
-data = gmsgff.parse_gff3_to_dataframe( args.input )
+data = gmsgff.read_gff( args.input )
 ```
 
 </TabItem>
@@ -466,7 +466,7 @@ get_dataset_name = function( filename ) {
 }
 
 process = function( args ) {
-    data = gmsgff::parse_gff3_to_dataframe( args$input )
+    data = gmsgff::read_gff( args$input )
 
     # Add the dataset name as a column
     data = add_column(
@@ -533,7 +533,7 @@ def get_dataset_name( filename ):
     return( result )
 
 def process( args ):
-    data = gmsgff.parse_gff3_to_dataframe( args.input )
+    data = gmsgff.read_gff( args.input )
 
     # Add the source as a column
     data.insert( loc = 0, column = 'dataset', value = get_dataset_name( args.input ) )

@@ -11,8 +11,8 @@ class TestGff(unittest.TestCase):
 	])
 	
 	# The main test from the introduction
-	def test_parse_gff3_to_dataframe( self ): 
-		data = gff.parse_gff3_to_dataframe( io.StringIO( self.test_data ))
+	def test_read_gff( self ): 
+		data = gff.read_gff( io.StringIO( self.test_data ))
 		assert data['seqid'][0] == 'chr1'
 		assert data['strand'][0] == '+'
 		assert data['attributes'][0] == 'other_data=stuff'
@@ -34,13 +34,13 @@ class TestGff(unittest.TestCase):
 
 	# An additional test to check attributes are processed correctly
 	def test_attributes( self ): 
-		data = gff.parse_gff3_to_dataframe( io.StringIO( self.test_data ), [] )
+		data = gff.read_gff( io.StringIO( self.test_data ), [] )
 		assert data['attributes'][0] == 'ID=gene1;other_data=stuff'
 		assert data['attributes'][1] == 'ID=gene1.1;Parent=gene1'
 		assert 'ID' not in data.columns
 		assert 'Parent' not in data.columns
 
-		data = gff.parse_gff3_to_dataframe( io.StringIO( self.test_data ), ['other_data'] )
+		data = gff.read_gff( io.StringIO( self.test_data ), ['other_data'] )
 		assert data['attributes'][0] == 'ID=gene1'
 		assert data['attributes'][1] == 'ID=gene1.1;Parent=gene1'
 		assert data['other_data'][0] == 'stuff'
@@ -48,7 +48,7 @@ class TestGff(unittest.TestCase):
 		assert 'ID' not in data.columns
 		assert 'Parent' not in data.columns
 
-		data = gff.parse_gff3_to_dataframe( io.StringIO( self.test_data ), [ 'ID', 'Parent', 'other_data' ] )
+		data = gff.read_gff( io.StringIO( self.test_data ), [ 'ID', 'Parent', 'other_data' ] )
 		assert data['attributes'][0] == ''
 		assert data['attributes'][1] == ''
 		assert data['ID'][0] == 'gene1'

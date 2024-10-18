@@ -60,13 +60,13 @@ of hierarchical data structure to capture this.
 
 That sounds complex, so let's break off a manageable first bit of the job by just focussing on
 getting the data in. We'll start by trying to write a function that loads the data. We'll call this
-function `parse_gff3_to_dataframe()` because that's what it will do. It will look like this:
+function `read_gff()` because that's what it will do. It will look like this:
 
 <Tabs groupId="language">
 <TabItem value="R" label="In R">
 
 ```r
-parse_gff3_to_dataframe = function( file ):
+read_gff = function( file ):
     result = (some code to load the data from the file here)
     return( result )
 ```
@@ -74,7 +74,7 @@ parse_gff3_to_dataframe = function( file ):
 <TabItem value="python" label="In python">
 
 ```python
-def parse_gff3_to_dataframe( file ):
+def read_gff( file ):
     result = (some code to load the data from the file here)
     return result
 ```
@@ -87,7 +87,7 @@ and can be run like this:
 <TabItem value="R" label="In R">
 
 ```r
-X = parse_gff3_to_dataframe( "gencode.v41.annotation.head.gff3" )
+X = read_gff( "gencode.v41.annotation.head.gff3" )
 ```
 
 </TabItem>
@@ -95,7 +95,7 @@ X = parse_gff3_to_dataframe( "gencode.v41.annotation.head.gff3" )
 
 ```python
 file = open( "gencode.v41.annotation.head.gff" )
-X = parse_gff3_to_dataframe( file )
+X = read_gff( file )
 ```
 
 </TabItem>
@@ -108,17 +108,22 @@ This should produce a dataframe with columns `id`, `parent`, `seqid`, `source`, 
 Simple! If only we knew what bit of code to write in the function there.
 
 :::caution Challenge
-Can you write `parse_gff3_to_dataframe()`?
+Can you write `read_gff()`?
 :::
 
+:::tip Note
 To make your function really good, here are a few things it should get right:
-* it should: **deal with column names**
-* it should **handle missing data values** right
+* It should **parse the main data records** (skipping over the metadata).
+* it should **get the column names right**
 * it should **get the data types of columns right**.
+* it should **handle missing data values** appropriately.
 
-And, because we want to capture the relational structure,  it shuld also  extract out the `ID` and
-`Parent` attributes as new columns.   (In short - it should pass the **test** in the next section.)
-Good luck!
+And, because we want to capture the relational structure of the file:
+
+* it should **extract out the `ID` and `Parent` attributes as new columns. **
+
+In other words - your function has to pass the test in the next section.  Good luck!
+:::
 
 If you don't know where to start - don't worry, we will walk through a process of writing this
 below.
@@ -182,7 +187,7 @@ Now let's use that test data to write a test capturing our requirements:
 <TabItem value="R" label="In R">
 
 ```r
-test_parse_gff3_to_dataframe = function() {
+test_read_gff = function() {
     test_data = "##gff-version 3
 #description: test data
 chr1\tme\tgene\t1\t1000\t.\t+\t.\tID=gene1;other_data=stuff
@@ -191,7 +196,7 @@ chr1\tme\texon\t10\t900\t.\t+\t.\tID=gene1.1;Parent=gene1
     cat( "Using test data:\n" )
     cat( test_data )
     # 1. run our function to parse the data:
-    gff = parse_gff3_to_dataframe( test_data )
+    gff = read_gff( test_data )
     print(gff)
     # 2. test it:
     # Check we have all the basic columns
@@ -232,7 +237,7 @@ chr1\tme\texon\t10\t900\t.\t+\t.\tID=gene1.1;Parent=gene1
     # etc.
     # add your own checks here!
 
-    cat( "\n++ test_parse_gff3_to_dataframe(): Congratulations, all tests passed!\n" )
+    cat( "\n++ test_read_gff(): Congratulations, all tests passed!\n" )
 }
 
 ```
@@ -241,7 +246,7 @@ chr1\tme\texon\t10\t900\t.\t+\t.\tID=gene1.1;Parent=gene1
 <TabItem value="python" label="In python">
 
 ```python
-def test_parse_gff3_to_dataframe():
+def test_read_gff():
     test_data = """##gff-version 3
 #description: test data
 chr1\tme\tgene\t1\t1000\t.\t+\t.\tID=gene1;other_data=stuff
@@ -252,7 +257,7 @@ chr1\tme\texon\t10\t900\t.\t+\t.\tID=gene1.1;Parent=gene1
     from io import StringIO # see comment below
         
     # 1. run our function to parse the data:
-    data = parse_gff3_to_dataframe( StringIO( test_data ))
+    data = read_gff( StringIO( test_data ))
 	
     # 2. test it:
     # check some string fields:
@@ -282,7 +287,7 @@ chr1\tme\texon\t10\t900\t.\t+\t.\tID=gene1.1;Parent=gene1
     assert data['Parent'][1] == 'gene1'
     # etc.
 
-    print( "++ test_parse_gff3_to_dataframe(): Congratulations,all tests passed!" )
+    print( "++ test_read_gff(): Congratulations,all tests passed!" )
 ```
 
 </TabItem>
@@ -292,7 +297,7 @@ chr1\tme\texon\t10\t900\t.\t+\t.\tID=gene1.1;Parent=gene1
 
 And then run this to test the function:
 ```
-test_parse_gff3_to_dataframe()
+test_read_gff()
 ```
 
 This prints an error, something like:
@@ -300,16 +305,16 @@ This prints an error, something like:
 <Tabs groupId="language">
 <TabItem value="R" label="In R">
 
-    Error in parse_gff3_to_dataframe(data) : 
-      could not find function "parse_gff3_to_dataframe"
+    Error in read_gff(data) : 
+      could not find function "read_gff"
 
 </TabItem>
 <TabItem value="python" label="In python">
 
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
-      File "<stdin>", line 5, in test_parse_gff3_to_dataframe
-    NameError: name 'parse_gff3_to_dataframe' is not defined
+      File "<stdin>", line 5, in test_read_gff
+    NameError: name 'read_gff' is not defined
 
 </TabItem>
 </Tabs>
@@ -339,17 +344,17 @@ module](making_a_module.md).
 
 ## Getting it to work
 
-To figure out how to write `parse_gff3_to_dataframe()` let's try a few things. Start an R or python
+To figure out how to write `read_gff()` let's try a few things. Start an R or python
 session now if you haven't already.  Also make sure you have installed [the
 tidyverse](/prerequisites/tidyverse.md) (in R) or [pandas](/prerequisites/pandas.md) (in python)
 because that's what we'll use.  You can find the documentation for these packages here:
 
 ### A first go
 
-The data in a GFF is basically tabular, so let's try to load the data using the function
-`read_tsv()` (R) or `read_table()` function (python).  You can find the documentation for this function here:
+The data in a GFF is basically tabular, so let's try to load the data using the appropriate function.  In R/tidyverse this is 
+`read_tsv()` while in python/pandas it's called `read_table()`.  You can find the documentation for this function here:
 
-* for tidyverse in R, search for `read_tsv` in the [readr docuemntation](https://readr.tidyverse.org/reference/index.html) 
+* for tidyverse in R, search for `read_tsv` in the [readr documentation](https://readr.tidyverse.org/reference/index.html) 
 * for pandas in python, search for `read_table`` in the [pandas documentation](https://pandas.pydata.org/docs/) 
 
 Let's have a first go.  To get things working let's work with a small file - the
@@ -387,7 +392,7 @@ You will probably find you have an error.
 If using R, print the resulting dataframe `X` now.  How many rows and columns does it have?  What
 are the first few lines?
 
-It doesn't look right - can you figure out what has gone wrong?
+It doesn't look right - what has gone wrong?
 
 </TabItem>
 <TabItem value="python" label="In python">
@@ -455,7 +460,9 @@ X = pandas.read_table(
 
 Try this again.  Does it work?  (Print `X` again to see.)
 
-It sort of works - but not quite.  This begins our long war of attrition to get this in shape.
+It sort of works!
+
+...but not quite.  Thus begins our long war of attrition to get this in shape.
 
 ### Adding column names
 
@@ -507,7 +514,7 @@ Let's try putting this in our function and testing now?
 <TabItem value="R" label="In R">
 
 ```r
-parse_gff3_to_dataframe = function( filename ) {
+read_gff = function( filename ) {
     readr::read_tsv(
         filename,
         comment = '#',
@@ -520,7 +527,7 @@ parse_gff3_to_dataframe = function( filename ) {
 
 ```python
 
-def parse_gff3_to_dataframe( filename ):
+def read_gff( filename ):
     pandas.read_table(
         filename,
         comment = '#',
@@ -534,7 +541,7 @@ def parse_gff3_to_dataframe( filename ):
 
 and run the test: 
 ```python
-test_parse_gff3_to_dataframe()
+test_read_gff()
 ```
 
 :::tip Note
@@ -581,7 +588,7 @@ see it?)
 Let's try again:
 
 ```r
-parse_gff3_to_dataframe = function( filename ) {
+read_gff = function( filename ) {
     readr::read_tsv(
         filename,
         comment = '#',
@@ -589,7 +596,7 @@ parse_gff3_to_dataframe = function( filename ) {
         na = "."
     )
 }
-test_parse_gff3_to_dataframe()
+test_read_gff()
 ```
 
 Now the missing values come up as `NA`  - R's shorthand for missing values.
@@ -602,7 +609,7 @@ docs](https://www.google.com/search?client=safari&rls=en&q=panda+read_table) you
 as well - we need the `na_values` argument:
 
 ```python
-def parse_gff3_to_dataframe( filename ):
+def read_gff( filename ):
     pandas.read_table(
         filename,
         comment = '#',
@@ -688,7 +695,7 @@ there's a `col_types` argument for this purpose.  The syntax is a bit involved (
 [here](https://readr.tidyverse.org/reference/cols.html)), but works like this:
 
 ```r
-parse_gff3_to_dataframe = function( filename ) {
+read_gff = function( filename ) {
     library( readr )
     readr::read_tsv(
         filename,
@@ -716,7 +723,7 @@ parse_gff3_to_dataframe = function( filename ) {
 Let's specify them instead using the `dtype` argument:
 
 ```python
-def parse_gff3_to_dataframe( filename ):
+def read_gff( filename ):
     return pandas.read_table(
         filename,
         comment = '#',
@@ -741,7 +748,7 @@ def parse_gff3_to_dataframe( filename ):
 And let's try again:
 
 ```python
-X = parse_gff3_to_dataframe( "gencode.v41.annotation.head.gff" )
+X = read_gff( "gencode.v41.annotation.head.gff" )
 ```
 
 :::tip Note
@@ -753,7 +760,7 @@ Run this and look at the output.  Are the column types right now?  (If not, fix 
 What about the test - does it pass now?
 
 ```
-test_parse_gff3_to_dataframe()
+test_read_gff()
 ```
 
 If not, why not?

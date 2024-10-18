@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Making a module
 
-If you've got this far, you've written a function `parse_gff3_to_dataframe()` that [passes the
+If you've got this far, you've written a function `read_gff()` that [passes the
 test](./Getting_started_writing_some_code.md#test-driven-development).  And ope
 
 That's already cool but let's go one step further - let's turn it into an R package (or python module.)
@@ -44,13 +44,13 @@ To use your python module, simply import it and use like this:
 
 ```python
 import gmsgff
-X = gmsgff.parse_gff3_to_dataframe( 'gencode.v41.annotation.head.gff' )
+X = gmsgff.read_gff( 'gencode.v41.annotation.head.gff' )
 ```
 
 or if you don't want to type the "`gmsgff.`" before the function name:
 ```python
-from gmsgff import parse_gff3_to_dataframe
-X = parse_gff3_to_dataframe( 'gencode.v41.annotation.head.gff' )
+from gmsgff import read_gff
+X = read_gff( 'gencode.v41.annotation.head.gff' )
 ```
 
 Cool!
@@ -70,7 +70,7 @@ But for now, we'll use base R approaches to get it working.
 ### The skeleton
 
 To get started, first you need to start with an empty R workspace that has **only** the functions you want in it. So,
-start a new R session (quit the old one if you want) and paste in the definition of `parse_gff3_to_dataframe()`.
+start a new R session (quit the old one if you want) and paste in the definition of `read_gff()`.
 
 Now, to create an R package, use `package.skeleton()`.  Let's call our package "gmsgff":
 
@@ -87,16 +87,16 @@ gmsgff/
   Read-and-delete-me
   man/
     gmsgff-package.Rd
-    parse_gff3_to_dataframe.Rd
+    read_gff.Rd
   R/
-    parse_gff3_to_dataframe.R
+    read_gff.R
 ```
 
 Have a look at these files now using your preferred method.  They are:
 
 * The `NAMESPACE` and `DESCRIPTION` files are package metadata - we will have to edit these to make the package work
-* The `parse_gff3_to_dataframe.R` file contains your function.
-* The `gmsgff-package.Rd` and `parse_gff3_to_dataframe.Rd` file contain the package documentation - we'll have to edit these too.
+* The `read_gff.R` file contains your function.
+* The `gmsgff-package.Rd` and `read_gff.Rd` file contain the package documentation - we'll have to edit these too.
 
 (You can read, and if you wish delete, `Read-md-and-delete-me`.)
 
@@ -106,11 +106,11 @@ Let's go through these in order.  You can also see a completed version of the pa
 github](https://github.com/chg-training/chg-training-resources/tree/main/docs/bioinformatics/programming_with_gene_annotations3/code/R/gmsgff).
 
 First let's edit `NAMESPACE`, which declares what the package imports (in our case, `readr` and
-`stringr`), and what it "exports" (in our case, the `parse_gff3_to_dataframe()` function.)  It should look like this:
+`stringr`), and what it "exports" (in our case, the `read_gff()` function.)  It should look like this:
 ```
 import( readr )
 import( stringr )
-export("parse_gff3_to_dataframe")
+export("read_gff")
 ```
 
 Easy enough.
@@ -124,7 +124,7 @@ Version: 0.1
 Date: 2023-10-13
 Author: My Name
 Maintainer: My Name <my.email@server.info>
-Description: Provides parse_gff3_to_dataframe
+Description: Provides read_gff
 License: mit_license
 ```
 
@@ -149,7 +149,7 @@ But you will probably see an error like:
 
 ```
 Error in Rd_info(db[[i]]) : 
-  missing/empty \title field in '/private/var/folders/1j/6glxfbj173d604n6mx1zh30c0000gn/T/Rtmp14vvWH/Rbuild772d141c32f6/gmsgff/man/parse_gff3_to_dataframe.Rd'
+  missing/empty \title field in '/private/var/folders/1j/6glxfbj173d604n6mx1zh30c0000gn/T/Rtmp14vvWH/Rbuild772d141c32f6/gmsgff/man/read_gff.Rd'
 Rd files must have a non-empty \title.
 See chapter 'Writing R documentation' in manual 'Writing R Extensions'.
 * removing ‘/private/var/folders/1j/6glxfbj173d604n6mx1zh30c0000gn/T/Rtmp14vvWH/Rinst772d4755beca/gmsgff’
@@ -183,7 +183,7 @@ A bit complicated!
 To get this working for this tutorial I suggest just copying the files I quickly made for this:
 
 * [gmsgff-package.Rd](https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/bioinformatics/programming_with_gene_annotations3/code/R/gmsgff/man/gmsgff-package.Rd)
-* [parse_gff3_to_dataframe.Rd](https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/bioinformatics/programming_with_gene_annotations3/code/R/gmsgff/man/parse_gff3_to_dataframe.Rd)
+* [read_gff.Rd](https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/bioinformatics/programming_with_gene_annotations3/code/R/gmsgff/man/read_gff.Rd)
 
 For example you could download these files and replace your original ones.  Please have a look at them and edit anything
 you want to improve.
@@ -218,12 +218,12 @@ With luck you should see a bunch of messages ending wtih
 Try it like this: start a new R session and type
 ```
 library(gmsgff)
-gencode = parse_gff3_to_dataframe( "gencode.v41.annotation.gff3" )
+gencode = read_gff( "gencode.v41.annotation.gff3" )
 ```
 
 Or like this:
 ```
-gencode = gmsgff::parse_gff3_to_dataframe( "gencode.v41.annotation.gff3" )
+gencode = gmsgff::read_gff( "gencode.v41.annotation.gff3" )
 ```
 
 Does it work?
@@ -232,7 +232,7 @@ Does it work?
 
 You can also read the package help - try
 ```
-?parse_gff3_to_dataframe
+?read_gff
 ```
 
 ### Adding the tests

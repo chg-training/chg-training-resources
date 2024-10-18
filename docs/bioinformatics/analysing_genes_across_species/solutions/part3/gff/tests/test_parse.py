@@ -3,7 +3,7 @@ import unittest
 import gff
 
 class TestGff(unittest.TestCase):
-    def test_parse_gff3_to_dataframe( self ): 
+    def test_read_gff( self ): 
         test_data = """##gff-version 3
 #description: test data
 chr1\tme\tgene\t1\t1000\t.\t+\t.\tID=gene1;other_data=stuff

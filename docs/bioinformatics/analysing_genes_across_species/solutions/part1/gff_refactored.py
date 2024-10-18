@@ -1,11 +1,11 @@
 # gff.py
-# This file implements the function parse_gff3_to_dataframe()
+# This file implements the function read_gff()
 # and a number of helper functions.
 # This is the 'refactored' version in which the main function is only 3 lines long.
 
 import pandas, re
 
-def parse_gff3_to_dataframe( file):
+def read_gff( file):
 	"""Read GFF3-formatted data in the specified file (or file-like object)
 	Return a pandas dataframe with seqid, source, type, start, end, score, strand, phase, and attributes columns.
 	Additinally, the listed attributes are removed from the attributes column and placed in seperate

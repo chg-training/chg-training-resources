@@ -2,19 +2,19 @@ echo <- function( message, ... ) {
     cat( sprintf( message, ... ))
 }
 
-parse_gff3_to_dataframe <-
+read_gff <-
 function(
     filename,
     extra_attributes = c()
 ) {
-    echo( "++parse_gff3_to_dataframe(): Reading GFF3 data from \"%s\"...\n", filename )
+    echo( "++read_gff(): Reading GFF3 data from \"%s\"...\n", filename )
     result = read_gff3( filename )
 
     result = tibble::add_column( result, ID = NA, .before = 1 )
     result = tibble::add_column( result, Parent = NA, .before = 2 )
 
     for( attribute in c( "ID", "Parent", extra_attributes )) {
-        echo( "++parse_gff3_to_dataframe(): Extracting \"%s\" attribute...\n", attribute )
+        echo( "++read_gff(): Extracting \"%s\" attribute...\n", attribute )
         # Updated regex that also matches the trailing semicolon or end-of-string
         # so we can remove it
         regex = sprintf( "%s=([^;]+)[;|$]", attribute )
@@ -25,11 +25,11 @@ function(
     }
 
     # Get rid of 'gene:', 'exon:', etc in ID which is just wasting space.
-    echo( "++parse_gff3_to_dataframe(): Removing prefixes from ID fields...\n" )
+    echo( "++read_gff(): Removing prefixes from ID fields...\n" )
     result[['ID']] = stringr::str_remove( result[['ID']], '^(chromosome:|gene:|transcript:|exon:|CDS:)' )
     result[['Parent']] = stringr::str_remove( result[['Parent']], '^(chromosome:|gene:|transcript:|exon:|CDS:)' )
 
-    echo( "++parse_gff3_to_dataframe(): ok.\n" )
+    echo( "++read_gff(): ok.\n" )
     return( result )
 }
 

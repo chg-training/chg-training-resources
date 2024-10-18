@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 If you reach this point, you have:
 
-* written a function`parse_gff3_to_dataframe()` that can read GFF data into R (or python)
+* written a function`read_gff()` that can read GFF data into R (or python)
 * written an R package, or a python module, to contain that function
 * written a command-line program `gff_to_sqlite.R` (or `gff_to_sqlite.py`) that uses that function to convert GFF file(s) to a database format.
 
@@ -25,7 +25,7 @@ Ensembl](http://ftp.ensembl.org/pub/current_gff3/homo_sapiens/), at least at fir
 
 :::caution Wartning
 
-Some of these challenges involve changes to your `parse_gff3_to_dataframe()` function. Make sure and test it to ensure
+Some of these challenges involve changes to your `read_gff()` function. Make sure and test it to ensure
 it still works!
 
 Also, if you like your edits and put them in your **gmsgff** package, remember to run `R CMD INSTALL gmsgff` again to
@@ -41,7 +41,7 @@ Wouldn't it be nice to have other attributes extracted as columns?  For example 
 
 :::tip Challenge
 
-Give `parse_gff3_to_dataframe()` a second argument called 'attributes', which should be a list (or in R,
+Give `read_gff()` a second argument called 'attributes', which should be a list (or in R,
 a vector) of attribute names. For each attribute in the list, you should extract it and add it into a seperate column of
 the result dataframe.  (This should be in addition to the `ID` and `Parent` attributes, which you should always
 extract.)
@@ -54,7 +54,7 @@ that the option can take several values.  The argument can then be used as a lis
 
 ## Challenge 2: shrink `attributes`
 
-Currently, `parse_gff3_to_dataframe()` extracts `ID` and `Parent` (and, if you do the challenge above, other attributes too).
+Currently, `read_gff()` extracts `ID` and `Parent` (and, if you do the challenge above, other attributes too).
 But it also leaves these fields in the `attributes` column.  Since the files are so bit, this can waste a lot of space.
 
 :::tip Challenge

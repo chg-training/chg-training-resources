@@ -1,9 +1,9 @@
 # gff.py
-# This file implements the function parse_gff3_to_dataframe()
+# This file implements the function read_gff()
 # and a number of helper functions.
 import pandas, re
 
-def parse_gff3_to_dataframe(
+def read_gff(
 	file,
 	attributes_to_extract = [ 'ID', 'Parent' ]
 ):

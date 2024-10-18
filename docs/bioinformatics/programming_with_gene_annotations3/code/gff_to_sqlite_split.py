@@ -44,7 +44,7 @@ def write_records( data, db, table_name, record_types ):
 
 def process( args ):
 	print( "++ process(): loading data from '%s'..." % args.input )
-	data = gmsgff.parse_gff3_to_dataframe( args.input )
+	data = gmsgff.read_gff( args.input )
 	print( "++ ok, loaded %d rows and %d columns of data." % ( data.shape[0], data.shape[1] ) )
 	print( "first few rows are:" )
 	print( data.head() )

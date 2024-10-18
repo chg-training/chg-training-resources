@@ -7,9 +7,9 @@ import TabItem from '@theme/TabItem';
 
 # Testing it out
 
-Hopefully you have now got a working function, `parse_gff3_to_dataframe()` and got the extremely rewarding message:
+Hopefully you have now got a working function, `read_gff()` and got the extremely rewarding message:
 ```
-++ test_parse_gff3_to_dataframe(): Congratulations,all tests passed!
+++ test_read_gff(): Congratulations,all tests passed!
 ```
 
 If not here is my solution:
@@ -24,7 +24,7 @@ Please try to code it yourself first of course!  See the tabs for solutions.
 <TabItem value="R" label="R solution">
 
 ```r
-parse_gff3_to_dataframe = function( filename ) {
+read_gff = function( filename ) {
     result = readr::read_tsv(
         filename,
         comment = '#',
@@ -47,7 +47,7 @@ parse_gff3_to_dataframe = function( filename ) {
 	return( result )
 }
 
-test_parse_gff3_to_dataframe()
+test_read_gff()
 ```
 
 **Note.** Those `readr::` and `stringr::` bits are optional - you could just do `library( tidyverse )` at the top.
@@ -56,7 +56,7 @@ test_parse_gff3_to_dataframe()
 <TabItem value="python" label="python solution">
 
 ```python
-def parse_gff3_to_dataframe( file ):
+def read_gff( file ):
 	import pandas
 	result = pandas.read_table(
 		file,
@@ -87,7 +87,7 @@ def parse_gff3_to_dataframe( file ):
 </Tabs>
 
 ```
-test_parse_gff3_to_dataframe()
+test_read_gff()
 ```
 :::
 
@@ -96,7 +96,7 @@ test_parse_gff3_to_dataframe()
 You ought to be able to load some real data now.  Does it work on the full gencode file? 
 
 ```
-gencode = parse_gff3_to_dataframe( "gencode.v41.annotation.gff3.gz" )
+gencode = read_gff( "gencode.v41.annotation.gff3.gz" )
 ```
 
 What about the file downloaded from Ensembl - called something like `Homo_sapiens.GRCh38.107.chr.gff3.gz` or similar -

@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 # Extracting the ID and Parent attributes
 
 If you followed the [previous page](./003_Getting_started_writing_some_code.md), you'll have a function called
-`parse_gff3_to_dataframe()` which *almost* - but not quite - loads GFF data the way we want it.
+`read_gff()` which *almost* - but not quite - loads GFF data the way we want it.
 
 What's missing is that we need to extract out attributes - in particular the `ID` and `Parent` attributes that specify
 the structure of the file.  As you saw before they are tucked away inside the `attributes` column.
@@ -320,20 +320,20 @@ Now you should be all set to get our function working!
 
 **Get the function working**, by following these steps:
 
-1. Add the above code to your `parse_gff3_to_dataframe()` so that it adds the `ID` attribute.
+1. Add the above code to your `read_gff()` so that it adds the `ID` attribute.
 
 2. Don't forget to add the similar code to extract the `Parent` attribute as well.
 
 3. Run the test:
 
 ```
-test_parse_gff3_to_dataframe()
+test_read_gff()
 ```
 
 If all goes well you should see:
 
 ```
-++ test_parse_gff3_to_dataframe(): Congratulations,all tests passed!
+++ test_read_gff(): Congratulations,all tests passed!
 ```
 
 Congratulations!

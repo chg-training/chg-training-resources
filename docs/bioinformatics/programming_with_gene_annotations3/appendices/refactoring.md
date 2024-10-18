@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Refactor for better readability
 
-If you've followed the [main tutorial](../005_testing_it_out.md), your `parse_gff3_to_dataframe()` function will have
+If you've followed the [main tutorial](../005_testing_it_out.md), your `read_gff()` function will have
 something like... 20 or 30 lines in it.  It's quite complicated, but really it's very simple and only does a couple of
 things:
 
@@ -13,7 +13,7 @@ things:
 
 So really it should look much simpler, like this:
 ```r
-parse_gff3_to_dataframe = function( filename ) {
+read_gff = function( filename ) {
 	result = read_gff_data( filename )
 	add_attributes( result )
 	return( result )

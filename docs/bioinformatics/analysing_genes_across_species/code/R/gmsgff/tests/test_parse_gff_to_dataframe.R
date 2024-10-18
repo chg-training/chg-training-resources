@@ -1,7 +1,7 @@
 library( gmsgff )
 library( unittest )
 
-test_parse_gff3_to_dataframe = function() {
+test_read_gff = function() {
     test_data = "##gff-version 3
 #description: test data
 chr1\tme\tgene\t1\t1000\t.\t+\t.\tID=gene1;other_data=stuff
@@ -10,7 +10,7 @@ chr1\tme\texon\t10\t900\t.\t+\t.\tID=gene1.1;Parent=gene1
     cat( "Using test data:\n" )
     cat( test_data )
     # 1. run our function to parse the data:
-    gff = parse_gff3_to_dataframe( test_data )
+    gff = read_gff( test_data )
     print(gff)
     # 2. test it:
     # Check we have all the basic columns
@@ -51,8 +51,8 @@ chr1\tme\texon\t10\t900\t.\t+\t.\tID=gene1.1;Parent=gene1
     # etc.
     # add your own checks here!
 
-    cat( "\n++ test_parse_gff3_to_dataframe(): Congratulations, all tests passed!\n" )
+    cat( "\n++ test_read_gff(): Congratulations, all tests passed!\n" )
 }
 
 
-test_parse_gff3_to_dataframe()
+test_read_gff()

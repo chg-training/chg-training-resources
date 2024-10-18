@@ -44,7 +44,7 @@ def parse_arguments():
 
 def process( args ):
     print( "++ Loading genes data from %s...\n" % args.input )
-    data = gff.parse_gff3_to_dataframe( args.input, args.attribute_columns )
+    data = gff.read_gff( args.input, args.attribute_columns )
     print( "++ ok, %d records loaded, they look like:\n" % data.shape[0] )
     print( data )
 

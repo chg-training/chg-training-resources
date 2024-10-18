@@ -1,4 +1,4 @@
-parse_gff3_to_dataframe <-
+read_gff <-
 function( filename ) {
     library( tidyverse )
     result = readr::read_tsv(
