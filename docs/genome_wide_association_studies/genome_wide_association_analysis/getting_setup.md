@@ -29,10 +29,10 @@ cd /mnt/c/Users/<your user name>/Desktop/
 ## Downloading the data
 
 To get the data, download and extract the tarball from
-[this folder](https://www.well.ox.ac.uk/~gav/projects/whg-training-resources/data/genome_wide_association_studies/genome_wide_association_analysis/):
+[this folder](https://www.chg.ox.ac.uk/~gav/projects/chg-training-resources/data/genome_wide_association_studies/genome_wide_association_analysis/):
 
 ```
-curl -O https://www.well.ox.ac.uk/~gav/projects/whg-training-resources/data/genome_wide_association_studies/genome_wide_association_analysis/gwas_practical.tgz
+curl -O https://www.chg.ox.ac.uk/~gav/projects/chg-training-resources/data/genome_wide_association_studies/genome_wide_association_analysis/gwas_practical.tgz
 ```
 
 This might take a minute or two.  Once the download has completed, extract the tarball and cd into the newly-created directory:

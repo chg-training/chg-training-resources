@@ -12,7 +12,7 @@ python or R.  We will then use this to create a useful utility program.
 
 The aim of this tutorial is that **you** to write the code that does this (either on your own or
 working in a group if you prefer). But the tutorial will guide you through one way to do it, and if
-you run this as part of a [WHG](www.well.ox.ac.uk) course, there will be lots of support.
+you run this as part of a [WHG](www.chg.ox.ac.uk) course, there will be lots of support.
 
 :::tip Note
 Remember we're not writing this code for it's own sake but to answer our questions like the ones in our introduction:

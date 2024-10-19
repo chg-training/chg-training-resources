@@ -102,7 +102,7 @@ Easy, right?  Here is a diagram of the overall pipeline:
 
 You have to implement a least the green bits... good luck!
 
-(If you are running this as part of a [WHG course](www.well.ox.ac.uk), we'll discuss your pipeline
+(If you are running this as part of a [WHG course](www.chg.ox.ac.uk), we'll discuss your pipeline
 and look at the outputs at the wrap-up session later in the week.)
 
 ## Good luck!

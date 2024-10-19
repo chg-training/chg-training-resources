@@ -5,7 +5,7 @@ sidebar_position: 1
 # Overview of the tutorials
 
 Welcome!  This folder contains course materials (practicals, notes and datasets) that were developed for the taught
-statistics component of the [Genomic Medicine and Statistics](https://www.well.ox.ac.uk/study/gms) course at the
+statistics component of the [Genomic Medicine and Statistics](https://www.chg.ox.ac.uk/study/gms) course at the
 Centre for Human Genetics, University of Oxford.  The content is a mixture of training on bioinformatics,
 computational and statistical genomics.
 

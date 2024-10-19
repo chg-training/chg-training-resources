@@ -2,9 +2,11 @@
 sidebar_position: 2
 ---
 
-# Probability distributions
+# Some probability distributions
 
-Let's look at some commonly-used distributions.  Here are a few useful ones.
+In practice we often use distributions with specific mathematical forms.
+
+Let's look at some commonly-used ones.  Here are a few useful ones.
 
 
 | Distribution name  |  R function | parameters | domain                 |  Expression | Explanation |

@@ -32,15 +32,15 @@ library(hexbin)
 
 ## Loading data
 
-We will now load the GTEx gene expression table, as well as a table containing annotations for each of the genes measured in the study.  The data can be found in [this folder](https://www.well.ox.ac.uk/~gav/projects/whg-training-resources/data/data_visualisation/visualising_rna-seq_data/) - download both files now.
+We will now load the GTEx gene expression table, as well as a table containing annotations for each of the genes measured in the study.  The data can be found in [this folder](https://www.chg.ox.ac.uk/~gav/projects/chg-training-resources/data/data_visualisation/visualising_rna-seq_data/) - download both files now.
 
 :::tip Note
 We recommend working in a new folder for this - for example by running this in your terminal:
 ```
 mkdir rna-seq_practical
 cd rna-seq_practical
-curl -O https://www.well.ox.ac.uk/~gav/projects/whg-training-resources/data/data_visualisation/visualising_rna-seq_data/GTEx-v8-RNAseq_mean-TPM_QCed.tsv
-curl -O https://www.well.ox.ac.uk/~gav/projects/whg-training-resources/data/data_visualisation/visualising_rna-seq_data/GTEx_gene-annotations.tsv
+curl -O https://www.chg.ox.ac.uk/~gav/projects/chg-training-resources/data/data_visualisation/visualising_rna-seq_data/GTEx-v8-RNAseq_mean-TPM_QCed.tsv
+curl -O https://www.chg.ox.ac.uk/~gav/projects/chg-training-resources/data/data_visualisation/visualising_rna-seq_data/GTEx_gene-annotations.tsv
 ```
 This might take a minute or so to download.
 

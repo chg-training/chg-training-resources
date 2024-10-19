@@ -6,10 +6,10 @@ sidebar_position: 0.5
 
 In this page you will load up some real haplotype data (from the 1000 Genomes Project) and plot it in R.
 
-Start by downloading the file `GWD_30x_calls.filtered.tsv.gz` from [this folder](https://www.well.ox.ac.uk/bioinformatics/training/gms/data/) and loading into R:
+Start by downloading the file `GWD_30x_calls.filtered.tsv.gz` from [this folder](https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/) and loading into R:
 ```r
 library( tidyverse )
-gwd = read_tsv( "https://www.well.ox.ac.uk/bioinformatics/training/gms/data/GWD_30x_calls.filtered.tsv.gz" )
+gwd = read_tsv( "https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/GWD_30x_calls.filtered.tsv.gz" )
 
 print(gwd)
 ```

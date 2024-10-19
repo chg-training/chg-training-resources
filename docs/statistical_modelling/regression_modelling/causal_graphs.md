@@ -93,7 +93,7 @@ For each diagram, **first** try to decide by looking at the diagram whether you 
 doesn't matter?)
 
 **Second**, try downloading loading the matching dataset from [this
-folder](https://www.well.ox.ac.uk/~gav/projects/whg-training-resources/data/statistical_modelling/regression_modelling/data/causal/)
+folder](https://www.chg.ox.ac.uk/~gav/projects/chg-training-resources/data/statistical_modelling/regression_modelling/data/causal/)
  and use `lm()` in R to check your answer is right. More precisely, what is the impact of including $B$ in as a covariate on a) the
 regression estimate $\hat{\beta}$ and b) the standard error of conditioning on $B$?
 

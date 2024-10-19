@@ -24,7 +24,7 @@ FinchTV by running the installer.
 :::tip Note
 
 In case of problems, a backup copy can also be found
-[here](https://www.well.ox.ac.uk/bioinformatics/training/MSc_GM_2022/08_alpha-globin_experiment_analysis/software/). Another
+[here](https://www.chg.ox.ac.uk/bioinformatics/training/MSc_GM_2022/08_alpha-globin_experiment_analysis/software/). Another
 similar program is [Chromas](http://technelysium.com.au/wp/chromas/) which can also be found in that folder.
 
 :::
@@ -32,7 +32,7 @@ similar program is [Chromas](http://technelysium.com.au/wp/chromas/) which can a
 ### Getting the data
 
 Some sanger sequencing data from this experiment can be found in [this
-folder](https://www.well.ox.ac.uk/bioinformatics/training/MSc_GM_2022/08_alpha-globin_experiment_analysis/data/attempt1/).
+folder](https://www.chg.ox.ac.uk/bioinformatics/training/MSc_GM_2022/08_alpha-globin_experiment_analysis/data/attempt1/).
 
 The data is separated into 'groups', but all groups ran the same experiment.  For the purposes of this tutorial, pick a
 group and download the corresponding zip file by clicking in your web browser. You should now be able to open the zip file -

@@ -142,7 +142,7 @@ chemistry doesn't work out, then the fragment may not anneal to the flowcell so 
 chemistry doesn't work out we'll get artifacts in the second read. Some examples of that are [on
 the QC page](Quality_control.md) where a fraction of read pairs read 2 entirely composed of `G`
 bases. (As in
-[this sample](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/HV31-illumina_novaseq_2_fastqc.html#M9),
+[this sample](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/HV31-illumina_novaseq_2_fastqc.html#M9),
 sequenced during workflow testing, for which I presume the read 2 primers are not properly ligated leading to low intensities for
 the second read.
 

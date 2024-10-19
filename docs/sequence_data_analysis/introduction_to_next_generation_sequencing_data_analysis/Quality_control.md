@@ -39,17 +39,17 @@ In the rest of the page below I'm going to look at the `QG0033-C` dataset, which
 generated if you followed the instructions above. However, it's useful to see what the output looks
 like across datasets - so I collected some.  See:
 
-- **a malaria sample** sequenced on a HiSeq with an unusual GC bump.  (That's this dataset, described further below). [-> link](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/QG0033-C_Illumina-HiSeq_read1_fastqc.html#M5) 
+- **a malaria sample** sequenced on a HiSeq with an unusual GC bump.  (That's this dataset, described further below). [-> link](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/QG0033-C_Illumina-HiSeq_read1_fastqc.html#M5) 
 
-- a **second malaria sample** sequenced on the Illumina XTEN for which the reads have PCR primer contamination from the library prep step. [-> read 1 link](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/ERR6227518_Illumina-XTEN_read1_fastqc.html#M9), [read 2 link](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/ERR6227518_Illumina-XTEN_read2_fastqc.html#M9).
+- a **second malaria sample** sequenced on the Illumina XTEN for which the reads have PCR primer contamination from the library prep step. [-> read 1 link](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/ERR6227518_Illumina-XTEN_read1_fastqc.html#M9), [read 2 link](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/ERR6227518_Illumina-XTEN_read2_fastqc.html#M9).
 
-- **a human sample** sequenced on a Novaseq at the [WHG](https://www.well.ox.ac.uk), for which read 2 is enriched for poly-G sequences. [-> link](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/HV31-illumina_novaseq_2_fastqc.html#M9).
+- **a human sample** sequenced on a Novaseq at the [WHG](https://www.chg.ox.ac.uk), for which read 2 is enriched for poly-G sequences. [-> link](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/HV31-illumina_novaseq_2_fastqc.html#M9).
 
-- **another human sample**, sequenced during a fragmentation testing process, that has the same problem but much worse (nearly 3% of reads are like this.) [-> link](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/NA12878-illumina_novaseq-NE755566_R2_fastqc.html#M5).  
+- **another human sample**, sequenced during a fragmentation testing process, that has the same problem but much worse (nearly 3% of reads are like this.) [-> link](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/NA12878-illumina_novaseq-NE755566_R2_fastqc.html#M5).  
 
 - The **same human sample** sequenced [at the NYGC](https://www.ebi.ac.uk/ena/browser/view/ERR3239334?show=reads), where
   the base qualities have been compressed to a different set of levels.  [->
-  link](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/ERR3239334-Illumina_NovaSeq_6000_read2_fastqc.html#M1).
+  link](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/ERR3239334-Illumina_NovaSeq_6000_read2_fastqc.html#M1).
 
 Have a look at these. All except the second-last dataset would probably be considered reasonable quality data, but they
 all have at least some level of artifacts.
@@ -57,7 +57,7 @@ all have at least some level of artifacts.
 (More examples can be found [on the fastq documentation
 page](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).)
 
-Finally here is an example of [a long-read human dataset](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/HV31-PacBio_CCS_fastqc.html) (PacBio Hifi) - this looks quite different.
+Finally here is an example of [a long-read human dataset](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/HV31-PacBio_CCS_fastqc.html) (PacBio Hifi) - this looks quite different.
 
 ### Next steps
 
@@ -139,7 +139,7 @@ varies a bit around the genome so we should expect to see some spread around 23%
 But this sample also has a second bump of reads at around 60% GC. What could this be? Here are some
 data points:
 
-* If you look at the [read 2 fastqc output](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/QG0033-C_Illumina-HiSeq_read2_fastqc.html#M5) file you'll see it there as well.
+* If you look at the [read 2 fastqc output](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/QG0033-C_Illumina-HiSeq_read2_fastqc.html#M5) file you'll see it there as well.
 
 * It's not seen in other samples (such as those linked above) - so it's something about this sample.
 
@@ -173,7 +173,7 @@ For this sample about 3% of sequences seem to be duplicated.  To interpret this,
 - on the other hand sequencing errors might make duplicate fragments appear not duplicated, leading to underestimation
   of the number of duplicates. For this reason fastqc focusses on the first 50bp of each read, but [as we saw above
   there can be low-quality bases at the start of the read as
-  well](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/QG0033-C_Illumina-HiSeq_read1_fastqc.html#M1).
+  well](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/QG0033-C_Illumina-HiSeq_read1_fastqc.html#M1).
 
 - Some level of 'genuine' duplication is expected in high-coverage data , of course. This is both
   because we are sequencing randomly-placed fragments around the genome that occasionally overlap
@@ -185,7 +185,7 @@ dataset, although because of the low qualities at the start of the read, you mig
 underestimate.
 
 **Note.** It is common to see much higher levels of duplication - for example this
-[sequencing of human sample NA12878](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/ERR3239334-Illumina_NovaSeq_6000_read2_fastqc.html#M8)
+[sequencing of human sample NA12878](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/ERR3239334-Illumina_NovaSeq_6000_read2_fastqc.html#M8)
 shows around a 20% duplication rate even though it used a PCR-free library preparation.
 PCR-based library preparation typically needs to still higher duplication rates.
 
@@ -200,8 +200,8 @@ poly-G sequences) can arise when chemistry for one of the primers fails.
 
 This sample doesn't seem to have any problems here.  But see:
 
-- [this malaria dataset](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/ERR6227518_Illumina-XTEN_read2_fastqc.html#M9) with PCR primer contamination;
-- [this human dataset](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/HV31-illumina_novaseq_2_fastqc.html#M9) which has poly-G sequences in the second read.
+- [this malaria dataset](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/malaria/ERR6227518_Illumina-XTEN_read2_fastqc.html#M9) with PCR primer contamination;
+- [this human dataset](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/HV31-illumina_novaseq_2_fastqc.html#M9) which has poly-G sequences in the second read.
 
 If you see high levels of artifacts of this type, you may want to try [read trimming](Read_trimming.md) before analysis.
 

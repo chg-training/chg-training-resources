@@ -59,8 +59,8 @@ To get set up:
 * Start IGV on your laptop (not JupyterHub) and make sure you have selected human build 38 from the 'genomes' drop down.
 * Load the track for NA12878 data from the following urls:
 ```
-  BAM URL: https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/solutions/human/
-INDEX URL: https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/solutions/human/
+  BAM URL: https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/solutions/human/
+INDEX URL: https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/solutions/human/
 ```
 
 Now browse the genome in IGV.

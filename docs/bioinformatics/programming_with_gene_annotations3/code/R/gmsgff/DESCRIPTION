@@ -4,7 +4,7 @@ Title: Utilities for loading gene annotation data
 Version: 0.1
 Date: 2023-10-13
 Author: Gavin Band
-Maintainer: Gavin Band <gavin.band@well.ox.ac.uk>
+Maintainer: Gavin Band <gavin.band@chg.ox.ac.uk>
 Description: Provides read_gff
 License: mit_license
 Imports: tidyverse

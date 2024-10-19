@@ -29,5 +29,5 @@ However, there are some reasons not to worry about this:
   
 For the purposes of this practical we will skip the read trimming step. However, if I were
 analysing a dataset with high levels of contamination - like [this
-one](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/HV31-illumina_novaseq_2_fastqc.html) or worse - I would definitely be tempted to implement trimming.
+one](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/HV31-illumina_novaseq_2_fastqc.html) or worse - I would definitely be tempted to implement trimming.
 

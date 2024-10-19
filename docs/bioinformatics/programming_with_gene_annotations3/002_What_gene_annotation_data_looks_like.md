@@ -34,7 +34,7 @@ of the main chromosomes.)
 Plasmodb](https://plasmodb.org/plasmo/app/downloads/Current_Release/Pfalciparum3D7/gff/data/).
 
 A backup copy of these files can be found
-[in this folder](https://www.well.ox.ac.uk/~gav/projects/whg-training-resources/data/programming/programming_with_gene_annotations/).
+[in this folder](https://www.chg.ox.ac.uk/~gav/projects/chg-training-resources/data/programming/programming_with_gene_annotations/).
 
 Use your [command-line skills](/bioinformatics/exploring_gene_annotations_in_bash) to download these files to the
 `genes_programming` folder and have a look at them.  Feel free to download data for more species as well.  (To keep

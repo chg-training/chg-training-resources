@@ -29,7 +29,7 @@ files. Now would be a good point to explore what's in there.  The folder contain
 - A similar set of sequence data reads and reference genome for a human sample - in the `human/` folder.
 
 **Note.** I placed online a
-[set of solutions files for steps in the practical](https://www.well.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/solutions).
+[set of solutions files for steps in the practical](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/solutions).
 Feel free to check these as you go along.
 
 During the practical we'll bring one or more of these datasets to an analysis-ready state.

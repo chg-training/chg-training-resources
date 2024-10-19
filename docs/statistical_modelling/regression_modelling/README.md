@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 3
 ---
 
-# Statistical modelling I - regression
+# Modelling statistical association with regression
 
 Welcome!  This folder contains tutorials on modelling using regression.
 To get started, go [here](./linear_regression_1.md).

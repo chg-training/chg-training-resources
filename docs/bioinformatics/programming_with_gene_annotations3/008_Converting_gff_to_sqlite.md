@@ -672,7 +672,7 @@ And running it should produce nice output, something like this:
 <TabItem value="R" label="In R">
 
 ```
-% Rscript --vanilla ~/Projects/teaching/gms/whg-training-resources/docs/bioinformatics/programming_with_gene_annotations3/code/gff_to_sqlite.R --input gencode.v41.annotation.gff3 --output genes.sqlite
+% Rscript --vanilla ~/Projects/teaching/gms/chg-training-resources/docs/bioinformatics/programming_with_gene_annotations3/code/gff_to_sqlite.R --input gencode.v41.annotation.gff3 --output genes.sqlite
 ++ Welcome to gff_to_sqlite.R!
 ++ gff_to_sqlite.R: processing...
 ++ process(): loading data from 'gencode.v41.annotation.gff3'...

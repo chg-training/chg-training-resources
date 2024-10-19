@@ -1,3 +1,7 @@
+---
+sidebar_position: 10.0
+---
+
 # Glycophorin CNV calling tutorial
 
 Welcome! In this tutorial you will build a hidden markov model to model sequence read coverage

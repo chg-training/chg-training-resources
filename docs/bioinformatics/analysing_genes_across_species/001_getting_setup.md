@@ -14,7 +14,7 @@ If you don't have these or want an updated version, don't worry!  You can get my
 First, to install the R package, try (from an R session):
 ```
 install.packages(
-	"https://www.well.ox.ac.uk/bioinformatics/training/gms/code/R/gmsgff.tgz",
+	"https://www.chg.ox.ac.uk/bioinformatics/training/gms/code/R/gmsgff.tgz",
 	repos = NULL,
 	type = "source"
 )
