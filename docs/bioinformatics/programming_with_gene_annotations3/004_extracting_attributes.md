@@ -277,8 +277,7 @@ print( "Extracting the ID took %.2fs!" % (end - start) )
 </TabItem>
 </Tabs>
 
-On my system (an M1 mac) this 'naive' version takes about 80 seconds in R! (Though the python version is much better, at
-around 7 seconds.) So we have a table of timings, something like:
+On my system (an M1 mac) this 'naive' version takes about 80 seconds in R! (Though the python version is much better, at around 7 seconds.) So we have a table of timings, something like:
 
 | Language | Method | Best of three timings |
 | -------- | ------ | --------------------- |
@@ -291,7 +290,7 @@ around 7 seconds.) So we have a table of timings, something like:
 
 This illustrates a key point when working with large genomic datasets: it's quite easy to find that things get really
 slow, and some care over implementation is often needed to speed them up again.  (Although 70s might not seem much in
-the scheme of things, it's easily ennough for your mind to wander. Or imagine we were processing fifty files instead of
+the scheme of things, it's easily enough for your mind to wander. Or imagine we were processing fifty files instead of
 one...)
 
 Particularly when working in interpreted languages like R or python, finding ways to write efficient code soon becomes

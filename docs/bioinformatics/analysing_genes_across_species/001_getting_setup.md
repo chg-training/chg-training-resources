@@ -4,10 +4,10 @@ sidebar_position: 1
 
 # Getting setup
 
-If you followed the R version of our [earlier tutorial](../programming_with_gene_annotations3/README.md) you will have:
+If you followed the R version of our earlier tutorials you will have:
 
-* An R package called **gmsgff** which provides the `read_gff()` function.
-* An R script called `gff_to_sqlite.R` which converts a GFF file into the sqlite database format.
+* An R package called **gmsgff** which provides the `read_gff()` function.  (We made this in the [Making an R or python package](../making_an_R_package/README.md) tutorial.)
+* An R script called `gff_to_sqlite.R` which converts a GFF file into the sqlite database format.  (We made this in the [Making a command-line program](../a_command_line_program/README.md) tutorial.)
 
 If you don't have these or want an updated version, don't worry!  You can get my versions as follows.
 
@@ -57,20 +57,26 @@ If you completed the tutorial you should also have a command-line program `gff_t
 
 :::tip Note
 
-If you don't thave this program, fear not!  You can download my version at this link:
-[gff_to_sqlite.R](https://github.com/chg-training/chg-training-resources/blob/main/docs/bioinformatics/analysing_genes_across_species/code/gff_to_sqlite.R).
+If you don't have this program, fear not!  You can download my version at this link:
+[gff_to_sqlite.R](https://github.com/chg-training/chg-training-resources/blob/main/docs/bioinformatics/analysing_genes_across_species/code/gff_to_sqlite.R).  Click on 'Raw', copy the code, and paste into your `gff_to_sqlite.R` file in your current directory.
 
 (This program depends on the `gmsgff` R library above, so make sure to install that first.)
 
 :::
 
-In the command-line you can run the program like this:
+In the command-line you can now run the program like this:
 
 ```
 Rscript --vanilla gff_to_sqlite.R --input Homo_sapiens.GRCh38.107.chr.gff3.gz --output genes.sqlite --attributes biotype Name
 ```
 which will produce a new file called `genes.sqlite`.  If you're not used to using sqlite files, you can see some ways to
 access that data [on this page](../programming_with_gene_annotations3/appendices/sqlite_access.md).
+
+:::tip Note
+
+We added the 'biotype' and 'Name' attributes above - these are useful in the [Ensembl files](http://ftp.ensembl.org/pub/current_gff3/) (but not in the Gencode files, which use `gene_type` and `gene_name` instead.)
+
+:::
 
 :::tip Note
 
@@ -90,4 +96,4 @@ data](../programming_with_gene_annotations3/003_Getting_started_writing_some_cod
 
 ## Next steps
 
-You are all set to start [counting genes](./006_Counting_genes_1.md).
+You are all set to start [counting genes](./002_Counting_genes_1.md).

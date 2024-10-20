@@ -8,10 +8,12 @@ sidebar_position: 2
 
 This session has four parts:
 
-1. [Where statistics fits in](./diagram.md)
-2. [Statistics is reasoning with uncertainty](./reasoning.md)
-3. [How to measure uncertainty - using *probability distributions*](./some_distributions.md)
-4. [The most important formula in science!](./bayes.md)
-5. And two bayesian examples covering [how to interpreting a COVID-19 lateral flow test](./covid.md) and [how to
-   estimate an allele frequency](./allele_frequencies.md).
+1. [Where statistics fits in](./diagram.md).
+2. [Statistics is reasoning with uncertainty](./reasoning.md).
+3. [Measuring uncertainty with distributions](./distributions.md).
+4. [Summarising uncertainty](./summarising_distributions.md).
+5. [How to measure uncertainty - using *probability distributions*](./some_distributions.md).
+6. [The most important formula in science!](./bayes.md).
+7. Example; [how to interpreting a COVID-19 lateral flow test](./covid.md).
+8. Example [estimating an allele frequency](./allele_frequencies.md).
 

@@ -8,12 +8,11 @@ Let's apply Bayes formula to this question:
 
 :::tip Problem
 
-Suppose you test +ve for COVID using a lateral flow test.  How certain should you be that you are infected?
+Suppose you test +ve for COVID using a lateral flow test.  How convinced should you be that you are infected?
 
 :::
 
-Like **many scientific** problems, this one can be solved (in the 'narrow' sense) by applying [Bayes'
-formula](./bayes.md).  Let's try now:
+Like **many scientific** problems, this one can be solved by applying [Bayes' formula](./bayes.md).  Let's try now:
 
 $$
 
@@ -23,12 +22,12 @@ $$
 
 But how can we generate those numbers?
 
-Luckily there are huge datasets in which to estimate the quantities!  See this [review of COVID-19 lateral flow test accuracy](https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD013705.pub2/full) Cochrane Database.
+Luckily there are huge datasets in which to estimate the quantities!  See this [review of COVID-19 lateral flow test accuracy](https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD013705.pub2/full), or [this study in Welsh care homes](https://pmc.ncbi.nlm.nih.gov/articles/PMC10446167/#:~:text=Using%20this%20data%2C%20overall%20sensitivity,%25CI%2099.89%2C%2099.93), or [this study](https://pubmed.ncbi.nlm.nih.gov/34242764/#:~:text=The%20overall%20sensitivity%20of%20the,%25%20CI%2099.5%2D100.0).
 
 It reports results as:
 
 - "Sensitivity" i.e. $P(\text{+ve test result}|\text{infected})$ as 72% for symptomatic and 58% for asymptomatic patients
-- "Specificitiy" i.e. $P(\text{-ve test result}|\text{not infected})$ as 99.6%.
+- "Specificity" i.e. $P(\text{-ve test result}|\text{not infected})$ as between 99.6% and 99.9%.
 
 Meanwhile, population COVID rates are still being reported (albeit, given the lack of systematic testing, these must be somewhat underestimated now).
 
@@ -37,10 +36,9 @@ For example for Oxfordshire, UK the [numbers in September 2023](https://www.oxfo
 * 21.8 cases per 100,000 people in under-59s
 * or 57.5 cases per 100,000 in the over-60s
 
-(To be conservative, I suggest we err on the side of caution and imagine the true rate to be substantially larger than this - say 100 in 100,000.)
+(To be conservative, you might want to err on the side of caution - so let's imagine the true rate to be substantially larger than this - say at least 100 in 100,000.)
 
 **Can you use Bayes' theorem to answer the question? **
-
 
 :::tip Note
 

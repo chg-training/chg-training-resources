@@ -1,8 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
 ---
 
-# Learn to program with gene annotations!
+# Analysing gene annotations in R or python
 
 Welcome! This tutorial has two aims. On one hand it is about programming, specifically the type of
 programming we often have to do in bioinformatics. This means handling large bits of data, making

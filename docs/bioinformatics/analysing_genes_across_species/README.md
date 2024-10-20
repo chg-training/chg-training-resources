@@ -27,4 +27,4 @@ spring to mind - for example:
 - How much of these genes actually codes for proteins - and how much is untranslated?
 - Do these patterns differ across species?  Across cell types?  How?
 
-To start, go and [get set up](./getting_setup.md).
+To start, go and [get set up](./001_getting_setup.md).

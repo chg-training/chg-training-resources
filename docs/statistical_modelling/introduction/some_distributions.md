@@ -2,21 +2,39 @@
 sidebar_position: 2
 ---
 
-# Some probability distributions
+# Some useful probability distributions
 
-In practice we often use distributions with specific mathematical forms.
+In practice in statistics we often use a set of well-known distributions.
+These have specific mathematical forms that come with parameters to make them flexibly useful.
 
-Let's look at some commonly-used ones.  Here are a few useful ones.
+Here are some of the commonly-used ones:
 
+| Name | Domain | Expression<br /><small>and R function</small> | Parameters | Explanation | 
+| ---- | ------ | ----------- | -------------------- | -----------  |
+| **Binomial** | $x\in 0, \cdots, n$ | <center>$${n \choose x}p^x(1-p)^{(n-x)}$$</center><br /><center><small>(`dbinom()` in R)</small></center> | Number of 'trials' $n$ <br />'Success probability' $p$ | How many 'successes'<br />from $n$ trials? |
+| **Normal**<br />or **Gaussian** | $x\in\text{Real numbers}$ | <center>$$\frac{1}{\sqrt{2\pi v}} e^{-\frac{1}{2}\frac{(x-\mu)^2}{v}}$$</center><br /><center><small>(`dnorm()` in R)</small></center> | Mean $\mu$<br />Variance $v$| Ubiquitously useful |
+| **Beta** | $x\in[0,1]$ | <center>$$\frac{1}{B(\alpha,\beta)} x^{\alpha-1} (1-x)^{\beta-1}$$</center><br /><center><small>(`dbeta()` in R)</small></center> | 'Shape' parameters<br />$\alpha$ and $\beta$ | E.g. allele frequency estimates | 
 
-| Distribution name  |  R function | parameters | domain                 |  Expression | Explanation |
-| -----------------  | ----------- | ----------- | ------------- | -----------  | ---------- |
-| Binomial           | `dbinom()`  | 'number of trials' $n$, and probability $p$ | Integers $0, \cdots, n$ | $${n \choose x} p^x (1-p)^{(n-x)}$$ | Number of successes in $n$ trials |
-| Normal or Gaussian | `dnorm()`  | mean $\mu$ and variance $v$ | Real numbers | $$\frac{1}{\sqrt{2\pi\cdot v}}\cdot e^{-\frac{1}{2}\frac{(x-\mu)^2}{v}}$$ | Ubiquitously useful |
-| Uniform            | e.g. `dunif()` | (none) | Any domain, e.g. $[0,1]$ | (constant probability) | Everything has the same probability! |
-| Beta            | `dbeta()`   | $\alpha$ and $\beta$  | $[0,1]$| $$\frac{1}{B(\alpha,\beta)}\cdot x^{\alpha-1} \cdot (1-x)^{\beta-1}$$ | E.g. allele frequency estimates |
+If you don't understand the maths above, **don't worry**.
+You can understand these distributions by plotting what they look like as we'll do below.
 
-This is a good time to get a sense of what these look like.
+:::tip Normalising constants
+
+Many of these mathematical expressions have complicated-looking bit at the front that doesn't depend on $x$.  For example - the normal distribution has this bit:
+$$
+\frac{1}{\sqrt{2\pi v}}
+$$
+while the beta distribution has this bit:
+$$
+\frac{1}{B(\alpha,\beta)}
+$$
+(here $B()$ is the ['beta function'](https://en.wikipedia.org/wiki/Beta_function)). 
+
+This bits can look complicated but the **don't depend on $x$**.  In fact, they are just **normalising constants**: their purpose is to ensure the distribution sums to $1$ over all the possible values of $x$.
+
+**Question**. However, the expression $n \choose x$ in front of the binomial isn't a normalising constant in the same why - why not?
+
+:::
 
 ## Binomial distribution
 
@@ -48,7 +66,7 @@ For **extra kudos**, plot this using your own function `binomial(x, n, p)` imple
 
 Pick a *mean value* $\mu$ (start somewhere between $-10$ and $10$) and a *variance* $v$ (which must be positive - for example, $2$ is a good starting choice). Then plot the density of the **normal distribution** over the continuous range $x=-20 \cdots 20$.
 
-**Note**. the normal distribution density is given by `dnorm()` in R, but you have to specify the standard deviation (i.e. the **square root of the variance**) instead of the variant
+**Note**. the normal distribution density is given by `dnorm()` in R, but you have to specify the standard deviation (i.e. the **square root of the variance**) instead of the variance:
 ```r
 dnorm( x, mean = mu, sd = sqrt(v) )
 ```
@@ -66,7 +84,7 @@ $$
 
 :::tip Challenge
 
-Pick 'shape' parameters $\alpha$ and $\beta$ (make them between 1 and 10 to start) plot the *beta distribution*:
+Pick 'shape' parameters $\alpha$ and $\beta$ (make them between 1 and 10 to start) and plot the *beta distribution*:
 
 $$
 x | \alpha,\beta \sim \frac{1}{B(\alpha,\beta)} x^{\alpha-1} (1-x)^{\beta-1}
@@ -74,7 +92,7 @@ $$
 
 over the (continuous) range $x=0 \cdots 1$.
 
-**Note.** The beta distribution is implemented as `dbeta()` in R, but you have toi use "shape1" and "shape2" instead of $\alpha$ and $\beta$:
+**Note.** The beta distribution is implemented as `dbeta()` in R, but you have to use "shape1" and "shape2" instead of $\alpha$ and $\beta$:
 ```r
 dbeta( x, shape1 = alpha, shape2 = beta )
 ```
@@ -86,6 +104,6 @@ $$
 x | \alpha, \beta \sim \frac{1}{B(\alpha,\beta)} x^{(\alpha-1)} \cdot (1-x)^{(\beta-1)}
 $$
 
-You can use the `beta()` function to compute that $B(\alpha,\beta)$ on the 
+(You can use the `beta()` function to compute the value $B(\alpha,\beta)$ on the demoninator.)
 :::
 

@@ -14,18 +14,13 @@ gene transcript, and they also have the genome sequence lengths written in the m
 starting, download some of these files now. 
 
 We will focus on protein-coding genes, and their transcripts, exons and coding sequence. They have type `gene`, `mRNA`,
-`exon` and `CDS` in the files Ensembl respectively. They come in a basic hierarchy:
+`exon` and `CDS` in the files Ensembl respectively.  By now you should be familiar with the basic hierarchy:
 
-- Each gene can have multiple transcripts (i.e. multiple expressed forms at mRNA level - e.g. they
-  might differ in how exons are spliced together, or have different transcription start or end
-  sites).
+- Each gene can have multiple transcripts - they might differ in how exons are spliced together, or have different transcription start or end sites.
   
-- Each transcript is made up of one or more exons. The introns in between are spliced out. (This
-  happens during the transcription process.)
+- Each transcript can have one or more 'exon' records indicatiing exons. The introns in between are spliced out.
 
-- Of the exon sequence that makes it into a transcript, only a portion is actually translated into
-  the mature protein during processing by the ribosomes. This is the *coding sequence* and the rest
-  is *untranslated sequence*.
+- Each transcript, if it is for a protein-coding gene, can *also* have one or more 'CDS' records. These denote the *coding sequence* and the rest is *untranslated sequence*.
 
 The files we're looking are (roughly speaking) humanities' best guess at what this picture looks like in each organism.
 
