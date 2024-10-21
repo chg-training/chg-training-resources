@@ -12,19 +12,25 @@ Hopefully you have now got a working function, `read_gff()` and got the extremel
 ++ test_read_gff(): Congratulations,all tests passed!
 ```
 
-If not here is my solution:
+In addition it will be useful for your function to *also* extract the 'gene_type' and 'gene_name' attributes, because these are useful in the gencode files.
+
+If you haven't reached this point, don't worry!  Here is my solution:
 
 :::tip Solution
 
 <Tabs groupId="solutions">
 <TabItem value="teaser" label="Solution">
-Please try to code it yourself first of course!  See the tabs for solutions.
+
+Please feel free to use your solution, if it's working.  If not, see the tabs for my solutions.
+
 </TabItem>
 
-<TabItem value="R" label="R solution">
+<TabItem value="R" label="R solution, simpler version">
 
 ```r
-read_gff = function( filename ) {
+read_gff = function(
+	filename
+) {
     result = readr::read_tsv(
         filename,
         comment = '#',
@@ -44,16 +50,13 @@ read_gff = function( filename ) {
     )
 	result[['ID']] = stringr::str_extract( result[['attributes']], 'ID=([^;]+)', group = TRUE )
 	result[['Parent']] = stringr::str_extract( result[['attributes']], 'Parent=([^;]+)', group = TRUE )
+	result[['gene_type']] = stringr::str_extract( result[['attributes']], 'gene_type=([^;]+)', group = TRUE )
+	result[['gene_name']] = stringr::str_extract( result[['attributes']], 'gene_name=([^;]+)', group = TRUE )
 	return( result )
-}
-
-test_read_gff()
 ```
-
-**Note.** Those `readr::` and `stringr::` bits are optional - you could just do `library( tidyverse )` at the top.
-
 </TabItem>
-<TabItem value="python" label="python solution">
+
+<TabItem value="python" label="python solution, simpler version">
 
 ```python
 def read_gff( file ):
@@ -75,25 +78,95 @@ def read_gff( file ):
 			'attributes': str
 		}
 	)
+	result['ID'] = result.attributes.str.extract( 'ID=([^;]+)' )
+	result['Parent'] = result.attributes.str.extract( 'Parent=([^;]+)
+	result['gene_type'] = result.attributes.str.extract( 'gene_type=([^;]+)' )
+	result['gene_name'] = result.attributes.str.extract( 'gene_name=([^;]+)
+	return result
+```
+</TabItem>
+
+<TabItem value="R2" label="R solution, post-challenge version">
+
+```r
+read_gff = function(
+	filename
+) {
+    result = readr::read_tsv(
+        filename,
+        comment = '#',
+        na = ".",
+        col_names = c( 'seqid', 'source', 'type', 'start', 'end', 'score', 'strand', 'phase', 'attributes' ),
+        col_types = readr::cols(
+            readr::col_character(),
+            readr::col_character(),
+            readr::col_character(),
+            readr::col_integer(),
+            readr::col_double(),
+            readr::col_double(),
+            readr::col_character(),
+            readr::col_integer(),
+            readr::col_character()
+        )
+    )
+
+	# Put ID and Parent at the start.
+	result = tibble::add_column(result, ID = NA, .before = 1)
+    result = tibble::add_column(result, Parent = NA, .before = 2)
+
+	# Now extract all the attributes
+	for( attribute in c( "ID", "Parent", extra_attributes )) {
+		# Create the appropriate regex using `sprintf()`
+		regex = sprintf("%s=([^;]+)[;|$]", attribute)
+		# Extract the attribute...
+		result[[attribute]] = stringr::str_extract(result[["attributes"]], regex, group = TRUE)
+		# ...and remove it from the attributes column.
+		result[["attributes"]] = stringr::str_remove(result[["attributes"]], regex)
+	}
+	return( result )
+}
+```
+
+</TabItem>
+<TabItem value="python2" label="python solution, post-challenge version">
+
+```python
+def read_gff( file, extra_attributes = [] ):
+	import pandas
+	result = pandas.read_table(
+		file,
+		comment = '#',
+		names = [ 'seqid', 'source', 'type', 'start', 'end', 'score', 'strand', 'phase', 'attributes' ],
+		na_values = '.',
+		dtype = {
+			'seqid': str,
+			'source': str,
+			'type': str,
+			'start': int,
+			'end': int,
+			'score': float,
+			'strand': str,
+			'phase': str,
+			'attributes': str
+		}
+	)
 	result.insert( loc = 0, column = 'ID', value = None )
 	result.insert( loc = 1, column = 'Parent', value = None )
-	result['ID'] = result.attributes.str.extract( 'ID=([^;]+)' )
-	result['Parent'] = result.attributes.str.extract( 'Parent=([^;]+)' )
+	for attribute in [ 'ID', 'Parent' ] + extra_attributes:
+		regexp = '%s=([^;]+)[;|$]' % attribute
+		result[attribute] = result.attributes.str.extract( regexp )
+		result["attributes"] = result["attributes"].str.replace( regexp, "" )
 	return result
-
 ```
 
 </TabItem>
 </Tabs>
 
-```
-test_read_gff()
-```
 :::
 
 ## Trying some real data
 
-You ought to be able to load some real data now.  Does it work on the full gencode file? 
+Let's use this to do some work on some real data now.  Load up the gencode data:
 
 ```
 gencode = read_gff( "gencode.v41.annotation.gff3.gz" )

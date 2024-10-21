@@ -11,5 +11,5 @@ Welcome!  This tutorial assumes you have worked through the [Analysing gene anno
 
 Let's now turn the function into an R package (or python module.)
 
-To get started, go [here](./making_a_package.md).
+To get started, go [here](./read_gff.md).
 

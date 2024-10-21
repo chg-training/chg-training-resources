@@ -24,7 +24,7 @@ Use your own code, if it works, or see the tabs for my version.
 <TabItem value="R" label="R solution">
 
 ```
-read_gff = function( filename ) {
+read_gff = function( filename, extra_attributes = c() ) {
     result = readr::read_tsv(
         filename,
         comment = '#',

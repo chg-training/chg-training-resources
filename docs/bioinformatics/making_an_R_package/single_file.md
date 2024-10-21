@@ -55,5 +55,5 @@ Cool!
 
 For python this is it!
 
-However, if you're working in R, this isn't a fully-fledged package yet.  For that, go here:
+However, if you're working in R, this isn't a fully-fledged package yet.  For that, go [here](./fully_fledged.md).
 

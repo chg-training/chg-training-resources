@@ -339,4 +339,5 @@ Congratulations!
 
 :::
 
-If you get stuck - go on to the [next page](004_testing_it_out.md).
+Note - if you get stuck - don't worry, solutions will be provided!  Just go on to the [testing it out](005_testing_it_out.md) page.
+On the other hand, if you have got this far we have some [additional challenges](./004b_more_attributes.md).
