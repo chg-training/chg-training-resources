@@ -155,7 +155,7 @@ region?)
 
 This picture is for *alternate* alleles (versus reference alleles).  A better plot would show the frequencies of
  **derived** alleles (i.e. those that have arisen trhough mutation compared to the common ancestor).  To do that, we
- would need an ancestral allele, which we don't have right now.  So instead let's plot hte **folder site frequency spectrum**:
+ would need an ancestral allele, which we don't have right now.  So instead let's plot hte **folded site frequency spectrum**:
 
 
 ```r

@@ -1,10 +1,10 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
-# Introduction to statistics for genomics
+# From basics to Bayes
 
-**Warning. These pages are still under construction.**
+**Warning. These pages are perennially under construction.**
 
 This session has four parts:
 
@@ -14,6 +14,7 @@ This session has four parts:
 4. [Summarising uncertainty](./summarising_distributions.md).
 5. [How to measure uncertainty - using *probability distributions*](./some_distributions.md).
 6. [The most important formula in science!](./bayes.md).
-7. Example; [how to interpreting a COVID-19 lateral flow test](./covid.md).
-8. Example [estimating an allele frequency](./allele_frequencies.md).
+7. Example: [how to interpreting a COVID-19 lateral flow test](./covid.md).
+8. The [bayesian update](./bayesian_update.md).
+9. Example: [estimating O blood group frequency](./allele_frequencies.md).
 

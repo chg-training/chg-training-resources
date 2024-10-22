@@ -19,7 +19,7 @@ If you haven't reached this point, don't worry!  Here is my solution:
 :::tip Solution
 
 <Tabs groupId="solutions">
-<TabItem value="teaser" label="Solution">
+<TabItem value="teaser" label="Your solution">
 
 Please feel free to use your solution, if it's working.  If not, see the tabs for my solutions.
 
@@ -90,7 +90,8 @@ def read_gff( file ):
 
 ```r
 read_gff = function(
-	filename
+	filename,
+	extra_attributes = c( "gene_type", "gene_name" )
 ) {
     result = readr::read_tsv(
         filename,
@@ -172,20 +173,44 @@ Let's use this to do some work on some real data now.  Load up the gencode data:
 gencode = read_gff( "gencode.v41.annotation.gff3.gz" )
 ```
 
-What about the file downloaded from Ensembl - called something like `Homo_sapiens.GRCh38.107.chr.gff3.gz` or similar -
-does it work? What about the [*P.falciparum* file](./002_What_gene_annotation_data_looks_like.md)?
-
 Use your R skills [from the Introduction to R tutorial](/bioinformatics/introduction_to_R/working_with_data.md) or python
 skills to view these files and explore a bit - for example pulling out all gene records, or records pertaining to
-specific genes.  (For example you could look at *FUT2*, which has `ID=ENSG00000176920.13`, or at `PF3D7_1127000` in the
-*P.falciparum* genome).
+specific genes.  (For example you could look at *FUT2*.)
+
+### The data 'verbs'
+
+Now is a good point to introduce in a bit more detail a set of *data manipulation verbs* that make working with data
+frames easy.  You've already been working with several of these - `filter`, `group by`, `summarise`, and `arrange`.
+We'll describe a couple more 'verbs' - 'join' and 'select' - below.  
+
+We'll calling them data 'verbs' because they *do* things to dataframes.  For example
+
+| Operation | Description | R/dplyr function | pandas/polars function |
+| --------- | ----------- | ---------------- | - |
+| `select` | selects (and optionally renames) **columns** | `select()` | ? |
+| `mutate` | adds columns | `mutate()` | ? |
+| `filter` | filters rows based on column values | `filter()` | ? |
+| `arrange` or sort | orders rows | `arrange()` | ? |
+| `group by` | groups rows based on column values | `group_by()` | ? |
+| `summarise` | computes summary values over the rows | `summarise()` | ? |
+| `join` | joins two dataframes together, based on shared values. | `inner_join`, `outer_join`, etc. | ? |
+
+You can build these into pipelines you can conduct complex data manipulation tasks in a highly expressive way.
+
+For example, here's a simple way to use `filter()`:
+
+```r
+filter( X, ID == `ENSG00000176920.13` )
+```
+
+If we also wanted to filter out
 
 :::tip Note
 
 <Tabs groupId="language">
 <TabItem value="R" label="In R">
 
-Here's a cool way to filter the dataframe - using a kind of 'pipe', just like the one in bash.
+For example, here's a cool way to filter the dataframe - using a kind of 'pipe', just like the one in bash.
 Instead of using `filter()` like this:
 ```
 filter( gencode, ID == `ENSG00000176920.13` )

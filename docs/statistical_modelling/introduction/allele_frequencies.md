@@ -2,6 +2,9 @@
 sidebar_position: 100
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Estimating allele frequencies
 
 Let's use [Bayes](./bayes.md) to estimate allele frequencies - quantifying our uncertainty - for a couple of important
@@ -40,32 +43,26 @@ Add 95% credible intervals for each population to the data frame, using `qbeta()
 
 ## Plotting the posterior
 
-To get `ggplot()` to plot a posterior density for the whole dataset, or for individual populations, is not conceptually
-difficult - we're just plotting the beta distribution after all.  But does require a bit of complexity in terms of code.
-In short, `ggplot()` takes a single data frame as data, so you have to build a big dataframe that represents the
-posterior density at a grid of x axis values, for each population you want to plot.
+To get `ggplot()` to plot a posterior density for the whole dataset, or for individual populations, is not conceptually difficult - we're just plotting the beta distribution after all.  But it does require a bit of complexity in terms of code. In short, `ggplot()` takes a single data frame as data, so you have to build a big dataframe that represents the posterior density at a grid of x axis values, for each population you want to plot.
 
-You could find lots of ways to do this, but here's one way that is fairly re-useable.  Let's write a function that reads
-in one row of data and generates the dataframe we need.  Rather than hard-code this for the O blood group example, we'll
-make it work with generic 'reference' and 'alternate' counts (e.g. non-O blood group, and O blood group counts) so it
-can be re-used for other examples:
+Here's one way that is fairly re-useable.  Let's write a function that reads in one row of data and generates the dataframe we need.  Rather than hard-code this for the O blood group example, we'll make it work with generic counts $n_1$ and $n_2$ (which we can set to the counts of the non-O and O blood group genotypes):
 
 ```r
-generate_posterior = function(
-	row,
-	at= seq( from = 0, to = 1, by = 0.01 )
+compute_posterior_density = function(
+	n1, n2,
+	at = seq( from = 0, to = 1, by = 0.01 ),
+	prior = c( n1 = 0, n2 = 0 )
 ) {
-	posterior_distribution = dbeta(
-		at,
-		shape1 = row$alternate_count + 1,
-		shape2 = row$reference_count + 1
-	)
 	tibble(
-		population = row$population,
-		reference_count = row$reference_count,
-		alternative_count = row$alternate_count,
+		n1 = n1,
+		n2 = n2,
 		at = at, 
-		value = posterior_distribution
+		# Compute the posterior using `dbeta()`
+		posterior = dbeta(
+			at,
+			shape1 = n2 + prior['n2'] + 1,
+			shape2 = n1 + prior['n1'] + 1
+		)
 	)
 }
 ```
@@ -74,28 +71,20 @@ For example, for the O blood group data you could apply this to the whole datase
 ```r
 data = read_tsv( "https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_o_blood_group_grouped.tsv" )
 
-overall_counts = (
-	data
-	%>% summarise(
-		population = 'all',
-		reference_count = sum( `C/C` + `-/C` ),
-		alternate_count = sum( `-/-` )
-	)
-)
-print( overall_counts )
-overall_posterior = generate_posterior(
-	overall_counts,
-	at = seq( from = 0, to = 1, by = 0.01 )
+print( data )
+
+overall_posterior = compute_posterior_density(
+	n1 = sum(data$`C/C` + data$`-/C` ),
+	n2 = sum(data$`-/-`),
+	at = seq( from = 0, to = 1, by = 0.001 )
 )
 ```
 
-If you print this, you should see a data frame with 101 rows (one for each of those `at` values) showing the posterior
-distribution.
+If you print this, you should see a data frame with 101 rows (one for each of those `at` values) showing the posterior distribution.
 
 :::tip Note
 
-Make sure you understand what that data frame is showing.  To recap, it's the *posterior distribution of the frequency of O blood
-group across all populations*, evaluated at a grid of 101 points between zero and one.
+Make sure you understand what that data frame is showing.  To recap, it's the *posterior distribution of the frequency of O blood group across all populations*, evaluated at a grid of 101 points between zero and one.
 
 The posterior is a [beta distribution](./some_distributions.md) so we used `dbeta()` to compute it.
 
@@ -104,8 +93,11 @@ The posterior is a [beta distribution](./some_distributions.md) so we used `dbet
 Want to plot it?  No problem!
 ```r
 p = (
-	ggplot( data = overall_posterior )
-	+ geom_line( aes( x = at, y = value ))
+	ggplot(
+		data = overall_posterior,
+		aes( x = at, y = posterior )
+	)
+	+ geom_line()
 )
 print(p)
 ```
@@ -113,34 +105,22 @@ print(p)
 Ok that's not good enough.  Let's zoom in:
 
 ```r
-print( p + xlim( 0.35, 0.55 ))
+print( p + xlim( 0.35, 0.55 ) )
 ```
 
 :::tip Challenge
 
 Ok that's not good enough either.  Here are some things you should do to fix it.
 
-1. Does your plot look kind of jagged-y?  That's because the posterior distribution is concentrated around a small region (almost all the mass is between about 0.4 and 0.47), but we have only evaluated on a grid of 101 points across the interval.  To fix this, *increase the number of grid points* (i.e. the `at` variable above) and replot.
+1. Does your plot look kind of jagged-y?  Why?  Go back and fix it now!
 
-2. **Always give your plots meaningful x axis and y axis labels**.  (Otherwise you'll just waste people's time making them ask what they are).  The `xlab()` and `ylab()` functions can be used for this, e.g.:
-```r
-p = (
-	ggplot( data = overall_posterior )
-	+ geom_line( aes( x = at, y = value ))
-	+ xlab( "My x axis label" )
-	+ ylab( "My y axis label" )
-)
-print(p)
-```
+2. **You ought to give your plots meaningful x axis and y axis labels**.  (Otherwise you'll just waste people's time making them ask what they are).  The `xlab()` and `ylab()` functions can be used for this - add some now.
 
-3. Let's get rid of the grey background and make the text bigger, using 'theme_minimal()`:
-```
-print( p + theme_minimal(16) )
-```
+3. Adding `+ theme_minimal()` will get rid of the grey background, for a cleanrer plot.
 
-4. Personally, I don't like that the y axis label is printed at 90 degrees to the reading direction - do you?  That can
-   be fixed too with a bit of ggplot magic, which I always have to [look up in the
-   documentation](https://ggplot2.tidyverse.org) - it looks like this:
+4. Personally, I never like the way the y axis label is printed at 90 degrees to the reading direction - do you?  That can
+   be fixed too with a bit of ggplot magic. I always have to [look this up in the
+   documentation](https://ggplot2.tidyverse.org) so here it is for reference:
 
 ```r
 print(
@@ -152,9 +132,7 @@ print(
 )
 ```
 
-**Note**. you have to do this call to `theme()` *after* `theme_minimal()`, otherwise it resets this property.
-
-**Challenge** Put all this together to make a final plot of the posterior distribution now.  It should look something like this:
+**Challenge** Put all this together to make a final plot of the posterior distribution, centred near $(0.35, 0.55)$ now.  It should look something like this:
 
 ![img](images/o_bld_group_posterior.png)
 
@@ -162,42 +140,74 @@ print(
 
 Congratulations!  
 
-
 ## Plotting multiple populations
 
-Plotting multiple populations ought to be easy now - we just somehow need to call `generate_posterior()` for each row of
-our data, instead of for the whole set.  One way to do that is simple to loop over the rows and accumulate the results:
-```
+Well, but who cares about the average O blood gorup frequency globally? Much more interesting, let's plot the posterior in each population. This should be easy - we just somehow need to call `compute_posterior_density()` for each row of our data, instead of for the whole set.  Here's how:
+
+<Tabs groupId="style">
+<TabItem value="loop" label="Using a loop">
+
+A boring way to do this is write a loop that runs through the rows and accumulates the results.
+There's some code below that does it.
+
+But if you've followed any of our earlier tutorials you'll know there's often a simpler, more expressive way to do this things - and there is!  See the 2nd tab for a better version.
+
+```r
 per_population_posterior = tibble()
 for( i in 1:nrow( data )) {
-	# summarise one row, as before
-	population_data = (
-		X[i,]	
-		%>%
-		summarise(
-			population = population,
-			reference_count = sum( `C/C` + `-/C` ),
-			alternate_count = sum( `-/-` )
+	# summarise just one row
+	row = (
+		data[i,]
+		%>% mutate(
+			n1 = ( `C/C` + `-/C` ),
+			n2 = ( `-/-` )
 		)
 	)
 	per_population_posterior = bind_rows(
 		per_population_posterior,
-		generate_posterior( population_data )
+		cbind(
+			population = row$population,
+			compute_posterior_density( row$n1, row$n2 )
+		)
 	)
 }
 ```
+</TabItem>
+<TabItem value="dplyr" label="Using reframe()">
 
-If you look at `per_population_data` you should see it has thousands of rows (or tens of thousands if you increased the
-number of `at` values), the same number of rows per population.  You could count them like this:
+Luckily `dplyr()` has a function that works for this case - [`reframe()`](https://dplyr.tidyverse.org/reference/reframe.html).
+`reframe()` is a lot like `summarise()` but allows us to output a whole dataframe per input row.  
+
+We'll use it with [`pick()`](https://dplyr.tidyverse.org/reference/pick.html) which lets us pass in just the two variables we need.
+
+So like this:
+
+```r
+per_population_posterior = (
+	data
+	%>%	mutate(
+		n1 = ( `C/C` + `-/C` ),
+		n2 = ( `-/-` )
+	)
+	%>% group_by( population )
+	%>% reframe( compute_posterior_density( n1, n2 ))
+)
 ```
+
+</TabItem>
+</Tabs>
+
+If you look at `per_population_data` you should see it now has thousands of rows (or tens of thousands if you increased the number of `at` values), with the same number of rows per population.  You could count them like this:
+
+```r
 per_population_posterior %>% group_by( population ) %>% summarise( number_of_rows = n() )
 ```
 
 Getting ggplot to plot this is now easy - we use a **facet**:
-```
+```r
 p = (
 	ggplot( data = per_population_posterior )
-	+ geom_line( aes( x = at, y = value ))
+	+ geom_line( aes( x = at, y = posterior ))
 	+ facet_grid( population ~ . )
 )
 print(p)
@@ -207,13 +217,11 @@ print(p)
 
 Cool!
 
-:::tip Note
+:::tip Note on facet_grid()
 
-That `facet_grid()` call works like this.  You give it two variables to facet over rows and columns of the result, and write `variable1 ~ variable2`.
-In our case, we just want to facet over one variable rows, so we do `population ~ .`.  
+That `facet_grid()` call works like this.  You give it two variables to facet over, written like `variable1 ~ variable2`.  These variables are mapped to rows and columns of the resulting plot. (In our case, we just want to facet over one variable rows, so we do `population ~ .`).
 
-`ggplot()` then does all the work of splitting up the data up into each of the facets and arranges the plot into rows and columns.
-It's a very powerful feature for quickly exploring datasets.
+`ggplot()` then does all the work of splitting up the data up into each of the facets and arranges the plot into rows and columns. It's a very powerful feature for quickly exploring datasets.
 
 :::
 
@@ -229,7 +237,7 @@ All this can be fixed with suitable calls to ggplot - see the comments below:
 ```r
 p = (
 	ggplot( data = per_population_posterior )
-	+ geom_line( aes( x = at, y = value ))
+	+ geom_line( aes( x = at, y = posterior ))
 	+ facet_grid(
 		population ~ .,
 		# Make y axis facets have their own scales, learnt from the data
@@ -253,6 +261,7 @@ print(p)
 
 ![img](images/o_bld_group_posterior_by_population2.png)
 
+
 ## Ordering populations
 
 That's all very well, currently the populations are sorted in alphabetical order.  Wouldn't it be nicer to order the
@@ -264,7 +273,7 @@ You specify the order of the levels, and voila, the data is ordered.
 
 Let's do that now.  First let's compute the frequency in the original data:
 
-```
+```r
 data$O_bld_grp_frequency = data[['-/-']] / ( data[['C/C']] + data[['-/C']] + data[['-/-']])
 ```
 
@@ -297,3 +306,7 @@ In which populations is O blood group at lowest frequency?  In which populations
 
 :::
 
+## Bayesian shrinkage
+
+So far we have been ignoring the prior - the prior was effectively a flat distribution.
+But let's imagine now we had some prior data in each population 
