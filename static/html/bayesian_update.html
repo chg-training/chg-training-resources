@@ -23,29 +23,90 @@
 		}
 
 		#prior_w, #prior_l {
-			width: 40px ;
+			width: 80px ;
 		}
 
 		nav {
 			background: #EDEDED ;
 			padding: 5px ;
+			font-size: 14pt ;
+			font-family: "gill sans", "helvetica neue", helvetica, arial, sans-serif ;
+		}
+		nav > h1 {
+			width: 100% ;
+			font-size: 24pt ;
+			font-family: "Gill Sans" ;
+			text-align: center ;
+		}
+		nav input {
+			font-family: "Courier", "monospace" ;
+			font-size: 16pt ;
+		}
+		/* de-emphasise the priors at first */
+		#prior_l, #prior_w {
+			font-size: 12pt ;
+		}
+		nav > div {
+			margin: 4px ;
+			padding: 4px ;
+		}
+		h1 {
+			font-size: 16pt ;
+			margin-top: 5px ;
+			margin-bottom: 5px ;
+			border-bottom: 1px solid black ;
 		}
 		section {
 			margin-top: 5px ;
+		}
+		text {
+			font-size: 12pt ;
+			font-family:  "gill sans", "helvetica neue", helvetica, arial, sans-serif ;
+		}
+		svg {
+			margin-left: auto ;
+			margin-right: auto ;
+		}
+		section {
+			position: relative ;
+		}
+		#mean_display, #mode_display {
+			position: absolute ;
+			font-family:  "gill sans", "helvetica neue", helvetica, arial, sans-serif ;
+			font-size: 24pt ;
+			left: 620px ;
+			top: 150px ;
+		}
+		#mode_display {
+			font-size: 16pt ;
+			top: 190px ;
 		}
 	</style>
 </head>
 <body>
 	<nav id="controls">
-		<label>Data (a sequence of Ws and Ls):</label><input id="sequence" type="text" value = ""></input>
-		<label>Prior W:</label><input id="prior_w" type="number" value = "0" step="0.25" min = "0" max="20"></input>
-		<label>Prior L:</label><input id="prior_l" type="number" value = "0" step="0.25" min = "0" max="20"></input>
-		<label>Likelihood (sequence):</label><input id="likelihood_s" type="radio" name="what" value="likelihood_s"></input>
-		<label>Likelihood (counts):</label><input id="likelihood_c" type="radio" name="what" value="likelihood_c"></input>
-		<label>Posterior:</label><input id="posterior" type="radio" name="what" checked value="posterior"></input>
+		<h1>Bayesian update-o-meter™</h1>
+		<div>
+		<label><b>Data</b> (a sequence of A and B alleles):</label><input id="sequence" type="text" value = "" width = 100% ></input>
+		<label>Reset data?</label><button id="reset_data"></button>
+		</div>
+		<div>
+			<label><b>Prior</b> A:</label><input id="prior_l" type="number" value = "0" step="0.25" min = "0" max="20"></input>
+			<label><b>Prior</b> B:</label><input id="prior_w" type="number" value = "0" step="0.25" min = "0" max="20"></input>
+			<label>Reset prior?</label><button id="reset_prior"></button>
+		</div>
+		<div>
+			<span><b>Display:</b></span>
+			<label>Likelihood (sequence):</label><input id="likelihood_s" type="radio" name="what" value="likelihood_s"></input>
+			<label>Likelihood (counts):</label><input id="likelihood_c" type="radio" name="what" value="likelihood_c"></input>
+			<label>Posterior:</label><input id="posterior" type="radio" name="what" checked value="posterior"></input>
+		</div>
 	</nav>
 	<section>
-		<svg id="canvas"></svg>
+		<svg id="canvas">
+		</svg>
+		<span id="mean_display">mean = (no estimate)</span>
+		<span id="mode_display">mode = (no estimate)</span>
 	</section>
 </body>
 <script>
@@ -159,19 +220,20 @@ function betaFunc(x,y) {
 	let path = svg.append( 'path' )
 		.attr( 'class', 'main' )
 		.attr( 'fill', 'none' )
+		.attr( 'stroke-width', '2' )
 		.attr( 'stroke', 'black' ) ;
 
 	let oldpath = svg.append( 'path' )
 		.attr( 'class', 'old' )
 		.attr( 'fill', 'none' )
 		.attr( 'stroke', 'black' )
+		.attr( 'stroke-width', '2' )
 		.attr( 'stroke-dasharray', '4' ) ;
 
 	let updateDisplay = function(
 		counts,
 		what
 	) {
-		console.log( "COUNTS", counts ) ;
 		let max_y = 2 ;
 		if( counts.a == 0 && counts.b > 0 ) {
 			max_y = what( 0.001, counts.a, counts.b ) ;
@@ -180,7 +242,6 @@ function betaFunc(x,y) {
 		} else if( counts.a > 0 && counts.b > 0 ) {
 			max_y = what( counts.a / (counts.a+counts.b), counts.a, counts.b ) ;
 		}
-		console.log( "MAX_Y", max_y ) ;
 		scales.y.domain( [0, max_y ]) ;
 		let lf = d3.line()
 			.x( x => scales.x(x) )
@@ -212,20 +273,19 @@ function betaFunc(x,y) {
 		} ;
 
 		let sequence = document.getElementById( 'sequence' ).value.toUpperCase() ;
-		let a = (sequence.match(/W/g )||[]).length ;
-		let b = (sequence.match(/L/g )||[]).length ;
+		let a = (sequence.match(/B/g )||[]).length ;
+		let b = (sequence.match(/A/g )||[]).length ;
 		let a2 = a ;
 		let b2 = b ;
 		if( sequence.length > 0 ) {
-			if( sequence[sequence.length-1] == 'W') {
+			if( sequence[sequence.length-1] == 'B') {
 				--a2 ;
-			} else if( sequence[sequence.length-1] == 'L') {
+			} else if( sequence[sequence.length-1] == 'A') {
 				--b2 ;
 			}
 		}
 
 		let what = document.querySelector('input[type="radio"]:checked').value ;
-		console.log( "WHAT", what ) ;
 		let value = posterior ;
 		if( what == "posterior" ) {
 			value = posterior ;
@@ -242,6 +302,22 @@ function betaFunc(x,y) {
 			},
 			value
 		) ;
+		document.querySelector( '#mean_display' ).innerHTML = (
+			(a+prior.a+b+prior.b) == 0 ? "(no estimate)" : (
+				"mean estimate = " + (
+					((a+prior.a) / (a+prior.a+b+prior.b))
+					.toLocaleString('en-EN',{minimumFractionDigits:3, maximumFractionDigits:3})
+				)
+			)
+		) ;
+		document.querySelector( '#mode_display' ).innerHTML = (
+			((a+prior.a) < 1 || (b+prior.b) < 1) ? "" : (
+				"mode estimate = " + (
+					((a+prior.a-1) / (a+prior.a+b+prior.b-2))
+					.toLocaleString('en-EN',{minimumFractionDigits:3, maximumFractionDigits:3})
+				)
+			)
+		) ;
 	} ;
 	
 	update() ;
@@ -251,5 +327,16 @@ function betaFunc(x,y) {
 	input.addEventListener( 'input', update ) ;
 	input.addEventListener( 'paste', update ) ;
 	input.addEventListener( 'keyup', update ) ;
+	let reset_data = document.querySelector( '#reset_data' ) ;
+	reset_data.addEventListener( 'click', function() {
+		document.getElementById( 'sequence' ).value = "" ;
+		update() ;
+	}) ;
+	let reset_prior = document.querySelector( '#reset_prior' ) ;
+	reset_prior.addEventListener( 'click', function() {
+		document.getElementById( 'prior_w' ).value = 0 ;
+		document.getElementById( 'prior_l' ).value = 0 ;
+		update() ;
+	}) ;
 </script>
 </html>

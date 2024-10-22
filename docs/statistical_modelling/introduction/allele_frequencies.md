@@ -232,37 +232,50 @@ As usual, this initial plot isn't quite good enough to start with.  We should do
 3. A more subtle bug is that the posteriors all have slightly different heights (depending on how spread-out the
    distribution is).  But at the moment they all have the same scale.
 
-All this can be fixed with suitable calls to ggplot - see the comments below:
+All this can be fixed with suitable calls to ggplot.  Let's put this in a function for easy re-use - see the comments in the function for more info:
 
 ```r
-p = (
-	ggplot( data = per_population_posterior )
-	+ geom_line( aes( x = at, y = posterior ))
-	+ facet_grid(
-		population ~ .,
-		# Make y axis facets have their own scales, learnt from the data
-		scales = "free_y"
-	)
-	+ theme_minimal(16)
-	+ xlab( "O blood group frequency" )
-	+ ylab( "Posterior density" )
-	+ theme(
-		# remove Y axis tick labels
-		axis.text.y = element_blank(),
-		# rotate facet labels on right of plot
-		strip.text.y.right = element_text(angle = 0, hjust = 0),
-		# rotate overall y axis label 90
-		axis.title.y = element_text(angle = 0, vjust = 0.5)
-	)
+plot_posterior <- function( per_population_posterior ) {
+	result = (
+		ggplot(
+			data = per_population_posterior,
+			aes( x = at, y = posterior )
+		)
+		+ geom_line()
+		+ facet_grid(
+			population ~ .,
+			# Make y axis facets have their own scales, learnt from the data
+			scales = "free_y"
+		)
+		+ theme_minimal(16)
+		+ xlab( "O blood group frequency" )
+		+ ylab( "Posterior density" )
+		+ theme(
+			# remove Y axis tick labels
+			axis.text.y = element_blank(),
+			# rotate facet labels on right of plot
+			strip.text.y.right = element_text(angle = 0, hjust = 0),
+			# rotate overall y axis label 90
+			axis.title.y = element_text(angle = 0, vjust = 0.5)
+		)
 
-)
-print(p)
+	)
+	return( result )
+}
+
+plot_posterior( per_population_posterior )
 ```
 
 ![img](images/o_bld_group_posterior_by_population2.png)
 
+:::tip Question
 
-## Ordering populations
+What's going on with those populations with very spread-out distributions?
+
+:::
+
+
+## Ordering populations
 
 That's all very well, currently the populations are sorted in alphabetical order.  Wouldn't it be nicer to order the
 populations by allele frequency? 
@@ -286,14 +299,11 @@ ordered_populations = (
 )$population
 ```
 
-Finally, we'll convert the `population` column of `per_population_posterior` to a factor with these levels:
+Finally, we'll convert the `population` column of `per_population_posterior` (and the original data) to a factor with these levels:
 
 ```r
-
-per_population_posterior$population = factor(
-	per_population_posterior$population,
-	levels = ordered_populations 
-)
+data$population = factor( data$population, levels = ordered_populations )
+per_population_posterior$population = factor( per_population_posterior$population, levels = ordered_populations )
 ```
 
 That's it!  (If you try `str(data)` you'll see that the `population` column is now a factor.)
@@ -309,4 +319,37 @@ In which populations is O blood group at lowest frequency?  In which populations
 ## Bayesian shrinkage
 
 So far we have been ignoring the prior - the prior was effectively a flat distribution.
-But let's imagine now we had some prior data in each population 
+But let's imagine now we had some prior data in each population.  Say, 20 observations of each allele.
+
+```r
+
+prior.data = c( n1 = 0, n2 = 0 )
+per_population_posterior = (
+	data
+	%>%	mutate(
+		n1 = ( `C/C` + `-/C` ),
+		n2 = ( `-/-` )
+	)
+	%>% group_by( population )
+	%>% reframe( compute_posterior_density( n1, n2, prior = prior.data ))
+)
+plot_posterior( per_population_posterior )
+```
+
+:::tip Question
+Compare this to your earlier plot.
+
+What has happened to the posteriors?  Are they more or less spread out than before?
+
+Which populations were affected the most by this?
+:::
+
+What you are witnessing here is **bayesian shrinkage**.  The strong prior information has helped make all the estimates more similar, even though the data differs in each population.
+
+Compare the prior data to the sample sizes in each population.
+
+:::tip Question
+
+What is happening to the Spanish population?  Is the estimate with or without a prior more sensible?
+
+:::
