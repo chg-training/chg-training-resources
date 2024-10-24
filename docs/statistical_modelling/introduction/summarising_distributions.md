@@ -46,9 +46,9 @@ Why 'squared distance' instead of something else, like 'absolute distance' here?
 
 We won't make much use of entropy in this course, but here is an explainer in case you are interested.
 
-:::tip Entropy is average information content
+One way to think of the entropy is like this.  Imagine we draw a value $X=x$ from the distribution.  Suppose we measure
+how 'surprising' this value is as the negative logarithm of its probability:
 
-One way to think of the entropy is like this.  Imagine we draw a value $X=x$ from the distribution.  Suppose we measure how 'surprising' this value is as the negative logarithm of its probability:
 $$
 \text{surprisingness}(x) = -\log P(X=x)
 $$
@@ -57,22 +57,20 @@ $$
 H(X) = \sum_x P(X=x)\cdot\text{surprisingness}(x)
 $$
 
-Why is this a sensible definition of "surprisingness"?  Well, note that:
+Why is this a sensible definition of "surprisingness"?  Well, here is a graph of $p \mapsto -\log(p)$:
+![img](images/minus_log_p.png)
 
-* If $x$ is a very *likely* value (i.e. $P(X=x)$ is close to $1$) it will have a surprisingness close to zero.  
-* If $x$ is a value that is very *unlikely* (i.e. $P(X=x)$ is close to $0$) it will have a surprisingness close to infinity.
+Note that:
+* When $p$ is large (close to $1$), then $-\log(p)$ is close to zero. This matches the fact that observing a value that is very likely, is **not very surprising**.
 
-I've called this 'surprisingness' above, but another way to think of that is 'how much information does a value provide'?  If the value is surprising, it conveys a lot of new information (we should update our beliefs about $X$!) while if it was unsurprising it won't 
+* On the other hand when $p$ is small (close to $0$), then $-\log(p)$ gets very large - in fact it goes to $+\infty$ at $0$. 
+This matches the fact that observing a value that is very *un*likely, is **very surprising**.  (Infinitely surprising if actually had zero probability.)
 
-:::
+Although I've called this 'surprisingness' above, another way to think of it is 'average information provided by an observation'  If the distribution is already very concentrated on one of a few values - i.e. entropy is low - we don't learn much about $X$ by observing it.  On the other hand if the distribution is very spread-out - i.e. entropy is high -  we learn a lot about $X$ by observing it.
 
-Information and uncertainty are two sides of the same coin.
+The entropy, which is the average of $-\log(p)$, can therefore be thought of as the average surprisingness of an observation or the average amount of information added by an observation.
 
-If a distribution has high levels of uncertainty (i.e. it has high entropy) - then observing some values could tell you a lot of new information.
-
-On the other hand, if a distribution has low levels of uncertainty (low entropy) then it will already be concentrated on one or a few highly probable values.  Observing one of values doesn't provide much new information.  
-
-So the **amount of uncertainty in a distribution** is equivalent to **the amount of information an observation gives**, on average (i.e. the entropy).
+**Information and uncertainty are two sides of the same coin.**
 
 :::tip Example
 
@@ -82,7 +80,7 @@ $$
 H(X)= -1 \times 0 = 0
 $$
 
-So entropy = 0 corresponds to the situation of complete certainty in the value.
+So entropy = 0 corresponds to the situation of 'no uncertainty'.
 
 to the case where all the values $2,\cdots,12$ have the same probability $\tfrac{1}{11}$, so that we are, so to speak, 'completely uncertain' about the value of $X$.  Then the entropy is
 
