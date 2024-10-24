@@ -13,4 +13,4 @@ After all
 - "making inferences" is the same thing as reasoning.
 - "having incomplete information" is the same thing as being uncertain.
 
-In the next sections we will investigate how 'uncertainty' is handled and quantified in statistics.
+In the next sections we will investigate how this uncertainty is handled and quantified in statistics.
