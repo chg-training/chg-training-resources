@@ -49,19 +49,19 @@ Here's one way that is fairly re-useable.  Let's write a function that reads in 
 
 ```r
 compute_posterior_density = function(
-	n1, n2,
+	nA, nB,
 	at = seq( from = 0, to = 1, by = 0.01 ),
-	prior = c( n1 = 0, n2 = 0 )
+	prior = c( nA = 0, nB = 0 )
 ) {
 	tibble(
-		n1 = n1,
-		n2 = n2,
+		nA = nA,
+		nB = nB,
 		at = at, 
 		# Compute the posterior using `dbeta()`
 		posterior = dbeta(
 			at,
-			shape1 = n2 + prior['n2'] + 1,
-			shape2 = n1 + prior['n1'] + 1
+			shape1 = nB + prior['nB'] + 1,
+			shape2 = nA + prior['nA'] + 1
 		)
 	)
 }
@@ -69,13 +69,15 @@ compute_posterior_density = function(
 
 For example, for the O blood group data you could apply this to the whole dataset like this:
 ```r
-data = read_tsv( "https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_o_blood_group_grouped.tsv" )
+data = readr::read_tsv(
+	"https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_o_blood_group_grouped.tsv"
+)
 
 print( data )
 
 overall_posterior = compute_posterior_density(
-	n1 = sum(data$`C/C` + data$`-/C` ),
-	n2 = sum(data$`-/-`),
+	nA = sum(data$`C/C` + data$`-/C` ),
+	nB = sum(data$`-/-`),
 	at = seq( from = 0, to = 1, by = 0.001 )
 )
 ```
@@ -144,13 +146,16 @@ Congratulations!
 
 Well, but who cares about the average O blood gorup frequency globally? Much more interesting, let's plot the posterior in each population. This should be easy - we just somehow need to call `compute_posterior_density()` for each row of our data, instead of for the whole set.  Here's how:
 
+:::tip Computing posteriors per population
+
 <Tabs groupId="style">
 <TabItem value="loop" label="Using a loop">
 
 A boring way to do this is write a loop that runs through the rows and accumulates the results.
 There's some code below that does it.
 
-But if you've followed any of our earlier tutorials you'll know there's often a simpler, more expressive way to do this things - and there is!  See the 2nd tab for a better version.
+**But** if you've followed any of our earlier tutorials you'll know there's often a simpler, more expressive way to do
+ things in [dplyr](https://dplyr.tidyverse.org) - and there is here too.  See the second tab for a much slicker version.
 
 ```r
 per_population_posterior = tibble()
@@ -159,24 +164,27 @@ for( i in 1:nrow( data )) {
 	row = (
 		data[i,]
 		%>% mutate(
-			n1 = ( `C/C` + `-/C` ),
-			n2 = ( `-/-` )
+			nA = ( `C/C` + `-/C` ),
+			nB = ( `-/-` )
 		)
 	)
 	per_population_posterior = bind_rows(
 		per_population_posterior,
 		cbind(
 			population = row$population,
-			compute_posterior_density( row$n1, row$n2 )
+			compute_posterior_density( row$nA, row$nB )
 		)
 	)
 }
 ```
+
+
 </TabItem>
 <TabItem value="dplyr" label="Using reframe()">
 
 Luckily `dplyr()` has a function that works for this case - [`reframe()`](https://dplyr.tidyverse.org/reference/reframe.html).
-`reframe()` is a lot like `summarise()` but allows us to output a whole dataframe per input row.  
+
+`reframe()` works a lot like `summarise()` but allows us to output a whole dataframe per input row.  
 
 We'll use it with [`pick()`](https://dplyr.tidyverse.org/reference/pick.html) which lets us pass in just the two variables we need.
 
@@ -186,16 +194,18 @@ So like this:
 per_population_posterior = (
 	data
 	%>%	mutate(
-		n1 = ( `C/C` + `-/C` ),
-		n2 = ( `-/-` )
+		nA = ( `C/C` + `-/C` ),
+		nB = ( `-/-` )
 	)
 	%>% group_by( population )
-	%>% reframe( compute_posterior_density( n1, n2 ))
+	%>% reframe( compute_posterior_density( nA, nB ))
 )
 ```
 
 </TabItem>
 </Tabs>
+
+:::
 
 If you look at `per_population_data` you should see it now has thousands of rows (or tens of thousands if you increased the number of `at` values), with the same number of rows per population.  You could count them like this:
 
@@ -270,7 +280,7 @@ plot_posterior( per_population_posterior )
 
 :::tip Question
 
-What's going on with those populations with very spread-out distributions?
+What's going on with those populations, like the Spanish or the English, with very spread-out distributions?
 
 :::
 
@@ -323,15 +333,15 @@ But let's imagine now we had some prior data in each population.  Say, 20 observ
 
 ```r
 
-prior.data = c( n1 = 0, n2 = 0 )
+prior.data = c( nA = 0, nB = 0 )
 per_population_posterior = (
 	data
 	%>%	mutate(
-		n1 = ( `C/C` + `-/C` ),
-		n2 = ( `-/-` )
+		nA = ( `C/C` + `-/C` ),
+		nB = ( `-/-` )
 	)
 	%>% group_by( population )
-	%>% reframe( compute_posterior_density( n1, n2, prior = prior.data ))
+	%>% reframe( compute_posterior_density( nA, nB, prior = prior.data ))
 )
 plot_posterior( per_population_posterior )
 ```
