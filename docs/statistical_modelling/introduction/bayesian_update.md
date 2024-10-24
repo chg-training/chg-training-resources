@@ -13,7 +13,9 @@ population and want to use Bayes to estimate the allele frequency.
 
 :::
 
-How does Bayes theorem learn about data?  To find out, type your observed alleles (a list of A's and B's) into the **Bayesian update-o-meter™** below:
+## How does Bayes theorem learn?
+
+How does Bayes theorem update what we should believe?  To find out, type your observed alleles (a list of A's and B's) into the **Bayesian update-o-meter™** below:
 
 <iframe src="/chg-training-resources/html/bayesian_update.html" width="1000px" height="600px"> 
 </iframe>

@@ -45,11 +45,11 @@ Here are a few things to note:
 
 2. Like all [distributions](./distributions.md), the posterior distribution is supposed to sum to $1$ over possible values of $Z$.
 
-3. The denominator is *just the value needed* there to make the posterior sum to  $1$ over all possible values of $Z$.
+3. The denominator is *just the value needed* there to make the posterior sum to $1$ over all possible values of $Z$.
 
 The denominator therefore plays the same role as 'normalising constants' for [other distributions](./some_distributions.md).
 
-## Computing the denominator
+## Computing the denominator
 
 So how do we compute the normalising constant?  Here are a few things to note.
 
