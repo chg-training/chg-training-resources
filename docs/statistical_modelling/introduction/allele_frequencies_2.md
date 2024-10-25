@@ -113,7 +113,7 @@ Do the 95% intervals all overlap?
 
 :::tip Comparing a prior
 
-As a final task, compare the bayesian shinkage and non-shrinkage estimates by plotting different values side-by side.
+Compare the bayesian shinkage and non-shrinkage estimates by plotting different values side-by side.
 Here is an easy way to do this:
 
 1. Update the above code to add an extra column called `prior` to the `posterior_summary` data frame. The above had no prior data, so give it the value 'none'.
