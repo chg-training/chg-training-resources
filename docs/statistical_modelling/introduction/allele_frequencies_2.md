@@ -111,7 +111,7 @@ Do the 95% intervals all overlap?
 
 :::
 
-:::tip Comparing a prior
+:::tip Comparing the inference
 
 Compare the bayesian shinkage and non-shrinkage estimates by plotting different values side-by side.
 Here is an easy way to do this:
@@ -126,6 +126,34 @@ Here is an easy way to do this:
 + facet_grid( . ~ prior )
 ```
 into the ggplot command to put the two plots side by side.
+
+:::
+
+# Investigating a sickle modifier
+
+:::tip Challenge
+
+(**rs61028892** is a single nucleotide polymorphism which has been associated with [control of fetal
+haemoglobin](https://www.medrxiv.org/content/10.1101/2023.05.16.23289851v1.full) in individuals with sickle cell
+disease.)  Can you repeat this fores tplot for the variant?  
+
+You can find the [rs61028892 data
+here](https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_rs61028892_grouped.tsv).
+
+**Note.** Unlike the O blood group example, for this SNP it probably makes sense to compute the allele frequency directly using
+the counts from the homozygote and heterozygote individuals, something like this:
+
+```r
+(
+	data
+	%>% mutate(
+		nA = 2 * rs61028892_0 + rs61028892_1,
+		nB = 2 * rs61028892_2 + rs61028892_1 + 
+	)
+)
+```
+
+See if you can make a forest plot of this variant across populations.
 
 :::
 

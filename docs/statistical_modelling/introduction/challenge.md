@@ -2,30 +2,103 @@
 sidebar_position: 102
 ---
 
-# Investigating a sickle modifier
+# The normal approximation
 
-Now load the data for **rs61028892**, a single nucleotide polymorphism which has been associated with [control of fetal
-haemoglobin](https://www.medrxiv.org/content/10.1101/2023.05.16.23289851v1.full) in individuals with sickle cell
-disease.
+As the last part of this tutorial, I wanted to mention an approximation that is **very** **very** important in
+statistics. This is the **normal approximation to the likelihood** (or the posterior) and it underlies most of classical
+statistics. 
 
-You can find [rs61028892 data here](https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_rs61028892_grouped.tsv).
+Think classical statistical tests, like the likelihood ratio test, T tests, chi-squared tests, ANOVA.  (But not
+[Fisher's exact test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) which is 'exact' because it doesn't use this
+approximation).
 
-For this variant you could compute the allele counts from the homozygote and heterozygote genotypes, something like
-this:
+It also underlies commonly-used bayesian methods, such as (for example) [the fGWAS functional GWAS
+method](https://en.wikipedia.org/wiki/Fisher%27s_exact_test), the Bayes factors in [our malaria GWAS
+paper](https://doi.org/10.1038/s41467-019-13480-z), and many others.  When the approximation works it is an extremely
+useful calculational tool.
+
+For now we will just illustrate using the beta distribution.
+
+:::tip Normal distribution approximation
+
+You already know how to [plot a beta distribution](./some_distributions.md#beta-distribution).  Let's do this again
+using some chosen counts - to illustrate, I'll pick the counts from [African American O blood group
+data](./allele_frequencies.md), but you can choose your own values if you like:
 
 ```r
-(
-	data
-	%>% mutate(
-		nA = 2 * rs61028892_0 + rs61028892_1,
-		nB = 2 * rs61028892_2 + rs61028892_1 + 
-	)
-)
+nA = 32
+nB = 29
+x = seq( from = 0, to = 1, by = 0.001 )
+plot(
+	x,
+	dbeta(
+		x,
+		shape1 = nB+1,
+		shape2 = nA+1
+	),
+	ylim = c( 0, 8 ), # Adjust if your plot is too high or low
+	type = 'l',       # Plot as a line
+	lwd = 2           # 'line width'
+);
+grid()
 ```
 
-:::tip Challenge
+Now let's fit a normal approximation to this.  I happen to know a good way to do this (explained further in class or below).
+The key formula we need is the **curvature of the logarithm of the distribution function**, or in other words, the **second derivative of the log-posterior**.
+For the beta distribution this can be worked out (calculus challenge!) and is:
 
-Make a forest plot across populations for rs61028892 allele frequency.  Which populations is this SNP most common in?
+$$
+\text{curvature}(f) = \frac{d^2}{\text{df}^2} \log P(f|\text{data}) = -\frac{n_B}{f^2} - \frac{n_A}{(1-f)^2}
+$$
 
+Let's code that in R:
+```r
+curvature_of_log_posterior = function(f, nA, nB ) {
+	# This is the second derivative of the log-posterior
+	-(
+		nB/(x^2) + nA/((1-x)^2)
+	)
+}
+```
+
+The mode (maximum point) of the posterior is [also known](https://en.wikipedia.org/wiki/Beta_distribution) - it is:
+$$
+posterior_mode = n_B/(nA+nB)
+$$
+
+Now we are ready to fit the normal approximation.  The appropriate thing turns out to be to take a normal distribution
+with mean equal to the mode and variance equal to $-1$ over the 2nd derivative, at the mode:
+
+$$
+\begin{align*}
+\text{mode} &=& \frac{n_B}{n_A+n_B} \\
+v &=& -1 / \text{curvature}(f)
+\end{align*}
+$$
+
+Let's now use that to plot a normal approximation to the posteiror:
+
+```r
+posterior_mode = nB / (nA + nB)
+variance = -1 / curvature_of_log_posterior( posterior_mode, nA, nB )
+
+points(
+	x,
+	dnorm(
+		x,
+		mean = posterior_mode,
+		sd = sqrt( variance )
+	),
+	type = 'l',
+	lwd = 2 ,
+	lty = 2,       # Line type - 2 means 'dashed'
+	col = 'red',   # Plot in red!
+)
+
+```
+Pretty good, right?
 :::
 
+## Explanation 
+
+This is to be written...
