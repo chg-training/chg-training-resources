@@ -72,31 +72,53 @@ In this scenario it turns out that:
 
 1. **The likelihood function is a [binomial distribution](./some_distributions.md#binomial-distribution).**
 
-**Explanation**: Provided we are drawing alleles from a large population (so that sampling doesn't change the frequency
-much), the probability of the data just depends on the true population frequency.  If $n_A$ and $n_B$ are the counts of 'A' and 'B' alleles, and if $f$ is the frequency of the 'B' allele, the **[likelihood](./bayes.md)** is
+**Explanation**: Suppose the frequency of the 'B' allele is $p$.  As we start sampling, we therefore expect to observe a
+'B' allele with probabilty $f$ - and an 'A' with probability $1-f$.  Let's imagine that the population is so large that
+our sampling does not affect this frequendcy much.  To get the likelihood of any sequence, we therefore just multiply
+over the alleles drawn - for example
 $$
-\text{likelihood}(f) = P(\text{data}|f) = \text{a constant} \times
+P(BBA|f) = p^2(1-p)\quad\text{and}\quad P(AABAABB|f) = f^3 (1-f)^4
+$$
+In general, if the sequence has $n_A$ 'A' alleles and $n_B$ 'B' alleles the likelihood is just:
+
+$$
+\begin{align}
+\text{likelihood}(f) = P(\text{data}|f) = \text{constant} \times
 f^{n_B}\cdot(1-f)^{n_A}
+\end{align}
+
 $$
 
-2. In this example we have no prior information so the **[prior](./bayes.md)** is
+This is the form of a [binomial distribution](./some_distributions.md#binomial-distribution).
+
+(The 'constant' is just here because we switched to thinking of the data as counts $n_A,n_B$ instead of the full
+sequence - we have to count the number of sequences with those counts.  The constant doesn't depend on or hold any information
+about $f$, and so isn't very important.)
+
+2. **The prior is flat**. . In this example we have put in no prior information so the **[prior](./bayes.md)** is
 $$
 \text{prior}(f) = P(f) \equiv 1
 $$
 
-3. Multiplying the prior and likelihood, and normalising as in [Bayes theorem](./bayes.md), the **[posterior](./bayes.md)** is therefore just
+3. **The posterior is a beta distribution**. Multiplying the prior and likelihood, and normalising as in [Bayes theorem](./bayes.md), the **[posterior](./bayes.md)** is therefore just
 $$
+\begin{align}
 \text{posterior}(f) = P(f|\text{data}) = \text{another constant} \times f^{n_B}\cdot (1-f)^{n_A}
+\end{align}
 $$
 
-A quick glance at [the expression for a beta distribution](./some_distributions.md#beta-distribution) will show you that this is just a beta distribution - in fact it is:
+If this looks a lot like the likelihood, that's because it is!
+
+A quick glance at [the expression for a beta distribution](./some_distributions.md#beta-distribution) will show you that
+this is just the form of a beta distribution - in fact it is:
+
 $$
 f \sim \text{beta}(n_B+1, n_A+1)
 $$
 
 :::tip Key point
 
-In this example, the only difference between the likelihood and posterior is in the **constant**.  
+The only difference here between the likelihood and posterior is in the **constant**.  
 
 The constant in the likelihood is supposed to normalise the distribution over all possible values of data.  If the data is the number of 'A' and 'B' alleles in the data, the constant is $A+B\choose B$ as shown in the [definition of the binomial distribution](./some_distributions.md).  (On the other hand, if we think of the whole ordered sequence of A's and B's as the data, the constant is just $1$.)  Either way, this term is *constant with respect to the frequency $f$* so it doesnt really matter what it is - it's just a constant.
 
