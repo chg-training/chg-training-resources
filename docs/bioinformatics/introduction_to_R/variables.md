@@ -123,7 +123,7 @@ usually much better to use longwe, descriptive names, like this:
 ```
 > number_of_desks = 3
 > number_of_students_in_class = 24
-> number_of_students_per_desk = number_of_students_per_class / number_of_sides
+> number_of_students_per_desk = number_of_students_in_class / number_of_desks
 ```
 
 When you look back at the code later on to try to see what it does, you will find the
