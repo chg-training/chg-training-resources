@@ -63,7 +63,7 @@ curvature_of_log_posterior = function(f, nA, nB ) {
 
 The mode (maximum point) of the posterior is [also known](https://en.wikipedia.org/wiki/Beta_distribution) - it is:
 $$
-posterior_mode = n_B/(nA+nB)
+\text{posterior mode} = \frac{n_B}{n_A+n_B}
 $$
 
 Now we are ready to fit the normal approximation.  The appropriate thing turns out to be to take a normal distribution
@@ -71,8 +71,7 @@ with mean equal to the mode and variance equal to $-1$ over the 2nd derivative, 
 
 $$
 \begin{align*}
-\text{mode} &=& \frac{n_B}{n_A+n_B} \\
-v &=& -1 / \text{curvature}(f)
+\text{approximation} = N\left( \text{mean}= \frac{n_B}{n_A+n_B}, \text{variance} = \frac{-1}{\text{curvature}(f)} \right)
 \end{align*}
 $$
 

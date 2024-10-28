@@ -5,7 +5,7 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Getting started: linear regression
+# A linear regression example
 
 ### Prerequisites
 
@@ -117,7 +117,9 @@ data$reads_per_base_per_million = 1E6 * data$mean_reads_per_base / data$total_re
 :::tip Note
 
 I included added a factor of 1 million here just to bring the values back into roughly the right level. The values are the
-*number of reads per base of the gene per million sequenced reads*. (For most work I suggest computing **TPM** instead.)
+*number of reads per base of the gene per million sequenced reads*.
+
+For most work of this type you should probably compute **TPM** instead, which *also* normalises by gene length.  It is an estimate of the proportion of expressed transcripts from that gene. However, we're only interested in one gene here, so we'll stick with this value.
 
 :::
 
@@ -135,7 +137,7 @@ p = (
 
 ![img](images/normalised_per_genotype.png)
 
-It certainly looks visually like there's a relationship.
+It *still* looks visually like there's a relationship.
 
 :::tip Note
 
@@ -148,7 +150,7 @@ measurement of the actual expression of the gene.
 
 ### Running a regression
 
-Let's estimate the relationship between genotype and mRNA expression by fitting a **linear regression model**.
+Now let's estimate the relationship between genotype and mRNA expression by fitting a **linear regression model**.
 
 To start off let's recode our genotype by the number of **G** alleles:
 
@@ -206,7 +208,7 @@ So what does this output say?  It says that:
 
 * the estimated mean expression level is $0.0498$.
 * the *standard error* of this estimate is $0.0210$.
-* the estimated *association effect size* is $0.0209$.
+* the estimated *association effect size* - that is, the estimated increase in expression with each copy of the 'G' allele - is $0.0209$.
 * the standard error of this estimate is $0.0125$.
 
 Let's plot this on the above graph:

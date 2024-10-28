@@ -1,11 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Logistic regression
+# A logistic regression example
 
 Before moving on let's try a different type of regression: *logistic regression*. Unlike linear regression, which models a
 continuously varying outcome variable (such as expression levels), logistic regression models a binary 0/1 outcome - or more
@@ -125,6 +125,8 @@ fit2 = glm(
 summary(fit2)$coeff
 ```
 :::tip Note
+
+Compare the names of the outcome parameters, with the set of countries in the data.  Do you notice anything?
 
 This illustrates the way that regression handles categorical variables like the country by default.
 One country is chosen as a 'baseline' (in an ad hoc manner) and the variation in the other countries are measured against it.
