@@ -299,24 +299,29 @@ gaussian. The sampling can be done using the `mvtnorm` package:
 ```
 library( mvtnorm )
 sampled_lines = rmvnorm( 100, sigma = V, mean = c( 0.0498, 0.0209 ) )
+
 ```
 
 Now let's add quantiles from those sampled lines to the plot:
 ```
-sampled_interval = tibble(
-    dosage = x,
-    lower = sapply( x, function(p) { quantile( sampled_lines[,1] + p * sampled_lines[,2], 0.025 ) } ),
-    upper = sapply( x, function(p) { quantile( sampled_lines[,1] + p * sampled_lines[,2], 0.975 ) } )
+sampled_lines = tibble(
+    a = sampled_lines[,1],
+    b = sampled_lines[,2]
 )
 print(
     p
-    + geom_line( data = sampled_interval, aes( x = dosage, y = lower ))
-    + geom_line( data = sampled_interval, aes( x = dosage, y = upper ))
+    + geom_abline(
+        data = sampled_lines,
+        aes(
+            intercept = a,
+            slope = b
+        ),
+        col = rgb( 0, 0, 0, 0.1 )
+    )
 )
 ```
-![img](images/lm_confidence_interval_3.png)
 
-Ok that looks a bit wobbly! But if you turn up the number of samples to (say) 10,000 you'll see this is the same thing again.
+If you turn up the number of samples to (say) 10,000 you'll see this is the same thing again.
 
 **Note.** This last way of plotting the regression confidence interval is helpful because it reveals how we think of the regression
 fit: namely it determines a *joint distribution over the parameters*.
