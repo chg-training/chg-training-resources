@@ -245,7 +245,7 @@ intervals at a range of values from 0 to 2:
 ```
 x = seq( from = 0, to = 2, by = 0.01 )
 interval = predict(
-    fit2,
+    fit,
     newdata = data.frame( dosage = x ),
     interval = "confidence",
     level = 0.95
