@@ -129,9 +129,27 @@ $ conda install mamba
 
 The `mamba` package lives in the `conda-forge` channel.  Type 'y' and press &lt;enter&gt; to install.
 
+### Making a more specific environment
+
+Before installing anything else, it's a good idea to make a new environment to use, instead of using the conda
+'base' environment as you have been above.  In conda, `conda create` is used to do this:
+```
+$ conda create --name gms
+```
+
+To use the new environment you have to 'activate' it:
+```
+$ conda activate gms
+```
+
+If you start a new session, remember you might have to type this before doing any work - otherwise you might find your
+installed commands can't be found.
+
+(Remember at any time you can then deactivate conda again by typing `conda deactivate`.)
+
 ### Installing samtools
 
-Now let's try installing [`samtools`](samtools.github.io), which is a workhorse tool for handling
+Now that we have an environment, let's try installing [`samtools`](samtools.github.io), which is a workhorse tool for handling
 next-generation sequencing data. While you *can* download the source code and compile it yourself,
 conda makes this easy. You'll want a fairly recent version, so let's get version at least `1.15`
 which is available from the [bioconda](https://bioconda.github.io) channel:
@@ -139,13 +157,6 @@ which is available from the [bioconda](https://bioconda.github.io) channel:
 ```
 $ mamba install 'samtools>=1.15'
 ```
-
-:::tip Note
-
-This may not work if you are on a Mac with Apple silicon.  If so don't worry, we'll find a
-workaround later. For now, you can 
-
-:::
 
 If you look at the output you'll see that this is getting `htslib` and `samtools` from bioconda, but
 also `libdeflate` from `conda-forge`. Go ahead and install. Running samtools now gives you some

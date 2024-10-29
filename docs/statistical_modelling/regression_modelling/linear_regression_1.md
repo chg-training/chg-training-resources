@@ -302,7 +302,7 @@ sampled_lines = rmvnorm( 100, sigma = V, mean = c( 0.0498, 0.0209 ) )
 
 ```
 
-Now let's add quantiles from those sampled lines to the plot:
+Now let's add those sampled lines to the plot:
 ```
 sampled_lines = tibble(
     a = sampled_lines[,1],
@@ -318,10 +318,12 @@ print(
         ),
         col = rgb( 0, 0, 0, 0.1 )
     )
+    + theme_minimal(16) # simpler theme, to make it easier to see
 )
 ```
 
-If you turn up the number of samples to (say) 10,000 you'll see this is the same thing again.
+Congratulations!  You've added 100 samples from the (approximate) posterior distribution to the plot.
+(What happens if you turn up the number of lines?)
 
 **Note.** This last way of plotting the regression confidence interval is helpful because it reveals how we think of the regression
 fit: namely it determines a *joint distribution over the parameters*.
