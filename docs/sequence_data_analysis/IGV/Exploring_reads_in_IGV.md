@@ -61,8 +61,7 @@ Let's try looking some SNPs
 The mutation that causes [chloroquine resistance](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2954758/) is `CRT
 K76>T`, at `Pf3D7_07_v3:403,625`. (It actually involves a small haplotype including other nearby mutations).
 
-:::tip Questions
-
+:::tip SNP hunting
 
 * Can you find these mutations?
 
@@ -75,11 +74,21 @@ K76>T`, at `Pf3D7_07_v3:403,625`. (It actually involves a small haplotype includ
 
 **Note.** 'properly paired' means that the two reads in the pair align to the same region in the right orientation, and roughly fall within the distribution of insert sizes inferred from all the read pairs in the data.  The aligner (`bwa` in this case) sets a flag in the BAM file to reflect this.
 
+:::
+
 ## Looking at insertions and deletions
 
-**Question.** The variants above are single nucleotide polymorphisms (SNPs) - or rather multiple nucleotide polymorphisms (MNPs) since several come together.  What about other types of variation?  Scroll around a bit and see if you can find a deletion.  (If stuck, try looking around the gene [`PF3D7_0215300`](https://plasmodb.org/plasmo/app/search?q=PF3D7_0220300).  What read evidence supports this deletion?
+**Question.** The variants above are single nucleotide polymorphisms (SNPs) - or rather multiple nucleotide
+polymorphisms (MNPs) since several come together.  What about other types of variation?  Scroll around a bit and see if
+you can find a deletion.  
 
-**Note.** There might also be insertions, which are denoted by a purple bar across a read in IGV.  Can you find any of these?
+If stuck, try looking around the gene [`PF3D7_0215300`](https://plasmodb.org/plasmo/app/search?q=PF3D7_0220300).  What
+read evidence supports this deletion?
+
+Or look around the gene *PF3D7_0304600* - can you see anything odd here?
+
+**Note.** There might also be insertions, which are sometimes denoted by a purple bar across a read in IGV.  Can you
+find any of these?
 
 ## The trouble with mapping is...
 
@@ -142,6 +151,16 @@ Figure out the structure of the structural variant genomes from these reads.
 If you want some inspiration, see Figure 6 of [this paper on the Dantu blood group](https://doi.org/10.1126/science.aam6393) to see a similar process applied to a human structural variant.
 
 :::
+
+
+:::tip (Slightly) easier challenge?
+
+What's going on around `Pf3D7_03_v3:222,013-222,565`?  Any idea?
+
+**tip** Try turning on the viewing of soft-clipped bases as described [above](#examining-structural-variant-breakpoints).
+
+:::
+
 
 ## Summary
 

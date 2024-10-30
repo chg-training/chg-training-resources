@@ -51,35 +51,30 @@ What genotype does NA12878 have at rs601338?  Are they a secretor or non-secreto
 
 Look for other variation.  Can you see an indel?
 
-## Challenge 2: explore reads using `IGV`
+## Challenge 2: extracting reads.
 
-This challenge is an alternative to Challenge 1 and will **only work if you have IGV installed on your laptop**.
-To get set up:
-
-* Start IGV on your laptop (not JupyterHub) and make sure you have selected human build 38 from the 'genomes' drop down.
-* Load the track for NA12878 data from the following urls:
+The `samtools view` command provides a way to extract reads with particular properties - like aligning to a particular
+location or with particular flags.  Type `samtools view` to get a list of options.  For example,
 ```
-  BAM URL: https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/solutions/human/
-INDEX URL: https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/solutions/human/
+samtools view <file.bam> chr:start-end
 ```
+to see reads overlapping a region.  Or you can filter on the `flags` column with the `-f` option (which 'includes' reads with those flags) or the `-F` (which 'excludes' reads with those flags.)  
 
-Now browse the genome in IGV.
+**Note** remember, see [this page for a description of the SAM flags](flaghttps://broadinstitute.github.io/picard/explain-flags.html)
 
-**Challenge.** Can you find:
+:::tip Question
 
-1. a heterozygous SNP?
-2. a homozygous SNP?
-3. an insertion or deletion?
-4. a larger structural variant?
-5. a region where the coverage is unusually high (or low)?
-6. With reference to **challenge 1**, what is the secretor status of this sample?
-7. Can you find a read with clipped bases?  (Hint: to show clipped bases, you need to go to `View->Preferences->Alignments` and turn 'show soft-clipped bases' on.)
+Can you find all read alignments overlapping the position `Pf3D7_03_v3:221547`?
 
+Can you find alignments that are *supplementary*?  (These are additional bits of reads)
+
+Are there any *unmapped reads*?  (What happens if you [BLAST these against other genomes](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome))
+
+:::
 
 ### Challenge 3: figure out the GC bump.
 
-
-**Note.** This is a real challenge.  I don't fully know the answer right now.
+**Warning.** This is a real challenge.  I don't fully know the answer right now.
 
 In the [QC section](Quality_control.md) we saw this weird pattern of GC content for the malaria sample `QG0033-C`:
 

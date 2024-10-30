@@ -63,4 +63,4 @@ them to print their version information.  You should see something like:
 
 (Don't type the dollar signs, those are just there to indicate the command prompt.)
 
-When you've got the software [get the data](getting_the_datas.md).
+When you've got the software [get the data](getting_the_data.md).
