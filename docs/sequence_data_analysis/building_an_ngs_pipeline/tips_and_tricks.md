@@ -8,12 +8,13 @@ Here is some guidance to help you write your pipeline. Click the links to jump t
 section.
 
 * [Wait, what?  How should I start?](./#getting-started)
-* [How should I run snakemake?](./#how-should-i-run-snakemake)
-* [How should I get sample information in?](./#how-should-i-get-sample-information-in)
 * [Give me a first rule hint?](#give-me-a-first-rule-hint)
-* [How should I organise my pipeline files?](#how-should-I-organise-my-pipeline-files)
-* [My snakefiles are getting too big!](#my-snakefiles-are-getting-too-big)
+* [How should I run snakemake?](./#how-should-i-run-snakemake)
 * [Keeping a fast iteration time during development](#keeping-a-fast-iteration-time-during-development).
+* [How should I get sample information in?](./#how-should-i-get-sample-information-in)
+* [...a second rule hint?](#a-second-rule-hint)
+* [...and what about the other rules?](#what-about-the-other-rules)
+* [My snakefiles are getting too big!](#my-snakefiles-are-getting-too-big)
 * [Dealing with intermediate files](#dealing-with-intermediate-files).
 * [But I want to run the yellow bits too!](#but-I-want-to-run-the-yellow-bits-too)
 * [Read groups what now?](#read-groups-what-now)
@@ -356,9 +357,9 @@ Because some of the other steps (like alignment) are also easier to write using 
 
 [Go back to the tips and tricks](#tips-and-tricks).
 
-### ...what about a hint about the other rules?
+### ...what about the other rules?
 
-Nope - you have to write these yourself!  
+No help here - you have to write these yourself!
 
 However you should
 
