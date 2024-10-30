@@ -40,19 +40,71 @@ something like this:
         # results files go here
         ...
   
-	
+
 Of course you should already have `data` and snakemake will create the `results` folder as you go.
 So to get started, all you have to do is write a snakefile in `pipelines/`.
 
-You will also need a **config file** as outlined [below](#how-should-i-put-sample-information-in) -
-it can go in `pipelines` or in the top-level folder, whichever you prefer.
+Maybe you want to make an empty snakefile to get started?
+```
+touch pipelines/analysis.snakefile
+```
+
+And run it:
+```
+snakemake -s pipelines/analysis.snakefile -n
+```
+Congratulations!  You've started your pipeline.
+
+To really get started, you will need some [rules in there](#give-me-a-first-rule-hint) and will also
+need a **config file** as outlined [below](#how-should-i-put-sample-information-in) - it can go in
+`pipelines` or in the top-level folder, whichever you prefer.
 
 [Go back to the tips and tricks](#tips-and-tricks).
 
+### Give me a first rule hint?
+
+There are two sensible things you could do at the start of the pipeline.
+
+First, you could start at the top-left of the [pipeline](./pipeline.md#the-pipeline), and write a
+rule that indexes the reference file:
+
+```snakemake
+rule index_reference_assembly:
+	output:
+		index = "data/reference/Pf3D7_v3.fa.gz.bwt"
+	input:
+		fasta = "data/reference/Pf3D7_v3.fa.gz"
+	shell: """
+		bwa index {input.fasta}
+	"""
+```
+
+:::tip Top tip
+
+Notice that I wrote the **output** files first.  You don't have to do this, but it makes huge sense for snakemake, which works
+backwards from outputs to figure out what inputs it needs.
+
+:::
+
+If you run snakemake now:
+```
+snakemake -s pipelines/analysis.snakefile --cores 1
+```
+
+You will probably see it indexing the reference assembly.  Well done!
+
+:::tip input and wildcards
+
+The `{input.fasta}` is of course one of snakemake's cool features.  You don't have to write the whole filename out again, just use
+this form to refer to the filename from the `input:` section.
+
+:::
+
 ### How should I run snakemake?
 
-Let's say your snakefile is `pipelines/analysis.snakefile`. The best way (I find) to run snakemake
-is to *always run it from the top-level folder.* That is, you would run:
+Let's say your snakefile is `pipelines/analysis.snakefile`.  I find the best way to run snakemake is to *always run it
+from the top-level folder.*  That is, as above, you would run:
+
 ```sh
 snakemake -s pipelines/analysis.snakefile -configfile config.json [other options...]
 ```
@@ -78,9 +130,15 @@ layout](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html).
 
 ### How should I get sample information in?
 
-Your pipeline is going to need to read in sample information, but you'd probably also like it to be
-applicable to different samples sets. To accomodate this it's a good idea to put the information
-about the samples / the needed data in through a **config file**.
+Your pipeline is going to need the sample information in.
+
+Although you can add sample information into the top of the snakefile, say:
+```
+samples = [ 'QG0033-C', 'QG0041-C', and so on ]
+```
+
+...that's not very flexible.  A better way is to put this information about the samples, and any
+other needed data in through a **config file**.
 
 This is a file called (say) `config.json` that you pass in using the `--configfile` argument. For
 example, for this project you could use a `config.json` that looks like this:
@@ -102,19 +160,19 @@ example, for this project you could use a `config.json` that looks like this:
 (This contains information copied from `samples.tsv`.) And then you would run snakemake like this:
 
 ```
-snakemake -s pipelines/master.snakefile --configfile config.json
+snakemake -s pipelines/analysis.snakefile --configfile config.json
 ```
 
 The point of this is that it makes it easy to run the pipeline on different sets of data - such as
 [a test data for pipeline testing](#keeping-a-fast-iteration-time-during-development) - you just
 swap out the config file for a different one.
 
-In a real pipeline there are likely to be many samples, so it'd be better to reference the sample
+:::tip Note
+In a real pipeline there are likely to be many samples, so it might be better to reference the sample
 sheet in the config file:
 
 ```json config.json
 {
-	"reference": "data/reference/Pf3D7_v3.fa.gz",
 	"fastq_filename_template": "data/reads/subsampled/{ID}_{read}.fastq.gz",
 	"samples": "samples.tsv"
 }
@@ -128,17 +186,40 @@ import pandas
 config['samples'] = pandas.read_table( "samples.tsv" )
 ```
 
+:::
+
 [Go back to the tips and tricks](#tips-and-tricks).
 
-### Give me a first rule hint?
+### Keeping a fast iteration time during development.
 
-There are two sensible things you could do at the start of the pipeline.
-
-One is just to dive in and run `fastqc` (after all that's the first step outlined above.) That's
-pretty easy, right?  Something like:
+When you're developing a pipeline, you don't want to wait two hours only to discover that it didn't
+work. A good idea would therefore be to start by creating smaller, sub-sampled version of the
+datasets (whichever of the above raw data you use). For example, you could run:
 
 ```
-rule run_fastqc
+gunzip -c filename.fastq.gz | head -n 4000 | gzip -c > filename.subsampled.fastq
+```
+
+to take the first few reads from each file.
+
+:::tip Question
+The above command specifies a multiple of 4 lines. Why? How many reads does the above
+command extract?
+:::
+
+If you set your pipeline up the way I suggest above then you can have a config file for the small
+test dataset, and then once it is all working, rerun using the real config file specifying the full
+dataset.
+
+[Go back to the tips and tricks](#Tips-and-tricks).
+
+### ...a second rule hint?
+
+Ok.  The second step (top right of [the pipeline](./pipeline.md#the-pipeline)) is to run fastqc.  A rule to do that is pretty easy,
+right?  Something like:
+
+```
+rule run_fastqc:
 	output:
 		html1 = "results/qc/{ID}_1_fastqc.html",
 		html2 = "results/qc/{ID}_2_fastqc.html"
@@ -150,106 +231,126 @@ rule run_fastqc
 	shell: """
 		fastqc -q -o {params.outputdir} {input.fq1} {input.fq2}
 	"""
-	
 ```
 
-This is what I've done in my solution.
+You can see this rule contains the `{ID}` which is a snakemake **wildcard**.  If snakemake figures out it needs to make,
+for example, `results/qc/A_1_fastqc.html`, it will run this rule with `ID="A"`.
 
-**However**, this dataset has an annoying property: the files aren't named quite the way we would want
-them. In our case, we want to name them after the samples, but they are currently named after
-accessions.
+But there are two problems.
 
-Therefore another way to start is to have a first rule that renames the files to have the right
-names. (This is great because it gets done once, at the top, and all the other rules never have to
-worry about the accession at all.) In practice it'd be better to leave the original files and
-instead copy or symlink them into the right names - like this:
+**Problem 1**. If you add this and run snakemake, it won't do anything!
 
+**Solution**: remember the first snakemake rule declares the default targets.  If you want it to create these files by default, you have to add
+a rule (say rule 'all') at the top to say what you want.  So something like:
 ```
-rule copy_data_by_sample
-	output:
-		fq1 = "results/reads/{ID}_1.fq.gz",
-		fq2 = "results/reads/{ID}_2.fq.gz"
+rule all:
 	input:
-		fq1 = "data/reads/{something}_1.fq.gz",
-		fq2 = "data/reads/{something}_2.fq.gz"
-	shell: """
-		cp {input.fq1} {output.fq1}
-		cp {input.fq2} {output.fq2}
-	"""
-```
-
-The difficult here is what goes in the "something" in the input wildcards.
-
-To get this right you have to remember that snakemake works backwards from its output file
-wildcards (i.e. `{ID}`) to its input files. You therefore need a way to compute the accession from
-the supplied `ID`.
-
-All this info is in `config['samples']` though, so that should be easy, right? 
-
-To do this, let's turn the input rule into a **function** instead of a string.  The function reads in the wildcards and
-returns the right filename.  And to make this even easier, let's just use a 'lambda' function (i.e. an un-named
-function, defined right there in the rule):
-
-```python
-rule copy_data_by_sample
-	input:
-		fq1 = lambda wildcards: "data/reads/{accession}_1.fq.gz".format(
-			accession = config['samples'][wildcards.ID]['accession']
-		),
-		fq2 = lambda wildcards: "data/reads/{accession}_2.fq.gz".format(
-			accession = config['samples'][wildcards.ID]['accession']
+		fastqc = expand(
+			"results/qc/{ID}_{read_id}_fastqc.html",
+			name = config['samples'].keys(),
+			read_id = [ '1', '2' ]
 		)
-		(etc.)
 ```
 
 :::tip Note
 
-If you don't like the "lambda" function, make it a named function instad:
+The `expand()` function is used there to replace all the `ID` and `read_id` with all the combinations of the arguments.
+
+:::
+
+But there's another, harder problem too!  (This is actually the trickiest problem in the whole pipeline.)
+
+**Problem 2**.  
+The [requirements](./pipeline.md#overview) say that we are supposed to name the output files by the sample ID (like "QG0033-C").
+But the fastq files are named a different way (for these files, it's for the accessions, like "ERR377582".)
+So this means is that **the above rule won't work**. 
+
+However, if you followed the [suggestion above](#how-should-i-get-sample-information-in) you'll have put this
+information into the config file - somehow you now have to get it out.  What you need is this:
+
+```
+rule run_fastqc
+	output:
+		html1 = "results/qc/{ID}_1_fastqc.html",
+		html2 = "results/qc/{ID}_2_fastqc.html"
+	input:
+		fq1 = "data/reads/{accession}_1.fq.gz",
+		fq2 = "data/reads/{accession}_2.fq.gz"
+	(etc.)
+```
+
+but how do you tell snakemake how to compute the accession?
+
+**Solution** The trick here is remember the golden rule: snakemake works **from outputs to inputs**.  What you need is a function that
+converts the output sample ID we want (`QG0033-C`) into the input filename we need (e.g. `data/reads/ERR377582_1.fastq.gz`).
+With our [config file](#how-should-i-get-sample-information-in) set up, this data is easy to find - it's `config['samples'][ID]['accession']`.  
+
+To plumb this into snakemake, write a function that reads in the rule wildcards and outputs the fastq filename:
 
 ```python
-def get_fq1_name( wildcards ):
-	return "data/reads/{accession}_{read}.fq.gz".format(
+def get_fq1_filename( wildcards ):
+	return "data/reads/{accession}_1.fq.gz".format(
+		accession = config['samples'][wildcards.ID]['accession']
+	)
+def get_fq2_filename( wildcards ):
+	return "data/reads/{accession}_2.fq.gz".format(
 		accession = config['samples'][wildcards.ID]['accession']
 	)
 ```
 
-and use that instead of the lambda function above = `fq1 = `
+...at which point you can use the function in place of the input filename in the rule:
+
 ```
-rule copy_data_by_sample
+rule run_fastqc
+	output:
+		html1 = "results/qc/{ID}_1_fastqc.html",
+		html2 = "results/qc/{ID}_2_fastqc.html"
 	input:
-		fq1 = get_fq1_name
-	(etc)
+		fq1 = get_fq1_filename,
+		fq2 = get_fq2_filename
+	(etc.)
 ```
-
-but it's slicker just to use a lambda function, it think.
-
-:::
-
-In my solutions I've used a slightly different approach where the fastq files themselves aren't copied/renamed, but the
-renaming gets done by the alignment step. This has the advantage that we don't copy the data, but it's not as simple
-because all major 'output' rules have to figure out how to rename the output file appropriately.
 
 :::tip Note
 
-Another way to avoid copying is to use symbolic links ("*symlinks*") instead. The `ln` command can be used to do this.
-For example:
+Writing our named functions like this in a snakefile is a bit... long-winded.
+
+If you want a shorter way, you can use a **lambda function** instead, like this:
 
 ```
-ln -s file.txt link_name.txt
+rule run_fastqc
+	output:
+		html1 = "results/qc/{ID}_1_fastqc.html",
+		html2 = "results/qc/{ID}_2_fastqc.html"
+	input:
+		fq1 = lambda w: "data/reads/{accession}_1.fq.gz".format( accession = config['samples'][w.ID]['accession']),
+		fq2 = lambda w: "data/reads/{accession}_2.fq.gz".format( accession = config['samples'][w.ID]['accession'])
+	(etc.)
 ```
 
-will create a symlink called `link_name.txt` that points to the original file.
+A "lambda function" just means 'a function defined in-line' - they can be useful to avoid adding extra lines of code in the snakefile.
 
-This is helpful because it avoids copying data, but it comes with a big caveat: having multiple names referencing the
-same file in the filesystem can quickly get very confusing. (For example, what happens if you delete the symlink above -
-does the file get deleted? What happens to the symlink if you delete the original file?)
-
-I typically don't use symlinks now except in rare cases where I name them `something.symlink` so it's completely obvious
-that they are symbolic links.  It can be ok in snakemake pipelines though as long as those links are tucked away
-somewhere pipeline-y.
+(On the other hand, you're going to need these filenames to write the alignment step as well... so maybe you want the
+named functions instead.)
 
 :::
 
+[Go back to the tips and tricks](#tips-and-tricks).
+
+### ...what about a hint about the other rules?
+
+Nope - you have to write these yourself!  
+
+However you should
+
+* Look at the [pipeline steps](./pipeline.md#the-pipeline) to see what steps are needed...
+
+* ...and look at the [sequence data pipeline tutorial](../introduction_to_next_generation_sequencing_data_analysis/Aligning_reads.md) to see what the needed
+  commands are.
+
+* And perhaps look back at the [first rule hint](#give-me-a-first-rule-hint) and the [second rule hint](#a-second-rule-hint) to figure out how to write them.
+
+Good luck!
 
 [Go back to the tips and tricks](#tips-and-tricks).
 
@@ -289,29 +390,6 @@ them becoming too big and unweildy.
 You'll notice I included a `functions.snakemake` above. This is where I tend to put helper
 functions, like the `find_sample_with_name()` function mentioned above.
 :::
-
-[Go back to the tips and tricks](#Tips-and-tricks).
-
-### Keeping a fast iteration time during development.
-
-When you're developing a pipeline, you don't want to wait two hours only to discover that it didn't
-work. A good idea would therefore be to develop your practical using smaller, sub-sampled version
-of the datasets (whichever of the above raw data you use). For example, you could run:
-
-```
-gunzip -c filename.fastq.gz | head -n 4000 | gzip -c > filename.subsampled.fastq
-```
-
-to take the first few reads from each file.
-
-:::tip Question
-The above command specifies a multiple of 4 lines. Why? How many reads does the above
-command extract?
-:::
-
-If you set your pipeline up the way I suggest above then you can have a config file for the small
-test dataset, and then once it is all working, rerun using the real config file specifying the full
-dataset.
 
 [Go back to the tips and tricks](#Tips-and-tricks).
 
@@ -558,8 +636,10 @@ Here are some tips on using `samtools`:
 
 ### Solutions
 
-My solution to this tutorial can be found
+A complete solution to this tutorial can be found
 [in this folder](https://github.com/chg-training/chg-training-resources/tree/main/docs/sequence_data_analysis/building_an_ngs_pipeline/solutions).
+
+Warning: this is a full solution!
 
 (As mentioned above, I used a rename-files-at-the end strategy so this might look a bit different to yours.)
 

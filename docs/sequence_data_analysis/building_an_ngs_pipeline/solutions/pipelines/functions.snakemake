@@ -12,7 +12,7 @@ def find_sample_with_ID( ID ):
 		raise Exception( "Wrong number of samples found with ID '%s' (%d, expected 1)." % ( ID, len( sample )) )
 	return sample[0]
 
-def get_read_files( ID ):
+def get_fastq_files( ID ):
 	template = config['fastq_filename_template']
 	return {
 		"read1": template.format( ID = ID, read = 1 ),

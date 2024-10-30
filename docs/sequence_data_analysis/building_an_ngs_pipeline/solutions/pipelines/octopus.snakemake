@@ -1,9 +1,9 @@
 rule unpack_reference_for_octopus:
-    input:
-        fasta = config['reference']
     output:
         fasta = temp( "results/variants/tmp/reference.fa" ),
         fai = temp( "results/variants/tmp/reference.fa.fai" )
+    input:
+        fasta = config['reference']
     shell: """
         gunzip -c {input.fasta} > {output.fasta}
         ~gav/Projects/Software/usr/bin/samtools faidx {output.fasta}
@@ -11,6 +11,9 @@ rule unpack_reference_for_octopus:
 
 
 rule call_variants_using_octopus:
+    output:
+        vcf = "results/variants/variants.vcf.gz",
+        log = "logs/octopus.log"
     input:
         fasta = rules.unpack_reference_for_octopus.output.fasta,
         fai = rules.unpack_reference_for_octopus.output.fai,
@@ -18,9 +21,6 @@ rule call_variants_using_octopus:
             "results/aligned/{name}.bam",
             name = [ sample['name'] for sample in config['samples']]
         )
-    output:
-        vcf = "results/variants/variants.vcf.gz",
-        log = "logs/octopus.log"
     params:
         regions = [ "Pf3D7_02_v3:616190-656190", "Pf3D7_02_v3:779288-859288", "Pf3D7_11_v3:1023035-1081305" ]
     shell: """
@@ -28,10 +28,10 @@ rule call_variants_using_octopus:
     """
 
 rule index_variants_vcf:
-    input:
-        vcf = rules.call_variants_using_octopus.output.vcf
     output:
         vcf = "results/aligned/variants.vcf.gz.tbi"
+    input:
+        vcf = rules.call_variants_using_octopus.output.vcf
     shell: """
         tabix -p vcf {input.vcf}
     """

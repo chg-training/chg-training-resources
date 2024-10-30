@@ -1,22 +1,22 @@
 rule get_samtools_stats:
-	input:
-		bam = "results/aligned/{name}.bam",
-		reference = config['reference']
 	output:
 		stats = "results/stats/{name}.stats.txt",
 		flagstats = "results/stats/{name}.flagstats.txt"
+	input:
+		bam = "results/aligned/{name}.bam",
+		reference = config['reference']
 	shell: """
 		~/Projects/Software/usr/bin/samtools stats --reference {input.reference} {input.bam} > {output.stats}
 		~/Projects/Software/usr/bin/samtools flagstat {input.bam} > {output.flagstats}
 	"""
 
 rule collect_stats_multiqc:
-	input:
-		stats = expand( "results/stats/{name}.stats.txt", name = [ sample['name'] for sample in config['samples'] ] ),
-		flagstats = expand( "results/stats/{name}.flagstats.txt", name = [ sample['name'] for sample in config['samples'] ] )
 	output:
 		report = "results/stats/post_alignment_multiqc_report.html",
 		files = temp( "results/qc/tmp/stats_file_list.txt" )
+	input:
+		stats = expand( "results/stats/{name}.stats.txt", name = [ sample['name'] for sample in config['samples'] ] ),
+		flagstats = expand( "results/stats/{name}.flagstats.txt", name = [ sample['name'] for sample in config['samples'] ] )
 	params:
 		outputdir = "results/stats",
 		title = "post_alignment"

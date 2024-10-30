@@ -303,17 +303,17 @@ function betaFunc(x,y) {
 			value
 		) ;
 		document.querySelector( '#mean_display' ).innerHTML = (
-			(a+prior.a+b+prior.b) == 0 ? "(no estimate)" : (
+			(
 				"mean estimate = " + (
-					((a+prior.a) / (a+prior.a+b+prior.b))
+					((a+prior.a+1) / (a+prior.a+b+prior.b+2))
 					.toLocaleString('en-EN',{minimumFractionDigits:3, maximumFractionDigits:3})
 				)
 			)
 		) ;
 		document.querySelector( '#mode_display' ).innerHTML = (
-			((a+prior.a) < 1 || (b+prior.b) < 1) ? "" : (
+			((a+prior.a) == 0 && (b+prior.b) == 0 ) ? "" : (
 				"mode estimate = " + (
-					((a+prior.a-1) / (a+prior.a+b+prior.b-2))
+					((a+prior.a) / (a+prior.a+b+prior.b))
 					.toLocaleString('en-EN',{minimumFractionDigits:3, maximumFractionDigits:3})
 				)
 			)
