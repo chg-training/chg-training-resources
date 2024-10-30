@@ -412,7 +412,7 @@ them becoming too big and unweildy.
 
 :::tip Note
 You'll notice I included a `functions.snakemake` above. This is where I tend to put helper
-functions, like the `find_sample_with_name()` function mentioned above.
+functions, like the `get_fq1_filename()` function mentioned above.
 :::
 
 [Go back to the tips and tricks](#Tips-and-tricks).
@@ -427,11 +427,9 @@ The alignment steps in [our pipeline](pipeline.svg) in particular are notorious 
 * in which you then have to mark the duplicates...
 * which are then indexed.
 
-That's at least 3 intermediate files along the way. We don't want to keep these, they were just
-needed during the pipeline.
+That's at least 3 intermediate files along the way. We don't want to keep these, they were just needed during the pipeline.
 
-There are a few different ways to deal with this. One way is just to use unix pipes to pipe command
-together within rules - as in
+There are a few different ways to deal with this. One way is just to use unix pipes to pipe command together within rules - as in
 
 ```sh
 bwa mem reference.fa read1.fq read2.fq | samtools view -b -o aligned.bam
@@ -439,16 +437,15 @@ bwa mem reference.fa read1.fq read2.fq | samtools view -b -o aligned.bam
 
 However, I find that this makes the pipeline hard to debug (which command failed? you can't tell.)
 
-Instead, I typically go for temp files and use the snakemake `temp()` function to tell snakemake
-files are temporary. So I might write the alignment rule as:
+Instead, I typically go for temp files and use the snakemake `temp()` function to tell snakemake files are temporary. So I might write the alignment rule as:
 
 ```
 rule align_reads:
+  output:
+    sam = temp( "results/alignment/{ID}.sam" )
   input:
     fq1 = something,
     fq2 = something
-  output:
-    sam = temp( "results/alignment/{sample_name}.sam" )
   shell: "bwa mem ..."
 ```
 
@@ -458,19 +455,19 @@ avoids cluttering up the results folder when jobs fail.
 Second, rules can refer to other rule outputs, so the next step in the pipeline can be written:
 ```
 rule fix_matepair_information_and_convert_to_bam:
+  output:
+    bam = temp( "results/alignment/tmp/{ID}.bam" )
   input:
     sam = rules.align_reads.output.sam
-  output:
-    bam = temp( "results/alignment/tmp/{sample_name}.bam" )
   shell: "samtools fixmate -m {input.sam} {output.bam}"
 ```
 and so on down the pipeline.
 
 Third - `snakemake` actually has a [named pipe
-output](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#piped-output) feature, so
-you can get the benefit of the UNIX pipe with the same syntax as above - just replace `temp()` with
-`pipe()` and it should automatically work. (I've never actually used this feature but it's a nice
-idea for this step, because the SAM file output by `bwa` might be huge when applied to real data.)
+output](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#piped-output) feature, so you can get the
+benefit of the UNIX pipe with the same syntax as above - just replace `temp()` with `pipe()` and it should automatically
+work. (I've never actually used this feature but it's a nice idea for this step, because the SAM file output by `bwa`
+might be huge when applied to real data.)
 
 [Go back to the tips and tricks](#Tips-and-tricks).
 
