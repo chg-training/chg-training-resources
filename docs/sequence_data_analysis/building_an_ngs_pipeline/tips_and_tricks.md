@@ -215,10 +215,10 @@ dataset.
 
 ### ...a second rule hint?
 
-Ok.  The second step (top right of [the pipeline](./pipeline.md#the-pipeline)) is to run fastqc.  A rule to do that is pretty easy,
+Well, the second step (top right of [the pipeline](./pipeline.md#the-pipeline)) is to run fastqc.  A rule to do that is pretty easy,
 right?  Something like:
 
-```
+```python
 rule run_fastqc:
 	output:
 		html1 = "results/qc/{ID}_1_fastqc.html",
@@ -233,16 +233,16 @@ rule run_fastqc:
 	"""
 ```
 
-You can see this rule contains the `{ID}` which is a snakemake **wildcard**.  If snakemake figures out it needs to make,
-for example, `results/qc/A_1_fastqc.html`, it will run this rule with `ID="A"`.
+You can see this rule contains the `{ID}` which is a snakemake **wildcard**.  If snakemake thinks it needs to make (for example) the file `results/qc/A_1_fastqc.html`, it will run this rule with `ID="A"`.
 
 But there are two problems.
 
 **Problem 1**. If you add this and run snakemake, it won't do anything!
 
-**Solution**: remember the first snakemake rule declares the default targets.  If you want it to create these files by default, you have to add
-a rule (say rule 'all') at the top to say what you want.  So something like:
-```
+**Solution**: remember the first rule in the snakefile declares the main files it will try to create.  If you want it to
+create these fastqc output files, you had better add them there.  The convention is to add a rule called 'all' at the
+top which lists what you want, something like:
+```python
 rule all:
 	input:
 		fastqc = expand(
@@ -258,82 +258,101 @@ The `expand()` function is used there to replace all the `ID` and `read_id` with
 
 :::
 
-But there's another, harder problem too!  (This is actually the trickiest problem in the whole pipeline.)
+But there's another, harder problem too!  (This one is actually the trickiest problem in the whole pipeline.)
 
 **Problem 2**.  
 The [requirements](./pipeline.md#overview) say that we are supposed to name the output files by the sample ID (like "QG0033-C").
 But the fastq files are named a different way (for these files, it's for the accessions, like "ERR377582".)
-So this means is that **the above rule won't work**. 
+So this means is that **the above rule won't fully solve the problem**. 
 
-However, if you followed the [suggestion above](#how-should-i-get-sample-information-in) you'll have put this
-information into the config file - somehow you now have to get it out.  What you need is this:
+**Solution** For fastqc, this is slightly annoying to solve because it [doesn't have a way to rename output
+files](https://github.com/s-andrews/FastQC/issues/9).  The easiest way to solve this is first create a re-named copy of
+the input files.  Let's do that now - what we need is a rule like this:
 
-```
-rule run_fastqc
+```python
+rule make_renamed_fastqs:
 	output:
-		html1 = "results/qc/{ID}_1_fastqc.html",
-		html2 = "results/qc/{ID}_2_fastqc.html"
+		fq1 = "results/renamed_reads/{ID}_1.fastq.gz",
+		fq2 = "results/renamed_reads/{ID}_2.fastq.gz"
 	input:
 		fq1 = "data/reads/{accession}_1.fq.gz",
 		fq2 = "data/reads/{accession}_2.fq.gz"
-	(etc.)
+	shell: """
+	cp {input.fq1} {output.fq1}
+	cp {input.fq2} {output.fq2}
+	"""
 ```
 
-but how do you tell snakemake how to compute the accession?
+...but how do you get snakemake to compute the accession in there?
 
-**Solution** The trick here is remember the golden rule: snakemake works **from outputs to inputs**.  What you need is a function that
-converts the output sample ID we want (`QG0033-C`) into the input filename we need (e.g. `data/reads/ERR377582_1.fastq.gz`).
-With our [config file](#how-should-i-get-sample-information-in) set up, this data is easy to find - it's `config['samples'][ID]['accession']`.  
-
-To plumb this into snakemake, write a function that reads in the rule wildcards and outputs the fastq filename:
+The trick here is remember the golden rule: snakemake works **from outputs to inputs**.  What you need is a function that
+converts the output sample ID (e.g. `QG0033-C`) into the input filename (e.g.
+`data/reads/ERR377582_1.fastq.gz`).  If you followed the [suggestion above](#how-should-i-get-sample-information-in)
+you'll have put this information into the config file - so you could get it out using a function like this:
 
 ```python
+def get_accession( sample ):
+	return config['samples'][sample]['accession']
+```
+
+To plumb this into snakemake, write functions that read in the rule's wildcards and outputs the fastq filename:
+```python
 def get_fq1_filename( wildcards ):
-	return "data/reads/{accession}_1.fq.gz".format(
-		accession = config['samples'][wildcards.ID]['accession']
+	return "data/reads/{accession}_1.fastq.gz".format(
+		accession = get_accession( wildcards.ID )
 	)
 def get_fq2_filename( wildcards ):
-	return "data/reads/{accession}_2.fq.gz".format(
-		accession = config['samples'][wildcards.ID]['accession']
+	return "data/reads/{accession}_2.fastq.gz".format(
+		accession = get_accession( wildcards.ID )
 	)
 ```
 
 ...at which point you can use the function in place of the input filename in the rule:
 
-```
-rule run_fastqc
+```python
+rule make_renamed_fastqs:
 	output:
-		html1 = "results/qc/{ID}_1_fastqc.html",
-		html2 = "results/qc/{ID}_2_fastqc.html"
+		fq1 = "results/renamed_reads/{ID}_1.fastq.gz",
+		fq2 = "results/renamed_reads/{ID}_2.fastq.gz"
 	input:
 		fq1 = get_fq1_filename,
 		fq2 = get_fq2_filename
-	(etc.)
+	shell: """
+	cp {input.fq1} {output.fq1}
+	cp {input.fq2} {output.fq2}
+	"""
 ```
 
-:::tip Note
+:::caution Tip
 
-Writing our named functions like this in a snakefile is a bit... long-winded.
+Since the data is large and there might be lots of samples, it's actually better to use **symbolic links** here instead of copies. 
+(A synbolic link is a bit like a shortcut - a small file that points at the other, larger file.)
 
-If you want a shorter way, you can use a **lambda function** instead, like this:
-
+To use symbolic links instead of copies, use `ln -s` instead of `cp` in the above commands, like this:
 ```
-rule run_fastqc
+ln -s ../../{input.fq1} {output.fq1}
+```
+
+(The `../..` is needed to get the right path of the linked file relative to the folder where the output is.)
+
+:::
+
+**Finally** update the `run_fastqc` rule to use these files instead:
+```python
+rule run_fastqc:
 	output:
 		html1 = "results/qc/{ID}_1_fastqc.html",
 		html2 = "results/qc/{ID}_2_fastqc.html"
 	input:
-		fq1 = lambda w: "data/reads/{accession}_1.fq.gz".format( accession = config['samples'][w.ID]['accession']),
-		fq2 = lambda w: "data/reads/{accession}_2.fq.gz".format( accession = config['samples'][w.ID]['accession'])
-	(etc.)
+		fq1 = "results/renamed_reads/{ID}_1.fastq.gz",
+		fq2 = "results/renamed_reads/{ID}_2.fastq.gz"
+	etc.
 ```
 
-A "lambda function" just means 'a function defined in-line' - they can be useful to avoid adding extra lines of code in the snakefile.
+**Phew!**
 
-(On the other hand, you're going to need these filenames to write the alignment step as well... so maybe you want the
-named functions instead.)
-
-:::
+If all this seemed like a lot of work - note it has made the rest of the pipeline easier too.
+Because some of the other steps (like alignment) are also easier to write using the re-named fastq files.
 
 [Go back to the tips and tricks](#tips-and-tricks).
 
@@ -349,6 +368,10 @@ However you should
   commands are.
 
 * And perhaps look back at the [first rule hint](#give-me-a-first-rule-hint) and the [second rule hint](#a-second-rule-hint) to figure out how to write them.
+
+* To make life easier you might want to use the renamed input fastq files [described above](#a-second-rule-hint) as
+inputs. (That way you don't have to jump through hoops to do the rename again.)
+
 
 Good luck!
 
