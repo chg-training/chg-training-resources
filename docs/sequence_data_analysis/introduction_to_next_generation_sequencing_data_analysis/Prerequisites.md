@@ -1,11 +1,9 @@
 ---
 sidebar_position: 1
 ---
-# Getting the prerequisites
+# Getting the software
 
-To run this tutorial you will need two things: some software and some data.  This page will get you set up.
-
-## Getting the software
+To run this tutorial you will need some software.  This page will get you set up.
 
 You need a version of the following tools:
 
@@ -65,27 +63,4 @@ them to print their version information.  You should see something like:
 
 (Don't type the dollar signs, those are just there to indicate the command prompt.)
 
-## Getting the data
-
-To get the data for this tutorial, download the tarball from [this folder](https://www.chg.ox.ac.uk/~gav/projects/chg-training-resources/data/sequence_data_analysis/introduction_to_next_generation_sequencing_data_analysis/) - for example using curl:
-
-For example using `curl`:
-```sh
-curl -O https://www.chg.ox.ac.uk/~gav/projects/chg-training-resources/data/sequence_data_analysis/introduction_to_next_generation_sequencing_data_analysis/sequence_data_analysis.tgz
-```
-
-This will take a minute or so to download.  Extract it :
-
-```
-tar -xzf sequence_data_analysis.tgz
-```
-
-You should now have a folder called `sequence_data_analysis`. For the tutorial, delete the tarball
-and then change into that directory:
-
-```
-rm sequence_data_analysis.tgz
-cd sequence_data_analysis
-```
-
-Now you're [ready to start](Pipeline_outline.md).
+When you've got the software [get the data](getting_the_datas.md).
