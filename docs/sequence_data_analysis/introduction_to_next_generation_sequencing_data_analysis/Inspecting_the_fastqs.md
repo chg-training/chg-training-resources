@@ -156,12 +156,20 @@ The computation goes:
   into the range from zero (very likely to be an error) to infinity (no chance at all of being an
   error). However, in practice it generally maxes out at 41 (except for PacBio Hifi which goes up to ~100).
 
-* Finally add 33 and take the corresponding [ASCII character](https://en.wikipedia.org/wiki/ASCII).
+* Finally - to turn this into a printable character add 33 and take the corresponding [ASCII character](https://en.wikipedia.org/wiki/ASCII).
 
-The point of this is that ASCII characters from 33 onwards are visible / printable, so this
-generates a sequence of characters that encode the estimated quality of each base. (**Note.** There
-is also a 'PHRED64' encoding which adds 64 instead. It's generally only used on older sequencers
-and you aren't likely to run across it for new data.)
+If this looks confusing, here's a handy table to explain:
+
+| P(basecall is an error) | ...on PHRED scale | ... + 33 | ...as ASCII character  |
+| ----------------------- | ----------------- | -------- | ---------------------- |
+| 1 | 0 | 33 | `!` |
+| 0.1 | 10 | 43 | `+` |
+| 0.01 | 20 | 53 | `5` |
+| 0.001 | 30 | 63 | `?` |
+| 0.0001 | 30 | 63 | `?` |
+
+(**Warning.** There is also a 'PHRED64' encoding which adds 64 instead. It's generally only used on older sequencers and
+you aren't likely to run across it for new data.)
 
 It is important to realise that these qualities are only the values *estimated* by the sequencer.
 They are generally [pretty good](https://lh3.github.io/2017/07/24/on-nonvaseq-base-quality) but can
