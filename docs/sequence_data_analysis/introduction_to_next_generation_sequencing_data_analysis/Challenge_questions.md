@@ -66,9 +66,11 @@ to see reads overlapping a region.  Or you can filter on the `flags` column with
 
 Can you find all read alignments overlapping the position `Pf3D7_03_v3:221547`?
 
-Can you find alignments that are *supplementary*?  (These are additional bits of reads)
+Can you find alignments that are *supplementary*?  (These are additional bits of alignments that don't align with the main alignment. Each one corresponds to a primary alignment.)
 
-Are there any *unmapped reads*?  (What happens if you [BLAST these against other genomes](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome))
+What about alignments that aren't primary or supplementary?  (These are **alternative alignment locations**.)
+
+Are there any *unmapped reads*?
 
 :::
 
