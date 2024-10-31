@@ -366,8 +366,11 @@ Good luck!
 
 ### Keeping a fast iteration time during development.
 
-When you're developing a pipeline, you don't want to wait two hours only to discover that it didn't
-work. A good idea would therefore be to start by creating smaller, sub-sampled version of the
+The data from this pipeline are pretty large, and it will take a while for the pipeline to run.
+That's no good for pipeline development as you'll want to know pretty quickly whether it works or doesn't work.
+(After all you don't want to wait two hours only to discover that it failed.)
+
+A good idea would therefore be to start by creating smaller, sub-sampled version of the
 datasets (whichever of the above raw data you use). For example, you could run:
 
 ```
@@ -382,9 +385,16 @@ command extract?
 :::
 
 If you set your config files the way I [suggested above](#how-should-i-get-sample-information-in) then you can have one
-config file for the small test dataset, and then once it is all working, rerun using the real config file specifying the
-full dataset.  (Of course, for this to work you'll have to make sure your rules find the fastq files using the data in
-the config file...)
+config file for the smaller test dataset (giving them new IDs, such as `QG0033-c-subsampled`, to avoid conflicts). Then,
+once it is all working, you can rerun using the real config file specifying the full dataset.
+
+:::warning Note
+
+Of course, for this to work you'll have to **make sure your rules find the fastq files using the paths from the config
+file** rather than hard-coding them. I called that `fastq_filename_template` in the [suggested config
+file](#how-should-i-get-sample-information-in).
+
+:::
 
 [Go back to the tips and tricks](#Tips-and-tricks).
 
