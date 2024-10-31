@@ -742,6 +742,12 @@ handle this most projects actually treat samples as if they were diploid - they 
 heterozygote calls as 'mixed' calls. This is *ad hoc* but works ok. So you could set
 `--organism-ploidy 2`.
 
+:::tip Note
+
+`bcftools call` has a similar option, called `--ploidy`.
+
+:::
+
 For the purposes of this tutorial you could do either - or both so we can see the difference?
 
 [Go back to the list of tips and tricks](#Tips-and-tricks).
