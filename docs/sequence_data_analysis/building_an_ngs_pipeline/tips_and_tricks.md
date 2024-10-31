@@ -101,6 +101,69 @@ this form to refer to the filename from the `input:` section.
 
 :::
 
+### How should I get sample information in?
+
+Your pipeline is going to need the sample information in.
+
+Although you can add sample information into the top of the snakefile, say:
+```
+samples = [ 'QG0033-C', 'QG0041-C', and so on ]
+```
+
+...that's not very flexible.  A better way is to put this information about the samples, and any
+other needed data in through a **config file**.
+
+This is a file called (say) `config.json` that you pass in using the `--configfile` argument. For
+example, for this project you could use a `config.json` that looks like this:
+
+```json config.json
+{
+	"reference": "data/reference/Pf3D7_v3.fa.gz",
+	"fastq_filename_template": "data/reads/{ID}_{read}.fastq.gz",
+	"samples": {
+		"QG0033-C": { "accession": "ERR377582" },
+		"QG0041-C": { "accession": "ERR377591" },
+		"QG0049-C": { "accession": "ERR417627" },
+		"QG0056-C": { "accession": "ERR417621" },
+		"QG0088-C": { "accession": "ERR377629" }
+	}
+}
+```
+
+(This contains information copied from `samples.tsv`.) And then you would run snakemake like this:
+
+```
+snakemake -s pipelines/analysis.snakefile --configfile config.json
+```
+
+The point of this is that it makes it easy to run the pipeline on different sets of data - such as
+[a test data for pipeline testing](#keeping-a-fast-iteration-time-during-development) - you just
+swap out the config file for a different one.
+
+:::tip Note
+In a real pipeline there are likely to be many samples, so it might be better to reference the sample
+sheet in the config file:
+
+```json config.json
+{
+	"reference": "data/reference/Pf3D7_v3.fa.gz",
+	"fastq_filename_template": "data/reads/{ID}_{read}.fastq.gz",
+	"samples": "samples.tsv"
+}
+```
+
+and then have your snakefile load the samples using (for example)
+[pandas](/prerequisites/pandas.md):
+
+```
+import pandas
+config['samples'] = pandas.read_table( "samples.tsv" )
+```
+
+:::
+
+[Go back to the tips and tricks](#tips-and-tricks).
+
 ### How should I run snakemake?
 
 Let's say your snakefile is `pipelines/analysis.snakefile`.  I find the best way to run snakemake is to *always run it
@@ -128,91 +191,6 @@ it makes it is easy to copy the code around, or to share the pipeline via github
 layout](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html).
 
 [Go back to the tips and tricks](#tips-and-tricks).
-
-### How should I get sample information in?
-
-Your pipeline is going to need the sample information in.
-
-Although you can add sample information into the top of the snakefile, say:
-```
-samples = [ 'QG0033-C', 'QG0041-C', and so on ]
-```
-
-...that's not very flexible.  A better way is to put this information about the samples, and any
-other needed data in through a **config file**.
-
-This is a file called (say) `config.json` that you pass in using the `--configfile` argument. For
-example, for this project you could use a `config.json` that looks like this:
-
-```json config.json
-{
-	"reference": "data/reference/Pf3D7_v3.fa.gz",
-	"fastq_filename_template": "data/reads/subsampled/{ID}_{read}.fastq.gz",
-	"samples": {
-		"QG0033-C": { "accession": "ERR377582" },
-		"QG0041-C": { "accession": "ERR377591" },
-		"QG0049-C": { "accession": "ERR417627" },
-		"QG0056-C": { "accession": "ERR417621" },
-		"QG0088-C": { "accession": "ERR377629" }
-	}
-}
-```
-
-(This contains information copied from `samples.tsv`.) And then you would run snakemake like this:
-
-```
-snakemake -s pipelines/analysis.snakefile --configfile config.json
-```
-
-The point of this is that it makes it easy to run the pipeline on different sets of data - such as
-[a test data for pipeline testing](#keeping-a-fast-iteration-time-during-development) - you just
-swap out the config file for a different one.
-
-:::tip Note
-In a real pipeline there are likely to be many samples, so it might be better to reference the sample
-sheet in the config file:
-
-```json config.json
-{
-	"fastq_filename_template": "data/reads/subsampled/{ID}_{read}.fastq.gz",
-	"samples": "samples.tsv"
-}
-```
-
-and then have your snakefile load the samples using (for example)
-[pandas](/prerequisites/pandas.md):
-
-```
-import pandas
-config['samples'] = pandas.read_table( "samples.tsv" )
-```
-
-:::
-
-[Go back to the tips and tricks](#tips-and-tricks).
-
-### Keeping a fast iteration time during development.
-
-When you're developing a pipeline, you don't want to wait two hours only to discover that it didn't
-work. A good idea would therefore be to start by creating smaller, sub-sampled version of the
-datasets (whichever of the above raw data you use). For example, you could run:
-
-```
-gunzip -c filename.fastq.gz | head -n 4000 | gzip -c > filename.subsampled.fastq
-```
-
-to take the first few reads from each file.
-
-:::tip Question
-The above command specifies a multiple of 4 lines. Why? How many reads does the above
-command extract?
-:::
-
-If you set your pipeline up the way I suggest above then you can have a config file for the small
-test dataset, and then once it is all working, rerun using the real config file specifying the full
-dataset.
-
-[Go back to the tips and tricks](#Tips-and-tricks).
 
 ### ...a second rule hint?
 
@@ -379,6 +357,30 @@ inputs. (That way you don't have to jump through hoops to do the rename again.)
 Good luck!
 
 [Go back to the tips and tricks](#tips-and-tricks).
+
+### Keeping a fast iteration time during development.
+
+When you're developing a pipeline, you don't want to wait two hours only to discover that it didn't
+work. A good idea would therefore be to start by creating smaller, sub-sampled version of the
+datasets (whichever of the above raw data you use). For example, you could run:
+
+```
+gunzip -c filename.fastq.gz | head -n 4000 | gzip -c > filename.subsampled.fastq
+```
+
+to take the first few reads from each file.
+
+:::tip Question
+The above command specifies a multiple of 4 lines. Why? How many reads does the above
+command extract?
+:::
+
+If you set your config files the way I [suggested above](#how-should-i-get-sample-information-in) then you can have one
+config file for the small test dataset, and then once it is all working, rerun using the real config file specifying the
+full dataset.  (Of course, for this to work you'll have to make sure your rules find the fastq files using the data in
+the config file...)
+
+[Go back to the tips and tricks](#Tips-and-tricks).
 
 ### My snakefiles are getting too big!
 
