@@ -284,11 +284,11 @@ rule make_renamed_fastqs:
 	"""
 ```
 
-...but how do you get snakemake to compute the accession in there?
+But how do you get snakemake to compute the accessions in there?
 
-The trick here is remember the golden rule: snakemake works **from outputs to inputs**.  What you need is a function that
-converts the output sample ID (e.g. `QG0033-C`) into the input filename (e.g.
-`data/reads/ERR377582_1.fastq.gz`).  If you followed the [suggestion above](#how-should-i-get-sample-information-in)
+The trick here is remember the golden rule: snakemake works **from outputs to inputs**.  What you need is a function
+that converts the desired output sample ID (e.g. `QG0033-C`) into the correct input filename (e.g.
+`data/reads/ERR377582_1.fastq.gz`).  Luckily, if you followed the [suggestion above](#how-should-i-get-sample-information-in)
 you'll have put this information into the config file - so you could get it out using a function like this:
 
 ```python
@@ -352,8 +352,10 @@ rule run_fastqc:
 
 **Phew!**
 
-If all this seemed like a lot of work - note it has made the rest of the pipeline easier too.
-Because some of the other steps (like alignment) are also easier to write using the re-named fastq files.
+If all this seemed like a lot of work - it was.
+
+(But note it has made the rest of the pipeline easier because you can use the re-named fastq files as input to other
+rules, too - such as the step that aligns reads.)
 
 [Go back to the tips and tricks](#tips-and-tricks).
 
