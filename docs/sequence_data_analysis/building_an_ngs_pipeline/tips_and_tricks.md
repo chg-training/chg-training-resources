@@ -9,11 +9,11 @@ section.
 
 * [Wait, what?  How should I start?](./#getting-started)
 * [Give me a first rule hint?](#give-me-a-first-rule-hint)
-* [How should I run snakemake?](./#how-should-i-run-snakemake)
-* [Keeping a fast iteration time during development](#keeping-a-fast-iteration-time-during-development).
 * [How should I get sample information in?](./#how-should-i-get-sample-information-in)
+* [How should I run snakemake?](./#how-should-i-run-snakemake)
 * [...a second rule hint?](#a-second-rule-hint)
 * [...and what about the other rules?](#what-about-the-other-rules)
+* [Keeping a fast iteration time during development](#keeping-a-fast-iteration-time-during-development).
 * [My snakefiles are getting too big!](#my-snakefiles-are-getting-too-big)
 * [Dealing with intermediate files](#dealing-with-intermediate-files).
 * [But I want to run the yellow bits too!](#but-I-want-to-run-the-yellow-bits-too)
