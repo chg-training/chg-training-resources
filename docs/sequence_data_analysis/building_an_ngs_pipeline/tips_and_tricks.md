@@ -339,7 +339,7 @@ rules, too - such as the step that aligns reads.)
 
 ### ...what about the other rules?
 
-No help here - you have to write these yourself!
+You have to write these yourself!
 
 However you should
 
@@ -351,8 +351,14 @@ However you should
 * And perhaps look back at the [first rule hint](#give-me-a-first-rule-hint) and the [second rule hint](#a-second-rule-hint) to figure out how to write them.
 
 * To make life easier you might want to use the renamed input fastq files [described above](#a-second-rule-hint) as
-inputs. (That way you don't have to jump through hoops to do the rename again.)
+inputs. That way you should just be able to use '{ID}' as the wildcard throughout the pipeline, i.e. like this:
 
+```
+output: "results/somewhere/output_file_{ID}.txt"
+input: "somewhere_else/input_file_{ID}.txt"
+```
+
+and snakemake will figure out the correct input file from the output file.
 
 Good luck!
 
