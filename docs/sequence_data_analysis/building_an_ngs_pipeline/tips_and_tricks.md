@@ -19,6 +19,8 @@ section.
 * [But I want to run the yellow bits too!](#but-I-want-to-run-the-yellow-bits-too)
 * [Read groups what now?](#read-groups-what-now)
 * [What's in the fastq header?](#whats-in-the-fastq-header)
+* [Getting variant-calling rules working](#getting-variant-calling-rules-working)
+* [I can't install Octopus!](#i-cant-install-octopus)
 * [Octopus is taking too long!](#octopus-is-taking-too-long)
 * [What ploidy?](#what-ploidy)
 * [Tools that use temporary directories](#tools-that-use-temporary-directories)
@@ -60,7 +62,7 @@ To really get started, you will need some [rules in there](#give-me-a-first-rule
 need a **config file** as outlined [below](#how-should-i-put-sample-information-in) - it can go in
 `pipelines` or in the top-level folder, whichever you prefer.
 
-[Go back to the tips and tricks](#tips-and-tricks).
+[Go back to the list of tips and tricks](#tips-and-tricks).
 
 ### Give me a first rule hint?
 
@@ -162,7 +164,7 @@ config['samples'] = pandas.read_table( "samples.tsv" )
 
 :::
 
-[Go back to the tips and tricks](#tips-and-tricks).
+[Go back to the list of tips and tricks](#tips-and-tricks).
 
 ### How should I run snakemake?
 
@@ -190,7 +192,7 @@ it makes it is easy to copy the code around, or to share the pipeline via github
 **Note.** The snakemake documentation suggests a [similar, but slightly different
 layout](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html).
 
-[Go back to the tips and tricks](#tips-and-tricks).
+[Go back to the list of tips and tricks](#tips-and-tricks).
 
 ### ...a second rule hint?
 
@@ -335,7 +337,7 @@ If all this seemed like a lot of work - it was.
 (But note it has made the rest of the pipeline easier because you can use the re-named fastq files as input to other
 rules, too - such as the step that aligns reads.)
 
-[Go back to the tips and tricks](#tips-and-tricks).
+[Go back to the list of tips and tricks](#tips-and-tricks).
 
 ### ...what about the other rules?
 
@@ -362,7 +364,7 @@ and snakemake will figure out the correct input file from the output file.
 
 Good luck!
 
-[Go back to the tips and tricks](#tips-and-tricks).
+[Go back to the list of tips and tricks](#tips-and-tricks).
 
 ### Keeping a fast iteration time during development.
 
@@ -396,7 +398,7 @@ file](#how-should-i-get-sample-information-in).
 
 :::
 
-[Go back to the tips and tricks](#Tips-and-tricks).
+[Go back to the list of tips and tricks](#Tips-and-tricks).
 
 ### My snakefiles are getting too big!
 
@@ -435,7 +437,7 @@ You'll notice I included a `functions.snakemake` above. This is where I tend to 
 functions, like the `get_fq1_filename()` function mentioned above.
 :::
 
-[Go back to the tips and tricks](#Tips-and-tricks).
+[Go back to the list of tips and tricks](#Tips-and-tricks).
 
 ### Dealing with intermediate files
 
@@ -489,7 +491,7 @@ benefit of the UNIX pipe with the same syntax as above - just replace `temp()` w
 work. (I've never actually used this feature but it's a nice idea for this step, because the SAM file output by `bwa`
 might be huge when applied to real data.)
 
-[Go back to the tips and tricks](#Tips-and-tricks).
+[Go back to the list of tips and tricks](#Tips-and-tricks).
 
 ### But I want to run the yellow bits too!
 
@@ -543,7 +545,7 @@ rule align_reads:
     fq1 = something,
     fq2 = something
   output:
-    sam = temp( "results/alignment/{name}.sam" )
+    sam = temp( "results/alignment/{ID}.sam" )
   params:
     read_group_spec = lambda wildcards: get_read_group_line( wildcards.name )
   shell: """
@@ -563,7 +565,7 @@ read names in the fastq files. For the data in this practical, some parts such a
 identifier can be found on the [ENA website](ERR377582). But in general it's a bit hard to put it
 all together. (Luckily just the sample name and identifier are enough for our analysis.)
 
-[Go back to the tips and tricks](#Tips-and-tricks).
+[Go back to the list of tips and tricks](#Tips-and-tricks).
 
 ### What's in the fastq header?
 
@@ -588,7 +590,121 @@ on your data provider. Some other examples can be found [on
 wikipedia](https://en.wikipedia.org/wiki/FASTQ_format#Illumina_sequence_identifiers) or on the
 [GATK read groups page](https://gatk.broadinstitute.org/hc/en-us/articles/360035890671-Read-groups).
 
-[Go back to the tips and tricks](#Tips-and-tricks).
+[Go back to the list of tips and tricks](#Tips-and-tricks).
+
+### Getting variant-calling rules working
+
+The variant calling rule will be slightly different because it will call across all samples at once.
+So it has multiple input files, and only one output file.
+
+This turns out to be easy in snakemake.  Instead of making a single filename input:
+
+```
+rule my_rule:
+	output: "results/variants.vcf.gz"
+	input: "results/alignment/{ID}.bam"
+```
+
+...you make the input a list of files:
+```
+rule my_rule:
+	output:
+		vcf = "results/variants.vcf.gz"
+	input:
+		bams = [
+			"results/alignment/Sample_1.bam",
+			"results/alignment/Sample_2.bam",
+			etc.
+		]
+	shell: """
+		octopus -i {input.alignments} (other arguments...)
+	"""
+```
+
+:::tip Note
+
+In the shell command, the multiple files are just pasted next to each other, so the command ends up looking like:
+```
+octopus -i "results/alignment/Sample_1.bam" "results/alignment/Sample_2.bam" (other arguments...)
+```
+:::
+
+That works just fine... but is a bit annoying as you'd have to hard-code all those sample IDs again.
+
+Luckily snakemake provides a short-hand for this, in the form of the `expand()` function:
+
+```
+rule my_rule:
+	output:
+		vcf = "results/variants.vcf.gz"
+	input:
+		bams = expand(
+			"results/alignment/{ID}.bam",
+			config['samples'].keys()
+		)
+	(etc.)
+```
+
+So now your rule will take multiple outputs and produce one input.
+
+[Go back to the list of tips and tricks](#Tips-and-tricks).
+
+### I can't install Octopus!
+
+On my system I have the problem that conda won't install Octopus for me.
+(This is because there's no [conda package available on bioconda for my mac](https://anaconda.org/bioconda/octopus).)
+
+If you run into this, you have three options:
+
+1. Give up and don't bother with variant calls.  (Have you really had enough of this pipelining challenge?)
+2. Install octopus yourself [from github](https://github.com/luntergroup/octopus).  See the 'Quick start' instructions there.
+3. Or switch to another variant caller.
+
+The simplest variant caller you could use is actually `bcftools` (which conda probably will install for you.)  
+
+There's a worked example of using `bcftools` on [this page](../variant_calling_and_imputation/Variant_calling.md), but
+here's a quick guide.  
+
+:::tip Calling with bcftools 
+
+Calling variants using bcftools takes two steps:
+
+1. Run `bcftools mpileup` to summarise the data in the reads at each position - something like:
+```
+bcftools mpileup \
+--output-type z \
+-f [reference fasta filename] \
+-o results/variants/mpileup.vcf.gz \
+sample1.bam sample2.bam ...
+```
+
+The `--output-type z` part of the above command tells `bcftools` to output a [**(b)gzipped VCF
+file**](https://samtools.github.io/hts-specs/VCFv4.2.pdf), which is a standard way of encoding genetic variation data.
+
+(The backslash characters here (`\`) are 'line continuation' characters - they just tell bash to treat the above as one command.)
+
+2. The output file of the `mpileup` step has information for all samples at every site in the reference genome (so
+something like 23 million rows).  What we want is just to find the sites where there's genetic variation and compute
+their genotypes - that's what `bcftools call` does.  Run it something like this:
+
+```
+bcftools call \
+--output-type z \
+--multiallelic-caller \
+--variants-only \
+ -o results/variants/calls.vcf.gz \
+results/variants/mpileup.vcf.gz
+```
+
+If you look at the output file, you should see it has rows for only a subset of positions in the genome - the sites
+where `bcftools` thinks there are genetic variants.
+
+:::
+
+If you don't fancy `bcftools` or `octopus`, the [pipeline](./pipeline.md#the-pipeline) also has a list of other variant
+callers you could attempt. They will all give similar, but slightly different output (it'd be interesting to compare...)
+
+[Go back to the list of tips and tricks](#Tips-and-tricks).
 
 ### Octopus is taking too long!
 
@@ -614,7 +730,7 @@ possibilities. For a simple approach you could also use [`bcftools mpileup` and 
 call`](https://samtools.github.io/bcftools/bcftools.html) (this is likely to be substantially faster as it relies on the input
 alignments does not try to reconstruct local haplotypes near each variant.). 
 
-[Go back to the tips and tricks](#Tips-and-tricks).
+[Go back to the list of tips and tricks](#Tips-and-tricks).
 
 ### What ploidy?
 
@@ -628,7 +744,7 @@ heterozygote calls as 'mixed' calls. This is *ad hoc* but works ok. So you could
 
 For the purposes of this tutorial you could do either - or both so we can see the difference?
 
-[Go back to the tips and tricks](#Tips-and-tricks).
+[Go back to the list of tips and tricks](#Tips-and-tricks).
 
 ### Tools that use temporary directories
 
