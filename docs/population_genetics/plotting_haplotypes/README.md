@@ -302,6 +302,8 @@ order_haplotypes <- function( haplotypes, metadata, region ) {
 
 ```
 
+Feel free to explore other regions within the data.
+
 ## The frequency of variants
 
 How much variation is there?  Here are a few ways to look at it.
@@ -421,16 +423,15 @@ Here are some challenges:
 
 :::tip Challenge 1
 
-The *FUT2* gene is in this data around positions 49,199,228 - 49,209,208
-
-Can you make a version of the haplotype plot that shows all haplotypes as before, but the ordering is based only on the
-SNPs in *FUT2* or a small region around it?
+Pick other genes in the region and make a version of the haplotype plot that shows all haplotypes, but the ordering is
+based only on the SNPs in the gene, or a small region around it.
 
 :::
 
 :::tip Challenge 2
 
-Do haplotypes carrying the alternate allele at the SNP `rs601338` (at `chr19:49206674`), which determines secretor status, look different from those that don't?  Try plotting just the haplotypes carrying each allele.
+Do haplotypes carrying the alternate allele at the SNP `rs601338` (at `chr19:49206674` in *FUT2*), which determines secretor
+status, look different from those that don't?  Try plotting just the haplotypes carrying each allele.
 
 :::
 

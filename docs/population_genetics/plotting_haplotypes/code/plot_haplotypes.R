@@ -149,7 +149,7 @@ plot_gff = function(
 		x = guide[w2],
 		y = ylim[1] - 0,
 		format( as.integer(guide[w2]), big.mark = "," ),
-		cex = 0.75,
+		cex = 1,
 		adj = 0.5,
 		xpd = NA
 	)
@@ -339,5 +339,5 @@ plot_haplotypes <- function(
 		name = "gene_name",
 		verbose = verbose
 	)
-	axis(1)
+#	axis(1)
 }
