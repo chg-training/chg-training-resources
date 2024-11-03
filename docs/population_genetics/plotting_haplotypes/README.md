@@ -22,7 +22,7 @@ It has data for >30,000 biallelic SNPs (in rows) and the samples in columns.
 
 If you want to see how this data was generated - follow the [Variant calling and imputation practical](/sequence_data_analysis/variant_calling_and_imputation/README.md).
 
-This data comes from the region of the gene *FUT2*.
+This data comes from a region of chromosome 19 including the genes *GRIN2D* (which is associated with a number of [neurodevelopmental disorders](https://www.ncbi.nlm.nih.gov/books/NBK582335/)) and *FUT2* (which encodes [secretor status](https://en.wikipedia.org/wiki/Secretor_status)).
 
 :::
 
@@ -92,7 +92,7 @@ install.packages(
 ```
 :::
 
-You can get a function to plot genes from [this file](./code/plot_gff.R).
+You can get a function to plot genes from [this file](https://github.com/chg-training/chg-training-resources/blob/main/docs/population_genetics/plotting_haplotypes/code/plot_gff.R).
 
 This uses base R so I'm going to make a layout for the plot - with the genes below the sequences.
 This will be a multi-panel plot, which takes a bit of care.
@@ -173,101 +173,12 @@ plot_gff(
 )
 ```
 
-I've put that all together into a function which you can find here:
-```
-plot_haplotypes <- function(
-	haplotypes,
-	metadata,
-	genes,
-	region,
-	verbose = FALSE
-) {
-	# Remove R's built-in plot margins
-	par( mar = c( 0, 0, 0, 0 ))
-	# Generate a multi-panel layout
-	layout(
-		matrix(
-			c(
-				0, 0, 0, # top margin
-				0, 1, 0, # haplotypes
-				0, 0, 0,
-				0, 2, 0, # linking lines
-				0, 0, 0,
-				0, 3, 0, # genes
-				0, 0, 0  # bottom margin
-			),
-			byrow = T,
-			ncol = 3
-		),
-		widths = c( 0.1, 1, 0.1 ),
-		heights = c( 0.1, 1, 0.01, 0.2, 0.01, 0.4, 0.1 )
-	)
-
-
-	w = which( metadata$position >= region$start & metadata$position <= region$end )
-	haplotypes = haplotypes[w,]
-	metadata = metadata[w,]
-	L = nrow(haplotypes) # number of SNPs
-	N = ncol(haplotypes) # number of haplotypes
-	# Plot the haplotypes
-	image(
-		haplotypes,
-		x = 1:L,
-		y = 1:N,
-		xlab = "SNPs",
-		ylab = "Chromosomes",
-		xaxt = 'n',
-		bty = 'n'
-	)
-
-	# Plot the joining segments
-	xlim = range( metadata$position )
-	blank.plot( xlim = xlim, ylim = c( 0, 1 ), xaxs = 'i' )
-
-	xs = seq( from = xlim[1], to = xlim[2], length = nrow( metadata ))
-	ys = c( 0, 0.25, 0.75, 1 )
-
-	# In case there are too many SNPs, let's just take a subset.
-	by = 10^(floor( log10( nrow( metadata )))-2)
-	indices = (1:nrow(metadata))[seq( from = 1, to = nrow(metadata), by = by )]
-	segments(
-		x0 = metadata$position[indices], x1 = metadata$position[indices],
-		y0 = ys[1], y1 = ys[2],
-		col = rgb( 0, 0, 0, 0.2 )
-	)
-	segments(
-		x0 = metadata$position[indices], x1 = xs[indices],
-		y0 = ys[2], y1 = ys[3],
-		col = rgb( 0, 0, 0, 0.2 )
-	)
-	segments(
-		x0 = xs[indices], x1 = xs[indices],
-		y0 = ys[3], y1 = ys[4],
-		col = rgb( 0, 0, 0, 0.2 )
-	)
-	genes = (
-		genes
-		%>% filter(
-			seqid == 'chr19'
-			& end >= region$start
-			& start <= region$end
-			& type %in% c( "gene", "transcript", "exon", "CDS" )
-		)
-	)
-
-	if( verbose ) {
-		print( genes )
-	}
-	plot_gff(
-		genes,
-		region = region,
-		name = "gene_name",
-		verbose = verbose
-	)
-}
+I've put that all together, with some tweaks, into a function which you can find [on github](https://github.com/chg-training/chg-training-resources/blob/main/docs/population_genetics/plotting_haplotypes/code/plot_haplotypes.R).  Download that file, source it by typing...
+```r
+source( 'plot_haplotypes.R' )
 ```
 
-...and try it:
+...and let's try it:
 ```
 region = list(
 	chromosome = 'chr19',
@@ -282,12 +193,12 @@ plot_haplotypes(
 )
 ```
 
-Let's also zoom in a bit to see the haplotypes around FUT2:
+Let's also zoom in a bit to see the haplotypes around *GRIN2D*:
 ```
 FUT2.region = list(
 	chromosome = 'chr19',
-	start = 49199228 - 100000,
-	end = 49209208 + 100000
+	start = 49199228 - 50000,
+	end = 49209208 + 50000
 )
 plot_haplotypes(
 	GT,
@@ -297,17 +208,35 @@ plot_haplotypes(
 )
 ```
 
+...or a slightly larger region around *GRIN2D**:
+```
+GRIN2D.region = list(
+	chromosome = 'chr19',
+	start = 48896925 - 100000,
+	end = 48948188 + 100000
+)
+plot_haplotypes(
+	GT,
+	metadata,
+	genes,
+	region = GRIN2D.region
+)
+```
+
+Very [hapmap-esque](https://doi.org/10.1038/nature04226)!.
+
 ## Ordering the haplotypes
 
-Let's use a simple approach to order the haplotypes in the region - [hierarchical
-clustering](https://en.wikipedia.org/wiki/Hierarchical_clustering).
+Haplotypes plotted like that look very noisy - and not surprisingly, since the individuals are essentially in random order.
 
-In R we can do this by first constructing a **distance matrix** and then using `hclust()` to cluster it.  Let's try now:
+To try to make sense of them, let's use a simple approach to order the haplotypes in the region -  [hierarchical clustering](https://en.wikipedia.org/wiki/Hierarchical_clustering).
 
+In R we can do this by first constructing a **distance matrix** and then using `hclust()` to cluster it.  Let's try now - we'll cluster by SNPs near the FUT2 gene:
 
 ```r
+wNearGRIN2D = which( metadata$position >= GRIN2D.region$start & metadata$position <= GRIN2D.region$end )
 distance = dist(
-	t(GT),
+	t(GT[wNearGRIN2D,]),
 	method = "manhattan"
 )
 ```
@@ -353,15 +282,24 @@ plot_haplotypes(
 	GT[,sample_order],
 	metadata,
 	genes,
-	region = region
+	region = GRIN2D.region
 )
+```
 
-plot_haplotypes(
-	GT[,sample_order],
-	metadata,
-	genes,
-	region = FUT2.region
-)
+:::tip Note
+
+Wouldn't it be better to put that sorting code into a function?  It would!
+
+```r
+order_haplotypes <- function( haplotypes, metadata, region ) {
+	wInRegion = which( metadata$position >= region$start & metadata$position <= region$end )
+	distance = dist(
+		t(haplotypes[wInRegion,]),
+		method = "manhattan"
+	)
+	return( hclust( distance )$order )
+}
+
 ```
 
 ## The frequency of variants
@@ -483,7 +421,7 @@ Here are some challenges:
 
 :::tip Challenge 1
 
-The *FUT2* gene is in this data around positions 48,695,971 - 48,705,951.
+The *FUT2* gene is in this data around positions 49,199,228 - 49,209,208
 
 Can you make a version of the haplotype plot that shows all haplotypes as before, but the ordering is based only on the
 SNPs in *FUT2* or a small region around it?
