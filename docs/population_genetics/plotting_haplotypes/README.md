@@ -75,14 +75,20 @@ The third thing it would be nice to do is plot genes on there... let's try this 
 
 :::caution Note
 The data above is in **build 37** coordinates.  So you will need to get the [build 37 version](https://www.gencodegenes.org/human/release_47lift37.html) of the gencode files for this.
+Download the b37 version of the gff file now, for example by:
+```
+curl -O https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_47/GRCh37_mapping/gencode.v47lift37.annotation.gff3.gz
+```
+and remember where it is saved.
 :::
 
+Now load the genes into R:
 ```r
 genes = gmsgff::read_gff( "/path/to/gencode.v47lift37.annotation.gff3.gz", extra_attributes = c( "gene_name", "gene_type" ) )
 ```
 
 :::tip Note
-To have this code, you have to have installed the `gmsgff` package or [written your own](https://chg-training.github.io/chg-training-resources/bioinformatics/programming_with_gene_annotations3/).  To install it now, try:
+To load the data like this, you have to have the `read_gff()` function.  Either you have [written your own](https://chg-training.github.io/chg-training-resources/bioinformatics/programming_with_gene_annotations3/), or else you can install my version from the `gmsgff` package.  To install that now, try:
 ```
 install.packages(
     "https://www.chg.ox.ac.uk/bioinformatics/training/gms/code/R/gmsgff.tgz",
@@ -90,51 +96,61 @@ install.packages(
     type = "source"
 )
 ```
+
+Plotting genes from gff is also nontrivial so I've written a function to do it - find it in [this file](https://github.com/chg-training/chg-training-resources/blob/main/docs/population_genetics/plotting_haplotypes/code/plot_gff.R).  If you download that file, you can either paste it into your R session or load it using `source()`:
+```r
+source( 'plot_gff.R')
+```
 :::
 
-You can get a function to plot genes from [this file](https://github.com/chg-training/chg-training-resources/blob/main/docs/population_genetics/plotting_haplotypes/code/plot_gff.R).
+Let's plot a multi-panel plot with the haplotypes on top and the genes underneath. Because the haplotypes are plotted in
+SNP index positions, we'll also need some join-y segments to show us where they are. For customised plots like this, you
+usually need to go low level.  This tutorial uses base R graphics to do this, but the techniques should apply to other
+systems as well.
 
-This uses base R so I'm going to make a layout for the plot - with the genes below the sequences.
+This is  graphics so I'm going to make a layout for the plot - with the genes below the sequences.
 This will be a multi-panel plot, which takes a bit of care.
-I've found the best way to do this is to
+I've found the best way to do control multi-panel plots is to
 
-1. get rid of R's built-in plot margins, and
-2. Instead control the margins as rows in the layout matrix.
+1. get rid of the built-in plot margins, and
+2. Instead control the margins as rows in the layout of panels.
 
-For this plot we'll want
-
-- a panel showing the haplotypes
-- a panel showing **linking lines** that show the physical location of each SNP
-- and a panel showing the genes.
-
-And in between each we will want a small margin line.  Let's try now:
+In R we can do that by creating a plot layout matrix with `0`'s in the rows and columns that are not plotted in.  Let's try now:
 
 ```
-# Remove R's built-in plot margins
+# First remove R's built-in plot margins...
 par( mar = c( 0, 0, 0, 0 ))
-# Generate a multi-panel layout
-layout(
-	matrix(
-		c(
-			0, 0, 0, # top margin
-			0, 1, 0, # haplotypes
-			0, 0, 0,
-			0, 2, 0, # linking lines
-			0, 0, 0,
-			0, 3, 0, # genes
-			0, 0, 0  # bottom margin
-		),
-		byrow = T,
-		ncol = 3
+
+# ...and generate a multi-panel layout matrix
+layout.matrix = matrix(
+	c(
+		0, 0, 0, # top margin
+		0, 1, 0, # haplotypes
+		0, 0, 0,
+		0, 2, 0, # linking lines
+		0, 0, 0,
+		0, 3, 0, # genes
+		0, 0, 0  # bottom margin
 	),
+	byrow = T,
+	ncol = 3
+)
+print( layout.m )
+```
+
+The layout() function now creates a multi-panel figure:
+```
+layout(
+	layout.matrix,
 	widths = c( 0.1, 1, 0.1 ),
 	heights = c( 0.1, 1, 0.1, 0.5, 0.1 )
 )
 ```
-Now we plot the panels in order:
+
+Now we plot the panels in the order they appear in the layout:
 
 ```
-# Plot the haplotypes
+# Plot 1: the haplotypes
 image(
 	GT,
 	x = 1:L,
@@ -148,6 +164,7 @@ For the middle panel, let's make a blank plot, and then put some line segments o
 I like three-segmented line segments here, so that's what I'll do!
 
 ```
+# Plot 2: the joining segments
 xlim = range( metadata$position )
 blank.plot( xlim = xlim, ylim = c( 0, 1 ), xaxs = 'i' )
 xs = seq( from = xlim[1], to = xlim[2], length = nrow( metadata ))
@@ -168,12 +185,14 @@ segments(
 
 Finally for the last panel we'll plot the genes:
 ```
+# Plot 3: the genes
 plot_gff(
-	genes %>% filter( end >= xlim[1] & start <= xlim[2] & type %in% c( "gene", "transcript", "exon", "CDS" ))
+	genes %>% filter( end >= xlim[1] & start <= xlim[2] & type %in% c( "gene", "transcript", "exon", "CDS" )),
+	region = list( chromosome = 'chr19', start = min(metadata$position), end = max( metadata$position ))
 )
 ```
 
-I've put that all together, with some tweaks, into a function which you can find [on github](https://github.com/chg-training/chg-training-resources/blob/main/docs/population_genetics/plotting_haplotypes/code/plot_haplotypes.R).  Download that file, source it by typing...
+Phew!  That's quite a bit to type so I've put that all together, with some extra tweaks, into a function which you can find [here](https://github.com/chg-training/chg-training-resources/blob/main/docs/population_genetics/plotting_haplotypes/code/plot_haplotypes.R).  Download that file, source it by typing...
 ```r
 source( 'plot_haplotypes.R' )
 ```
