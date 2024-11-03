@@ -48,8 +48,9 @@ mkdir -p tmp
 # Create a FM index for the reference
 bwa index Pf3D7_v3.fa
 
-# align the reads (using 2 threads - don't use more please!)
-bwa mem -t 4 -o tmp/QG0033-C-aligned.sam Pf3D7_v3.fa QG0033-C_Illumina-HiSeq_read1.fastq.gz QG0033-C_Illumina-HiSeq_read2.fastq.gz
+# Align the reads, using 2 threads.
+# (If you are running this on your own system, feel free to use more!)
+bwa mem -t 2 -o tmp/QG0033-C-aligned.sam Pf3D7_v3.fa QG0033-C_Illumina-HiSeq_read1.fastq.gz QG0033-C_Illumina-HiSeq_read2.fastq.gz
 
 # convert to BAM
 samtools view -b -o tmp/QG0033-C-aligned.bam tmp/QG0033-C-aligned.sam
