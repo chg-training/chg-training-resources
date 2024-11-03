@@ -249,3 +249,95 @@ plot_gff = function(
 		)
 	)
 }
+
+plot_haplotypes <- function(
+	haplotypes,
+	metadata,
+	genes,
+	region,
+	verbose = FALSE
+) {
+	# Remove R's built-in plot margins
+	par( mar = c( 0, 0, 0, 0 ))
+	# Generate a multi-panel layout
+	layout(
+		matrix(
+			c(
+				0, 0, 0, # top margin
+				0, 1, 0, # haplotypes
+				0, 0, 0,
+				0, 2, 0, # linking lines
+				0, 0, 0,
+				0, 3, 0, # genes
+				0, 0, 0  # bottom margin
+			),
+			byrow = T,
+			ncol = 3
+		),
+		widths = c( 0.1, 1, 0.1 ),
+		heights = c( 0.1, 1, 0.01, 0.2, 0.01, 0.4, 0.1 )
+	)
+
+
+	w = which( metadata$position >= region$start & metadata$position <= region$end )
+	haplotypes = haplotypes[w,]
+	metadata = metadata[w,]
+	L = nrow(haplotypes) # number of SNPs
+	N = ncol(haplotypes) # number of haplotypes
+	# Plot the haplotypes
+	image(
+		haplotypes,
+		x = 1:L,
+		y = 1:N,
+		xlab = "SNPs",
+		ylab = "Chromosomes",
+		xaxt = 'n',
+		bty = 'n'
+	)
+
+	# Plot the joining segments
+	xlim = c( region$start, region$end )
+	blank.plot( xlim = xlim, ylim = c( 0, 1 ), xaxs = 'i' )
+	#axis(1)
+	xs = seq( from = xlim[1], to = xlim[2], length = nrow( metadata ))
+	ys = c( 0, 0.25, 0.75, 1 )
+
+	# In case there are too many SNPs, let's just take a subset.
+	by = 10^(floor( log10( nrow( metadata )))-2)
+	indices = (1:nrow(metadata))[seq( from = 1, to = nrow(metadata), by = by )]
+	segments(
+		x0 = metadata$position[indices], x1 = metadata$position[indices],
+		y0 = ys[1], y1 = ys[2],
+		col = rgb( 0, 0, 0, 0.2 )
+	)
+	segments(
+		x0 = metadata$position[indices], x1 = xs[indices],
+		y0 = ys[2], y1 = ys[3],
+		col = rgb( 0, 0, 0, 0.2 )
+	)
+	segments(
+		x0 = xs[indices], x1 = xs[indices],
+		y0 = ys[3], y1 = ys[4],
+		col = rgb( 0, 0, 0, 0.2 )
+	)
+	genes = (
+		genes
+		%>% filter(
+			seqid == 'chr19'
+			& end >= region$start
+			& start <= region$end
+			& type %in% c( "gene", "transcript", "exon", "CDS" )
+		)
+	)
+
+	if( verbose ) {
+		print( genes )
+	}
+	plot_gff(
+		genes,
+		region = region,
+		name = "gene_name",
+		verbose = verbose
+	)
+	axis(1)
+}
