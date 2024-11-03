@@ -78,7 +78,7 @@ The data above is in **build 37** coordinates.  So you will need to get the [bui
 :::
 
 ```r
-genes = gmsgff::read_gff( "/path/to/gencode_b37.gff3.gz", extra_attributes = c( "gene_name", "gene_type" ) )
+genes = gmsgff::read_gff( "/path/to/gencode.v47lift37.annotation.gff3.gz", extra_attributes = c( "gene_name", "gene_type" ) )
 ```
 
 :::tip Note
@@ -173,7 +173,7 @@ plot_gff(
 )
 ```
 
-Let's put that all together into a function and try it:
+I've put that all together into a function which you can find here:
 ```
 plot_haplotypes <- function(
 	haplotypes,
@@ -286,8 +286,8 @@ Let's also zoom in a bit to see the haplotypes around FUT2:
 ```
 FUT2.region = list(
 	chromosome = 'chr19',
-	start = 48641760,
-	end = 48760090
+	start = 49199228 - 100000,
+	end = 49209208 + 100000
 )
 plot_haplotypes(
 	GT,
