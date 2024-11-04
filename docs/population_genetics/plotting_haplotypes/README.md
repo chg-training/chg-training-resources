@@ -486,21 +486,10 @@ status, look different from those that don't?  Try plotting just the haplotypes 
 
 :::
 
-::: Challenge 3
+:::tip Challenge 3
 
-Similarly, if you've done the [genome-wide association study practical](../../genome_wide_association_studies/genome_wide_association_analysis/README.md) you found an association in the *FUT2* gene. Can you make a two-panel version of the haplotype plot, with the top panel being haplotypes that carry the alternate allele of this associated SNP, and the lower panel being haplotypes that don't?
-
-**Hints**:
-
-* You can look up the position of the lead GWAS SNPs in the `metadata` variable.  (Both datasets are in GRCh37 'build 37' coords.)
-
-* You can get the genotypes for the SNP (of course) out of the `GT` matrix.
-
-* Use `layout()` in R to make a two-panel plot, e.g.:
-```r
-layout( matrix( 1:2, ncol = 1 ))
-```
-and then plot the panels in order.
+Plot an **LD matrix** (i.e. a matrix of pairwise correlations between different variants).
+Can you see the block-like structure?
 
 :::
 
