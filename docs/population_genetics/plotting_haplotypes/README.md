@@ -76,7 +76,7 @@ There are three ways we could improve it - we'll try two of these in this tutori
 
 First, we could order the haplotypes (i.e. grouping similar haplotypes) which will help to bring out the 'haplotype structure'.  We'll do this in [a moment](#ordering-the-haplotypes).
 
-Second, instead of plotting reference and non-reference alleles, it would be nice to plot ancestral and non-ancestral (i.e. 'derived') alleles.  Then we'd be looking at mutations directly.  (We'll skip this for now.)
+Second, instead of plotting reference and non-reference alleles, it would be nice to plot ancestral and non-ancestral (i.e. 'derived') alleles.  Then we'd be looking at mutations directly.  (We'll skip this for now., although [ancestral allele calls are available](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/pilot_data/technical/reference/ancestral_alignments/), so it's possible in principle.)
 
 The third thing it would be nice to do is plot the variants on reference sequence coordinates, with genes on there...
 
@@ -84,9 +84,10 @@ The third thing it would be nice to do is plot the variants on reference sequenc
 
 Let's try to plot with genes now.  First we need to load the genes.
 
-:::caution Note
-The data above is in **build 37** coordinates.  So you will need to get the [build 37 version](https://www.gencodegenes.org/human/release_47lift37.html) of the gencode files for this.
-Download the b37 version of the gff file now, for example by:
+:::caution Note 1
+
+The data in this tutorial is in **build 37** coordinates.  So you will need to get the [build 37 version](https://www.gencodegenes.org/human/release_47lift37.html) of the gencode files for this.  Download the b37 version of the gff file now, for example by:
+
 ```
 curl -O https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_47/GRCh37_mapping/gencode.v47lift37.annotation.gff3.gz
 ```
@@ -98,10 +99,11 @@ Now load the genes into R:
 genes = gmsgff::read_gff( "/path/to/gencode.v47lift37.annotation.gff3.gz", extra_attributes = c( "gene_name", "gene_type" ) )
 ```
 
-:::tip Note
+:::tip Note 2
 
-To load the data like this, you will also have to have the `read_gff()` function.  Either you have [written your own](https://chg-training.github.io/chg-training-resources/bioinformatics/programming_with_gene_annotations3/), or else
-you can install my version from the `gmsgff` package.  To install that now, try:
+To load the data like this, you will also have to have the `read_gff()` function.  You may have
+[written your own](https://chg-training.github.io/chg-training-resources/bioinformatics/programming_with_gene_annotations3/),
+but if not you can install my version from the `gmsgff`package.  To install that now, try:
 ```
 install.packages(
     "https://www.chg.ox.ac.uk/bioinformatics/training/gms/code/R/gmsgff.tgz",
@@ -109,6 +111,9 @@ install.packages(
     type = "source"
 )
 ```
+:::
+
+:::tip Note 3
 
 Plotting genes from gff is also nontrivial so I've written a function to do it - find it in [this file](https://github.com/chg-training/chg-training-resources/blob/main/docs/population_genetics/plotting_haplotypes/code/plot_gff.R).  If you download that file, you can either paste it into your R session or load it using `source()`:
 ```r
@@ -116,7 +121,7 @@ source( 'plot_gff.R')
 ```
 :::
 
-Great - now let's plot a multi-panel plot with the haplotypes on top and the genes underneath. Because the haplotypes are plotted in
+Great - now let's try making a multi-panel plot with the haplotypes on top and the genes underneath. Because the haplotypes are plotted in
 SNP index positions, we'll also need some join-y segments to show us where they are. For customised plots like this, you
 usually need to go low level.  This tutorial uses base R graphics to do this, but the techniques should apply to other
 systems as well.
@@ -128,13 +133,14 @@ I've found the best way to do control multi-panel plots is to
 1. get rid of the built-in plot margins, and
 2. Instead control the margins as rows in the layout of panels.
 
-In R we can do that by creating a plot layout matrix with `0`'s in the rows and columns that are not plotted in.  Let's try now:
+In R we can do that by creating a plot layout matrix with `0`'s in the rows and columns that are not plotted in.
+These will form the actual margins and we'll control their widths and heights as we choose.  Let's try now:
 
 ```
 # First remove R's built-in plot margins...
 par( mar = c( 0, 0, 0, 0 ))
 
-# ...and generate a multi-panel layout matrix
+# ...and then generate a multi-panel layout matrix
 layout.matrix = matrix(
 	c(
 		0, 0, 0, # top margin
@@ -160,7 +166,7 @@ layout(
 )
 ```
 
-Now we plot the panels in the order they appear in the layout:
+Having set up the layout, we now plot the panels in the order they were numbered in the layout:
 
 ```
 # Plot 1: the haplotypes
