@@ -84,6 +84,12 @@ The third thing it would be nice to do is plot the variants on reference sequenc
 
 Let's try to plot with genes now.  First we need to load the genes.
 
+:::warning Warning
+
+This section is somewhat **experimental**.  See how it goes and please let me know if you run into issues.
+
+:::
+
 :::caution Note 1
 
 The data in this tutorial is in **build 37** coordinates.  So you will need to get the [build 37 version](https://www.gencodegenes.org/human/release_47lift37.html) of the gencode files for this.  Download the b37 version of the gff file now, for example by:
