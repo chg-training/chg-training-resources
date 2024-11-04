@@ -16,34 +16,41 @@ print(gwd)
 Have a look at the data.  The data consists of genotype calls for 112 'Gambian from the Western Division' individuals
 from the recent high-coverage sequencing of [1000 Genomes Project](https://www.internationalgenome.org) samples.
 
-It has data for >30,000 biallelic SNPs (in rows) and the samples in columns.
+It has data for >30,000 biallelic SNPs (in rows) from the range `chr19:48,146,028-49,255,722`, and information for 224
+haplotypes in columns (two for each individual, of course, because we are diploid).
+
+The data comes from a region of chromosome 19 including the genes *GRIN2D* (which is associated with a number of [neurodevelopmental disorders](https://www.ncbi.nlm.nih.gov/books/NBK582335/)) and *FUT2* (which encodes [secretor status](https://en.wikipedia.org/wiki/Secretor_status)).
 
 :::tip Note
 
-If you want to see how this data was generated - follow the [Variant calling and imputation practical](/sequence_data_analysis/variant_calling_and_imputation/README.md).
+If you want to see how this data was generated - see the [Variant calling and imputation practical](/sequence_data_analysis/variant_calling_and_imputation/README.md).
 
-This data comes from a region of chromosome 19 including the genes *GRIN2D* (which is associated with a number of [neurodevelopmental disorders](https://www.ncbi.nlm.nih.gov/books/NBK582335/)) and *FUT2* (which encodes [secretor status](https://en.wikipedia.org/wiki/Secretor_status)).
 
 :::
 
 ## Plotting the haplotypes
 
 Let's plot this data now.  To start, let's turn the genotypes themselves into a matrix.
-If you look at the data you'll see the first five columns are variant metadata, so let's get the rest:
+If you look at the data you'll see the first four columns are variant metadata, so let's get the rest:
 ```r
+metadata = gwd[,1:4]
 GT = as.matrix( gwd[,5:ncol(gwd)])
 ```
 
-A simple way to plot is to use `image()`.  First we'll throw out monomorphic and rare variants:
+To plot haplotypes, the first thing we'll do is throw out monomorphic and rare variants.  (These don't look great on haplotype plots because almost everybody carries the same allele!)
 
 ```r
 frequencies = rowSums(GT) / ncol(GT)
 w = which( frequencies > 0 & frequencies < 1 )
 GT = GT[w,]
-metadata = gwd[w,1:4]
+metadata = metadata[w,]
 ```
 
-Let's first get the number of SNPs and haplotypes in the data:
+:::tip Question
+How many variants are left?
+:::
+
+Let's get the number of SNPs and haplotypes in the data:
 ```r
 L = nrow(GT) # number of SNPs
 N = ncol(GT) # number of haplotypes
@@ -63,15 +70,19 @@ image(
 
 Cool!  
 
-But there are three ways we could improve it - we'll try two of these.
+## Improving the plot
 
-First, we could order the haplotypes (i.e. grouping similar haplotypes) which will help to bring out the 'haplotype structure'.  (We'll do this in a moment.)
+There are three ways we could improve it - we'll try two of these in this tutorial.
+
+First, we could order the haplotypes (i.e. grouping similar haplotypes) which will help to bring out the 'haplotype structure'.  We'll do this in [a moment](#ordering-the-haplotypes).
 
 Second, instead of plotting reference and non-reference alleles, it would be nice to plot ancestral and non-ancestral (i.e. 'derived') alleles.  Then we'd be looking at mutations directly.  (We'll skip this for now.)
 
+The third thing it would be nice to do is plot the variants on reference sequence coordinates, with genes on there...
+
 ## Plotting genes
 
-The third thing it would be nice to do is plot genes on there... let's try this now.  First load the genes.
+Let's try to plot with genes now.  First we need to load the genes.
 
 :::caution Note
 The data above is in **build 37** coordinates.  So you will need to get the [build 37 version](https://www.gencodegenes.org/human/release_47lift37.html) of the gencode files for this.
@@ -88,7 +99,9 @@ genes = gmsgff::read_gff( "/path/to/gencode.v47lift37.annotation.gff3.gz", extra
 ```
 
 :::tip Note
-To load the data like this, you have to have the `read_gff()` function.  Either you have [written your own](https://chg-training.github.io/chg-training-resources/bioinformatics/programming_with_gene_annotations3/), or else you can install my version from the `gmsgff` package.  To install that now, try:
+
+To load the data like this, you will also have to have the `read_gff()` function.  Either you have [written your own](https://chg-training.github.io/chg-training-resources/bioinformatics/programming_with_gene_annotations3/), or else
+you can install my version from the `gmsgff` package.  To install that now, try:
 ```
 install.packages(
     "https://www.chg.ox.ac.uk/bioinformatics/training/gms/code/R/gmsgff.tgz",
@@ -103,7 +116,7 @@ source( 'plot_gff.R')
 ```
 :::
 
-Let's plot a multi-panel plot with the haplotypes on top and the genes underneath. Because the haplotypes are plotted in
+Great - now let's plot a multi-panel plot with the haplotypes on top and the genes underneath. Because the haplotypes are plotted in
 SNP index positions, we'll also need some join-y segments to show us where they are. For customised plots like this, you
 usually need to go low level.  This tutorial uses base R graphics to do this, but the techniques should apply to other
 systems as well.
