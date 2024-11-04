@@ -179,25 +179,32 @@ image(
 )
 ```
 
-For the middle panel, let's make a blank plot, and then put some line segments on.
-I like three-segmented line segments here, so that's what I'll do!
+For the middle panel, let's make a blank plot, and then put some line segments on. I like three-segmented line segments
+here, so that's what I'll do.  (This uses a `blank.plot()` function which makes a blank plot pane - it's in the
+`plot_gff.R` code as well.)
 
-```
+```r
 # Plot 2: the joining segments
 xlim = range( metadata$position )
 blank.plot( xlim = xlim, ylim = c( 0, 1 ), xaxs = 'i' )
-xs = seq( from = xlim[1], to = xlim[2], length = nrow( metadata ))
+
+# Locations of where the SNPs will be, in physical coords and in the haplotypes
+physical.pos = metadata$position
+haplotype.pos = seq( from = xlim[1], to = xlim[2], length = nrow( metadata ))
+
+# Vertical locations of the segment joins
 ys = c( 0, 0.25, 0.75, 1 )
+
 segments(
-	x0 = metadata$position, x1 = metadata$position,
+	x0 = physical.pos, x1 = physical.pos,
 	y0 = ys[1], y1 = ys[2]
 )
 segments(
-	x0 = metadata$position, x1 = xs,
+	x0 = physical.pos, x1 = haplotype.pos,
 	y0 = ys[2], y1 = ys[3]
 )
 segments(
-	x0 = xs, x1 = xs,
+	x0 = haplotype.pos, x1 = haplotype.pos,
 	y0 = ys[3], y1 = ys[4]
 )
 ```
