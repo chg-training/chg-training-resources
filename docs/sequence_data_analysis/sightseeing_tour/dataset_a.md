@@ -46,15 +46,15 @@ Can you find:
 * a sequencing error?
 
 
-:::tip Poorly alignable regions
+## Poorly alignable regions
 
-Short reads don't always align very well to the genome.
+Short reads don't *always* align very well to the genome.
 
 One reason for poor alignment is that the underlying DNA is repetitive - that is, the same read might have come from multiple source locations.
 This is characterised by **low mapping qualities** of the reads.
 
-Another thing that might cause poor read alignment is if  the reference genome doesn't represent the structure of the sample genome very well.
-This would be a **genome structural variant**.
+Another thing that might cause poor read alignment is **genome structural variation** - e.g. if the sample genome has a
+different structure to the reference genome.
 
 :::tip Question
 
@@ -78,6 +78,8 @@ from Server`.  Expand the tabs and find the 'Repeat Masker' track under 'Variati
 ![img](images/repeatmasker.png)
 
 The Repeat Masker tracks appear at the bottom, under the 'RefSeq genes'.  (You may have to scroll down to see it.)
+
+Is this repeat one of the known repetitive elements?  (You can also see what these are by searching the [DFAM database](https://dfam.org, which RepeatMasker uses under the hood.  For example here are results for the [L2 element](https://dfam.org/browse?keywords=L2).)
 
 **Note** More repeat annotation tracks are available in the [UCSC genome browser](https://genome.ucsc.edu).  This one can actually be seen in the 'Simple Tandem Repeats' track (which you have to turn on, near the bottom of the browser page) indicating it is a `CATCACCAC` repeat - is that what you thought?
 :::
