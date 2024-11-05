@@ -2,9 +2,20 @@
 sidebar_position: 2
 ---
 
-# Analysing a GWAS
+# A real (simulated) GWAS: quality control
 
-We will now work with a set of data files containing many SNPs from chromosome 19 genotyped on controls and cases. Data from a
+We will now work with a set of data files containing many SNPs from chromosome 19, which have been genotyped on a set of individuals who were infected with norovirus (**disease cases**) and a set of **population controls**
+
+:::tip Note
+
+The study we're running is actually simulated - so doesn't really correspond to real individuals or real phenotypes.
+So you can download and manipulate this data however you like.
+
+But it behaves just like a real GWAS!
+
+:::
+
+Data from a
 GWAS would contain SNPs at this density across the entire genome, but we will focus on just one chromosome to make the
 exercises more tractable.
 

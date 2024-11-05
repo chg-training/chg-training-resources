@@ -5,7 +5,6 @@ sidebar_position: 1.5
 
 You'll also need some data - to get this,  download the tarball from [this
 folder](https://www.chg.ox.ac.uk/~gav/projects/chg-training-resources/data/sequence_data_analysis/introduction_to_next_generation_sequencing_data_analysis/)
-- for example using curl:
 
 For example using `curl`:
 ```sh

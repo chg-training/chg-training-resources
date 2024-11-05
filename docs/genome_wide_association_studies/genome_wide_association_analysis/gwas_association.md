@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Association Practical
+# A real (simulated) GWAS: testing for association
 
 Now we will test for association between the SNPs in our dataset and the disease outcome.
 
