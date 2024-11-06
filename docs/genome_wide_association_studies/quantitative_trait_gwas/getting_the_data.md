@@ -12,7 +12,7 @@ cd gwas_tutorial
 
 Now download the data...
 ```sh
-curl -O https://chg.ox.ac.uk/bioinformatics/training/gms/data/gwas/quantitative_trait_gwas.tgz
+curl -O https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/gwas/quantitative_trait_gwas.tgz
 ```
 ...and unpack it:
 ```sh

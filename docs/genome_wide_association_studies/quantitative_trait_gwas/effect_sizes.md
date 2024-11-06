@@ -2,7 +2,7 @@
 sidebar_position: 10
 ---
 
-# Interpreting effect sizes (betas) and testing genotype-phenotype effects
+# Interpreting the effect sizes of the secretor status SNP
 
 Looking at the genomic region around our main peak, one of the genes in this region is fucosyltransferase 2 (FUT2).
 Using the genetic variation data present in Ensembl, we can see that there is a known SNP (rs601338) that is associated
