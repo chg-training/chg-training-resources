@@ -1,8 +1,8 @@
 ---
-sidebar_position: 11
+sidebar_position: 100
 ---
 
-# Extension: Looking for independent signals
+# Appendix 1: Looking for independent signals
 
 It is of course possible that there are multiple independent signals within a single region. To test if this is the
 case, we can carry out a conditional analysis on the region, using the allelic dosage of one SNP of interest (usually

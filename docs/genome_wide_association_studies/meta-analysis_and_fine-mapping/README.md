@@ -1,3 +1,7 @@
+---
+sidebar_position: 10
+---
+
 # Meta-analysis and fine-mapping tutorial
 
 **Contributors**: Luke Jostins, Gavin Band

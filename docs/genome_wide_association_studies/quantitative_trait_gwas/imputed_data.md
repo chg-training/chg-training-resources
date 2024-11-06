@@ -1,8 +1,8 @@
 ---
-sidebar_position: 8
+sidebar_position: 8.5
 ---
 
-# Part 4: Imputation
+# Part 5: Imputation
 
 Genotype imputation allows us to test associations at ungenotyped markers, increase genotyping density for fine-mapping
 of GWAS signals, or combine datasets that were genotyped on different arrays. Genotyping arrays are limited by the
@@ -23,7 +23,7 @@ We have provided imputed genotype data for each of the sample datasets in `Imput
 from the genotype data that you have been working with above, and imputed using SHAPEIT and IMPUTE2 with the entire 1000
 Genomes phase 3 dataset as the reference panel.
 
-IMPUTE2 provides data in the [Oxford format](./file_formats.md#oxford-format). Genotype data is stored in `.gen` files
+IMPUTE2 provides data in the [Oxford format](../file_formats/README.md#oxford-format). Genotype data is stored in `.gen` files
 and the associated sample information is saved in the `.sample` file. GCTA does not support this format, so to run the
 regression using a GRM, you will need to convert to "best-guess" phenotypes using PLINK then provide these files to
 GCTA.

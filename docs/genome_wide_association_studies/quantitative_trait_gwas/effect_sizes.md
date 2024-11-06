@@ -1,8 +1,8 @@
 ---
-sidebar_position: 10
+sidebar_position: 11
 ---
 
-# Part 6: Interpreting the effect sizes of the secretor status SNP
+# Assessing effect sizes
 
 Looking at the genomic region around our main peak, one of the genes in this region is fucosyltransferase 2 (FUT2).
 Using the genetic variation data present in Ensembl, we can see that there is a known SNP (rs601338) that is associated
@@ -16,7 +16,7 @@ providing a protective effect against norovirus infection.
 We can test whether the presence of this mutation is associated with differences in antibody responses to norovirus in
 our dataset, firstly by checking if the SNP is genotyped in our data, then by testing for an effect of genotype on
 phenotype distribution. We can use this information to locate summary statistics for this SNP from our PLINK and GCTA
-output using `grep`. See the [file formats](./file_formats.md) section for what each column means. You might notice that
+output using `grep`. See the [file formats](../file_formats/README.md) section for what each column means. You might notice that
 grep returns nothing for the genotyped data. This is because the SNP was not included in the original dataset, as is
 often the case when using genotype arrays. In this case, imputation has allowed us to estimate genotypes for each
 individual.

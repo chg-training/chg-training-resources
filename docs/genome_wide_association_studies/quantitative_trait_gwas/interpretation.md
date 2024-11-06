@@ -1,8 +1,8 @@
 ---
-sidebar_position: 9
+sidebar_position: 10
 ---
 
-# Part 5: Interpreting GWAS signals
+# Part 6: Interpreting GWAS signals
 
 ## Locating significant signals and defining regions of interest
 
