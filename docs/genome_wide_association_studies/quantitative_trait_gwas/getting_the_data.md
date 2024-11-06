@@ -49,6 +49,6 @@ The data is as follows:
 
 * There are also some example scripts are in the `Example_scripts` directory.
 
-## Next steps
+## Next steps
 
-As with all GWAS, the first place to start is to summarise and performe [quality control of the data](./qc_genotypes.md).
+As with all GWAS, the first place to start is to summarise and perform [quality control of the data](./qc_genotypes.md).
