@@ -10,10 +10,10 @@ How do we know if the signals in our scans are worth looking at?  That is, how l
 be excited by it?
 
 This question is a bit subtle - it really involves thinking about our prior on how *many* associations we think there
-might be, as well as the P-values themselves.  (This reasoning is described in the 'Box' in the [Wellcome Trust Case-Control Consortium paper](https://doi.org/10.1038/nature05911), as well as on the page [about interpreting P-values](../../statistical_modelling/regression_modelling/interpreting_p_values.md)).
+might be, and the *statistical power* of the study, as well as the P-values themselves.  (This reasoning is described in the 'Box' in the [Wellcome Trust Case-Control Consortium paper](https://doi.org/10.1038/nature05911), as well as on the page [about interpreting P-values](../../statistical_modelling/regression_modelling/interpreting_p_values.md)).
 
 Luckily however, there are some well-accepted rules of thumb to use. The value $5\times 10^-8$ is often used to identify
-signals that have *strong evidence*. A less stringent value, such as $1\times 10^{-5}$ could be used to identify signals that have *some evidence*.
+signals that have *strong evidence* from a GWAS discovery analysis like this. A less stringent value, such as $1\times 10^{-5}$ could be used to identify signals that have *some evidence*.
 
 :::tip Note
 
@@ -21,6 +21,22 @@ The $5\times 10^{-8}$ threshold is sometimes referred to as 'genome-wide signifi
 However, this isn't a particularly helpful term so we'll avoid using it here.
 
 It is, however, a reasonably stringent threshold for most purposes so we'll use it here.
+
+:::
+
+:::tip Note
+
+$P < 5\times 10^{-8}$ isn't enough!
+
+The **gold standard** for a GWAS study is that it
+
+* has compelling evidence in a discovery analysis (often taken as something like $P < 5\times 10^-5$)
+* has consistent evidence in at least one **replication analysis** (that is, an analysis of the same pohenotype in an independent cohort).  An often-used rule is to require 'nominal significance' e.g. $P<0.05$ and an effect in the same direction as the discovery analysis/
+* And very strong **combined evidence** of (at least) $P < 5\times 10^{-8}$ across both discovery and replication arms.
+
+For example, the [WTCCC2 GWAS of Multiple Sclerosis](https://www.chg.ox.ac.uk/wtccc2/md) used exactly this scheme to declare its list of associations with strong evidence - the actual thresholds used were $P_{discovery} < 10^{-4.5}$, one-sided $P_{\text{replication}} < 0.05$, and combined $P < 5\times 10^{-8}$.  (A lower threshold of $P < 5\times 10^{-7}$ was also used and referred to as 'strong evidence' - 5 regions were in this category.)
+
+It is worth re-iterating that in principle, appropriate P-value thresholds [depend on the study power and on the spectrum of true signals](../../statistical_modelling/regression_modelling/interpreting_p_values.md).  This study was very well-powered and, as it turns out, multiple sclerosis is highly polygenic, so these thresholds are certainly sufficient to give good confidence in the results.
 
 :::
 
