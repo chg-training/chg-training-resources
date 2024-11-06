@@ -40,7 +40,7 @@ To solve this we will apply a transformation to the phenotype.
 Two possible transformations you could try are: a **log transformation**:
 
 $$
-transformed_y <- log(y)
+transformed_y = \log(y)
 $$
 
 The log transformation simply transforms values by the log function (which tends to stretch out values more, the closer
@@ -49,21 +49,21 @@ to zero they are).
 Or a **quantile normalisation** transformation:
 
 $$
-transformed_y = \Phi^{-1} \left( \text{rank}(y) )
+transformed_y = \Phi^{-1} \left( \text{rank}(y) \right)
 $$
-where $\Phi^-1$ means the **quantile function** of the normal distribution.  (See the [probability cheatsheet](../../statistical_modelling/probability_cheatsheet.md) if you're unsure of what this is.)
 
-:::
+where $\Phi^-1$ means the **quantile function** of the normal distribution.  (See the [probability
+cheatsheet](../../statistical_modelling/probability_cheatsheet.md) if you're unsure of what this is.)
 
 :::tip Question
 
 Load the data into R or python, e.g:
 ```r
 # in R
-data <- readr::read_tsv( "Phenotype_data/AMR_phenotype.txt" )
+data = readr::read_tsv( "Phenotype_data/AMR_phenotype.txt" )
 ```
 
-and plot a histogram for the data or after applying the above transformations. 
+...and plot a histogram for the data or after applying the above transformations. 
 
 For example in R, the quantile normalisation can be applied using this function, which also handles missing values:
 
@@ -84,7 +84,7 @@ Which transformation might be most suitable the phenotype data associated with t
 
 ## Applying the transformation
 
-Let's apply that quantile normalisation transformation now. Try this code:
+Let's apply the quantile normalisation transformation now. Try this code:
 
 ```r
 library(ggplot2)

@@ -21,6 +21,11 @@ tar -xzf quantitative_trait_gwas.tgz
 
 Once the data is unpacked, you can safely delete the `quantitative_trait_gwas.tgz` file to save space, if you like.
 
+Finally, to get started, we'll assume you are working within the `gwas_tutorial` folder:
+```
+cd gwas_tutorial
+```
+
 ## What's in the data?
 
 You should now have four folders which have this structure:

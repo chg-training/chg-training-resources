@@ -37,46 +37,48 @@ We can make use of linkage disequilibrium to define both significant signals, an
 For this tutorial, we define linked SNPs as those with an $R^2 \geq 0.2$. `plink`` offers a `--clump`` utility which can be
 used to group SNPs in this way based on a PLINK summary statistics file:
 
-```
-plink \
+```sh
+./plink \
 --bfile Genotype_data/AMR_genotypes.filtered \
---clump AMR_genotypes.qassoc \
+--clump output/AMR_genotypes.qassoc \
 --clump-r2 0.2 \
 --clump-p1 5e-8 \
 --clump-p2 1e-5 \
 --clump-verbose \
---out AMR_genotypes
+--out output/AMR_genotypes
 ```
 
-This will produce output similar to that shown below, saved to a .clumped file.
-> CHR    F                       SNP         BP          P    TOTAL   NSIG    S05    S01   S001  S0001
->  19    1    rs2548459:49209339:T:C   49209339   1.84e-12       21      0      0      2      0     19
->
->                                            KB      RSQ  ALLELES    F            P
->  (INDEX)    rs2548459:49209339:T:C          0    1.000        C    1     1.84e-12
->
->              rs374886:49117247:A:G      -92.1    0.437    CA/TG    1     9.55e-07
->             rs8111874:49168942:G:A      -40.4    0.578    CA/TG    1     2.51e-06
->            rs35106244:49203829:C:T      -5.51    0.665    CT/TC    1     8.44e-09
->              rs281377:49206603:C:T      -2.74    0.481    CC/TT    1     4.99e-09
->              rs507855:49208501:A:G     -0.838    0.989    CG/TA    1     2.37e-12
->              rs632111:49208978:A:G     -0.361    0.997    CG/TA    1     2.43e-12
->              rs281380:49214470:T:C       5.13    0.317    CT/TC    1     4.63e-07
->             rs4002471:49215095:C:T       5.76    0.642    CT/TC    1     1.36e-08
->              rs281386:49217305:A:G       7.97     0.27    CA/TG    1     1.48e-06
->              rs629504:49223633:C:G       14.3    0.603    CG/TC    1     8.15e-09
->             rs2287921:49228272:T:C       18.9    0.616    CC/TT    1     2.35e-08
->              rs479486:49229323:G:A         20    0.659    CA/TG    1     3.99e-10
->              rs838147:49246866:A:G       37.5    0.509    CA/TG    1     2.83e-07
->             rs8111399:49247963:G:T       38.6    0.271    CG/TT    1     3.06e-06
->            rs56098615:49247999:T:A       38.7    0.271    CT/TA    1     3.06e-06
->             rs8111208:49248022:A:C       38.7    0.271    CA/TC    1     3.06e-06
->              rs838146:49248052:C:T       38.7    0.528    CC/TT    1     1.02e-06
->            rs12611211:49248331:G:A         39    0.271    CG/TA    1     3.06e-06
->             rs8103840:49254955:C:T       45.6    0.462    CC/TT    1     7.83e-06
->
->          RANGE: chr19:49117247..49254955
->           SPAN: 137kb
+This will produce output similar to that shown below, saved to a `.clumped` file.
+```
+CHR    F                       SNP         BP          P    TOTAL   NSIG    S05    S01   S001  S0001
+ 19    1    rs2548459:49209339:T:C   49209339   1.84e-12       21      0      0      2      0     19
+
+                                           KB      RSQ  ALLELES    F            P
+ (INDEX)    rs2548459:49209339:T:C          0    1.000        C    1     1.84e-12
+
+             rs374886:49117247:A:G      -92.1    0.437    CA/TG    1     9.55e-07
+            rs8111874:49168942:G:A      -40.4    0.578    CA/TG    1     2.51e-06
+           rs35106244:49203829:C:T      -5.51    0.665    CT/TC    1     8.44e-09
+             rs281377:49206603:C:T      -2.74    0.481    CC/TT    1     4.99e-09
+             rs507855:49208501:A:G     -0.838    0.989    CG/TA    1     2.37e-12
+             rs632111:49208978:A:G     -0.361    0.997    CG/TA    1     2.43e-12
+             rs281380:49214470:T:C       5.13    0.317    CT/TC    1     4.63e-07
+            rs4002471:49215095:C:T       5.76    0.642    CT/TC    1     1.36e-08
+             rs281386:49217305:A:G       7.97     0.27    CA/TG    1     1.48e-06
+             rs629504:49223633:C:G       14.3    0.603    CG/TC    1     8.15e-09
+            rs2287921:49228272:T:C       18.9    0.616    CC/TT    1     2.35e-08
+             rs479486:49229323:G:A         20    0.659    CA/TG    1     3.99e-10
+             rs838147:49246866:A:G       37.5    0.509    CA/TG    1     2.83e-07
+            rs8111399:49247963:G:T       38.6    0.271    CG/TT    1     3.06e-06
+           rs56098615:49247999:T:A       38.7    0.271    CT/TA    1     3.06e-06
+            rs8111208:49248022:A:C       38.7    0.271    CA/TC    1     3.06e-06
+             rs838146:49248052:C:T       38.7    0.528    CC/TT    1     1.02e-06
+           rs12611211:49248331:G:A         39    0.271    CG/TA    1     3.06e-06
+            rs8103840:49254955:C:T       45.6    0.462    CC/TT    1     7.83e-06
+
+         RANGE: chr19:49117247..49254955
+          SPAN: 137kb
+```
 
 As you can see, many of the SNPs within the large peak are in LD with the most significant SNP in that region. Taking the coordinates of those SNPs, we can define the outer bounds of a region of interest. 
 

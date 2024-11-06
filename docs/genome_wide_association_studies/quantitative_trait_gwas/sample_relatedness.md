@@ -119,26 +119,26 @@ If you need a full version of this file, see here.
 Now let's use that to generate a list of samples to exclude:
 
 ```python
-python exclude_missing.py AMR_genotypes.imiss AMR_genotypes.genome AMR_genotypes.relatedness.remove
+python exclude_missing.py output/AMR_genotypes.imiss output/AMR_genotypes.genome output/AMR_genotypes.relatedness.remove
 ```
 
 :::tip Note on python versions
 On a mac, you may find you need to use `python3` to run python, instead of `python`.
 :::
 
-You should now have an output file called `AMR_genotypes.relatedness.remove` containing the IDs of samples to remove.
+You should now have an output file called `output/AMR_genotypes.relatedness.remove` containing the IDs of samples to remove.
 
-Now we've generated a list of samples to remove, we can do actually remove them like this:
+Now we've generated a list of samples to remove, we can actually remove them like this:
 
 ```
 ./plink \
---bfile AMR_genotypes.filtered \
---remove AMR_genotypes.relatedness.remove \
+--bfile Genotype_data/AMR_genotypes.filtered \
+--remove output/AMR_genotypes.relatedness.remove \
 --make-bed \
---out AMR_genotypes.filtered.ibd
+--out Genotype_data/AMR_genotypes.filtered.ibd
 ```
 
-## Improving the algorithm
+:::tip Note on improving the algorithm
 
 If you look at the above code, you'll see it is pretty simple.  For every pair of samples with high IBD, it selects the sample
 with the highest missingness, and writes it to the exclusion file.
@@ -146,8 +146,6 @@ with the highest missingness, and writes it to the exclusion file.
 It's actually easy to do better than this in many cases. A better algorithm finds the sample with the most relationships
 $> \text{the cutoff}$ and removes it.  And then repeats this process with the remaining samples until there aren't any
 high IBD pairs left.  This algorithm typically excludes fewer samples while still leaving no high IBD pairs.
-
-:::tip Note
 
 This is of course important because the sample size is a key factor in determining the **power** of a GWAS!  Remember,
 all else being equal, the regression standard error scales like

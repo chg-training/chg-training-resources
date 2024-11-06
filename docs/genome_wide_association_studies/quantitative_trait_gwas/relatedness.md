@@ -13,11 +13,11 @@ There are a few ways one could do this including simply thinning data by positio
 
 The command will produce two output files containing variants to retain in the data (`AMR_genotypes.prune.in`) or to exclude from the data (`AMR_genotypes.prune.out`) for relatedness calculations.
 
-```
+```sh
 ./plink \
 --bfile Genotype_data/AMR_genotypes \
 --indep-pairwise 50 5 0.2 \
---out AMR_genotypes
+--out output/AMR_genotypes
 ```
 
 :::tip Note
@@ -31,8 +31,8 @@ The command will produce two output files containing variants to retain in the d
 There is also a danger of using LD-based pruning like this.  Because LD arises when variants 'drift' (or are selected) up to high frequency, common variants are **more likely to be in high $R^2$ with each other**.  In pracrice this means that this approach is likely to skew the frequency distribution of the variants.  You can see that by summarising in this data:
 
 ```r
-frequencies = readr::read_table( "AMR_genotypes.frq" )
-included_snps = scan( "AMR_genotypes.prune.in", what = character() )
+frequencies = readr::read_table( "output/AMR_genotypes.frq" )
+included_snps = scan( "output/AMR_genotypes.prune.in", what = character() )
 frequencies$included = (frequencies$SNP %in% included_snps)
 
 (
@@ -64,12 +64,12 @@ We'll stick with the LD pruning for now.
 
 We can now use one of these files in combination with the `--genome` flag to generate a relatedness summary table:
 
-```
+```sh
 ./plink \
 --bfile Genotype_data/AMR_genotypes \
---exclude AMR_genotypes.prune.out \
+--exclude output/AMR_genotypes.prune.out \
 --genome \
---out AMR_genotypes.relatedness
+--out output/AMR_genotypes.relatedness
 ```
 
 ## Plotting relatedness
@@ -98,7 +98,7 @@ Let's load that into R and plot it.  We'll plot `PI_HAT` which is the estimated 
 matrix form - this requires a bit of code to do.  First, let's load the data and get a list of samples:
 
 ```r
-ibd = readr::read_table( "AMR_genotypes.relatedness.genome" )
+ibd = readr::read_table( "output/AMR_genotypes.relatedness.genome" )
 samples = unique( c( ibd$IID1, ibd$IID2 ) )
 ```
 

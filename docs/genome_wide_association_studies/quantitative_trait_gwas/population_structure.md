@@ -23,7 +23,7 @@ We will use GCTA to generate the GRM files:
 
 ```sh
 mkdir grm/
-gcta64 \
+./gcta64 \
 --bfile Genotype_data/AMR_genotypes.filtered \
 --make-grm-bin \
 --out grm/AMR_genotypes
@@ -40,15 +40,15 @@ cat Genotype_data/AMR_genotypes.filtered.fam | cut -d " " -f 1,2,5 > Genotype_da
 
 And then to run GCTA:
 
-```
-gcta64 \
+```sh
+./gcta64 \
 --mlma \
 --bfile Genotype_data/AMR_genotypes.filtered \
 --grm grm/AMR_genotypes \
 --pheno Phenotype_data/AMR_phenotype.INT_transformed.txt \
 --mpheno 2 \
 --covar Genotype_data/AMR_genotypes.filtered.covars \
---out AMR_genotypes.gcta
+--out output/AMR_genotypes.gcta
 ```
 
 The resulting `.mlma` files can then be used to generate manhattan and Q-Q plots in a manner similar to that used [before](./testing_for_association.md).

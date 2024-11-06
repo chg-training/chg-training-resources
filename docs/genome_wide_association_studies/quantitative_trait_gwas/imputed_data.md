@@ -49,9 +49,6 @@ data <- readr::read_table( "Imputed_data/AMR_imputed.info" )
 # Provide a filename for the filtered output
 filtered_variants <- "Imputed_data/AMR_imputed.exclude.list"
 
-# Provide a filename for the plot output
-png( file = "AMR.info_score.png" )
-
 exclude_data <- subset( data, info <= 0.3 )
 
 readr::write_tsv(
@@ -68,8 +65,7 @@ p <- (
 	+ labs( title="Imputation info score", x="info score", y="count" )
 )
 ggsave( p, file = "AMR.info_score.png" )
-print(p)
-```
+	```
 
 You should see that a fair number of variants have **low IMPUTE info scores** but many have high scores.
 For this analysis we've excluded variants with `info < 0.3`.
@@ -77,8 +73,8 @@ For this analysis we've excluded variants with `info < 0.3`.
 This script will have generated a list of markers (`AMR_imputed.exclude.list``) to exclude from downstream analyses. We
 can then convert the gen file to PLINK format using the following command:
 
-```
-plink \
+```sh
+./plink \
 --gen Imputed_data/AMR_imputed.gen.gz \
 --sample Imputed_data/AMR_imputed.sample \
 --exclude Imputed_data/AMR_imputed.exclude.list \

@@ -11,12 +11,12 @@ data](./qc_genotypes.md) and the [inverse normal transformed phenotype](./phenot
 ## Testing for association 
 To run the association analysis, you can use the `--assoc`` flag in `plink` as follows:
 
-```
+```sh
 ./plink \
 --allow-no-sex \
 --assoc \
 --bfile Genotype_data/AMR_genotypes.filtered \
---out AMR_genotypes.INT_transformed.filtered \
+--out output/AMR_genotypes.filtered \
 --pheno Phenotype_data/AMR_phenotype.INT_transformed.txt \
 --pheno-name Noro_response_INT
 ```
@@ -57,7 +57,7 @@ library(qqman)
 options(scipen=999) # removes scientific notation from plot printout
 
 # Read in summary stats from PLINK
-data <- readr::read_table( "AMR_genotypes.filtered.qassoc" )
+data <- readr::read_table( "output/AMR_genotypes.filtered.qassoc" )
 
 manhattan <- function( data ) {
 	plot(
@@ -91,9 +91,10 @@ qqplot <- function( observed_pvalues ) {
 
 
 # Set file name for plots
-png( file = "AMR.Norovirus_response.transformed.manhattan_qq.png", width=1024, height=512 )
+png( file = "output/AMR.Norovirus_response.transformed.manhattan_qq.png", width=1024, height=512 )
 
-# Let's put both plots in one image:
+# Let's put both plots in one image.
+# The manhattan is wider than the q-q plot, so we'll make an appropariate layout
 layout(
 	matrix(
 		c(

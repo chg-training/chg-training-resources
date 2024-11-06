@@ -38,7 +38,7 @@ data <- readr::read_tsv( "Phenotype_data/AMR_geno_status.txt" )
 phenotypes <- readr::read_tsv("Phenotype_data/AMR_phenotype.INT_transformed.txt" )
 
 # Get list of individuals retained after filtering
-keep <- readr::read_table_("AMR_filtered_samples.keep.list" )
+keep <- readr::read_table_("output/AMR_filtered_samples.keep.list" )
 colnames(keep) <- c("FID", "IID")
 
 # Get genotypes for only those individuals retained in the analysis
@@ -70,7 +70,7 @@ p = (
 	)
 )
 
-ggsave( p, "AMR.Norovirus_response_by_genotype.png" )
+ggsave( p, "output/AMR.Norovirus_response_by_genotype.png" )
 
 ```
 

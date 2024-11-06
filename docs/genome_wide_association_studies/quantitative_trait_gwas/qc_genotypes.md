@@ -20,13 +20,18 @@ The simplest way to assess quality of genotyping data is by looking at the amoun
 
 Another useful way to inspect the data is to look at some genetic characteristics, such as the **level of relatedness** between individuals, the **occurence of rare alleles**, and the **heterozygosity** (proportion of genotype calls which are heterozygous) of each individual.  The heterozygosity in particular tells us useful information about the sample (for example, it might highlight samples that have been contaminated with other samples during processing - they would have too much heterozygosity).
 
-Let's start by using plink to calculating missingness.
+Let's start by using plink to calculating missingness.  First let's make a folder to put output in:
 
+```
+mkdir output
+```
+
+and compute missingness:
 ```
 ./plink \
 --bfile Genotype_data/AMR_genotypes \
 --missing \
---out AMR_genotypes
+--out output/AMR_genotypes
 ```
 
 This will give you two files in your output directory:
@@ -51,9 +56,7 @@ For example:
 library(tidyverse)
 
 # Read in the PLINK output file 
-data = readr::read_table( "AMR_genotypes.lmiss" )
-# Provide a filename for the plot output
-png(file="AMR.missing_variants.png")
+data = readr::read_table( "output/AMR_genotypes.lmiss" )
 
 p = (
 	ggplot( data, aes( x = F_MISS ) )
@@ -65,8 +68,7 @@ p = (
 	)
 )
 print(p)
-
-dev.off()
+ggsave( p, file = "output/AMR.missing_variants.png" )
 ```
 
 Here is a quick guide to each metric:
@@ -74,9 +76,10 @@ Here is a quick guide to each metric:
 ### Missingness
 
 'Missingess' is the proportion of missing genotypes.  Let's look at samples first:
-```
+
+```r
 miss = (
-	readr::read_table( "AMR_genotypes.imiss" )
+	readr::read_table( "output/AMR_genotypes.imiss" )
 	%>% mutate(
 		missingness = F_MISS
 	)
@@ -90,9 +93,9 @@ non-missing genotypes (`N(NM)`).
 
 Let's use that along with the missingness to plot the rate of missing and heterozygous genotypes per sample:
 
-```
+```r
 het = (
-	readr::read_table( "AMR_genotypes.het" )
+	readr::read_table( "output/AMR_genotypes.het" )
 	%>% mutate(
 		heterozygosity = (`N(NM)` - `O(HOM)`) / `N(NM)`
 	)
@@ -106,7 +109,7 @@ print( sample_summary )
 
 ```
 ...and plot it:
-```
+```r
 (
 	ggplot( data = sample_summary )
 	+ geom_point( aes( x = missingness, y = heterozygosity ))
@@ -132,7 +135,7 @@ The next step will be to apply filters to the dataset using PLINK to exclude var
 | Hardy-Weinberg equilibrium | `--hwe` | `0.000001` | Removes variants which have **Hardy-Weinberg<br/>"exact test" p-value** $< 1\times 10^{-6}$ |
 
 To filter variants and samples with genotyping rates below 0.1, and variants with a minor allele frequency less than 0.01, the following command would be used:
-```
+```bash
 ./plink \
 --bfile Genotype_data/AMR_genotypes \
 --geno 0.1 \
