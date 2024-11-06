@@ -14,6 +14,14 @@ Bear in mind that in a GWAS you are running association tests across millions of
 even a small proportion of variants have data quality issues, this can easily lead to hundreds or thousands of spurious
 findings.  You want to avoid this by getting rid of any obvious artifacts beforehand.
 
+If you are in any doubt about this, here are two cautionary tales:
+
+**Example 1**: In 2011 a paper in Science reported a GWAS of *extreme longevity* - purporting to find hundreds of loci across the genome which might make you live to a very old age.  However, within days it became clear that a substantial part of this signal was due to a quality control issue - different samples sets had been typed on different microarrays, and the quality control wasn't adequate. The paper was [eventually retracted](https://retractionwatch.com/2011/07/21/sebastiani-group-retracts-genetics-of-aging-study-from-science/).
+
+**Example 2**: In 2020 another study reported that the CCR-delta5 mutation [is deleterous](https://doi.org/10.1038/s41591-019-0637-6) (that is - it is associated with elevated mortality) in the UK Biobank.  This was also very high-profile because this was the gene at the centre of the creation of [gene-edited children](https://en.wikipedia.org/wiki/He_Jiankui_affair) in 2019.  **However** - this apparent deleterous effect again turned out to be an [artifact of the genotyping quality](https://doi.org/10.1038/s41591-019-0710-1) (albeit this time, discovered and reported by the original study author).  In short this lead again to a [retraction](https://www.nature.com/articles/s41591-019-0637-6).
+
+The moral is: anything that *can* go wrong with data, *will* go wrong - you must do your QC carefully!
+
 :::
 
 The simplest way to assess quality of genotyping data is by looking at the amount of missing genotype calls (or **missingness**) within the data.  This can be assessed at each variant or for each sample.  Variants with high missingness might mean the genotype assays for those variants are poor, while samples with high missingness might be ones that had low DNA quality or quantity, or other problems in collection.

@@ -24,19 +24,30 @@ It is, however, a reasonably stringent threshold for most purposes so we'll use 
 
 :::
 
-:::tip Note
+:::caution Important warning
 
-$P < 5\times 10^{-8}$ isn't enough!
+However, you shouldn't imagine that just having
+
+$P < 5\times 10^{-8}$
+
+is enough to be convinced by a signal!  **More work** is needed to really make this convincing.
 
 The **gold standard** for a GWAS study is that it
 
-* has compelling evidence in a discovery analysis (often taken as something like $P < 5\times 10^-5$)
-* has consistent evidence in at least one **replication analysis** (that is, an analysis of the same pohenotype in an independent cohort).  An often-used rule is to require 'nominal significance' e.g. $P<0.05$ and an effect in the same direction as the discovery analysis/
+* Has compelling evidence in a discovery analysis (often taken as something like $P < 5\times 10^-5$)
+* Has consistent evidence in at least one **replication analysis** (that is, an analysis of the same pohenotype in an independent cohort).  An often-used rule is to require 'nominal significance' e.g. $P<0.05$ with an effect in the same direction as the discovery analysis.
 * And very strong **combined evidence** of (at least) $P < 5\times 10^{-8}$ across both discovery and replication arms.
+* **And** it isn't obviously caused by any genotyping artifacts like cluster plot issues, or obvious confounding.
 
-For example, the [WTCCC2 GWAS of Multiple Sclerosis](https://www.chg.ox.ac.uk/wtccc2/md) used exactly this scheme to declare its list of associations with strong evidence - the actual thresholds used were $P_{discovery} < 10^{-4.5}$, one-sided $P_{\text{replication}} < 0.05$, and combined $P < 5\times 10^{-8}$.  (A lower threshold of $P < 5\times 10^{-7}$ was also used and referred to as 'strong evidence' - 5 regions were in this category.)
+**Example**: the [WTCCC2 GWAS of Multiple Sclerosis](https://www.chg.ox.ac.uk/wtccc2/md) used the following scheme to declare its list of associations: they required:
 
-It is worth re-iterating that in principle, appropriate P-value thresholds [depend on the study power and on the spectrum of true signals](../../statistical_modelling/regression_modelling/interpreting_p_values.md).  This study was very well-powered and, as it turns out, multiple sclerosis is highly polygenic, so these thresholds are certainly sufficient to give good confidence in the results.
+* $P_{discovery} < 10^{-4.5}$
+* one-sided $P_{\text{replication}} < 0.05$
+* and a combined $P < 5\times 10^{-8}$.
+
+(A lower threshold of $P < 5\times 10^{-7}$ was also used and referred to as 'strong evidence' - 5 regions were in this category.)
+
+Moreover if you look in the supplementary information of that paper you'll see just how much work was done to check the quality of the genotyping - it's extensive.
 
 :::
 
