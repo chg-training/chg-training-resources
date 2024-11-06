@@ -1,0 +1,19 @@
+library(ggplot2)
+
+# Read in the info file
+data <- read.table("AMR_imputed.info", header=TRUE)
+
+# Provide a filename for the filtered output
+filtered_variants <- "AMR_imputed.exclude.list"
+
+# Provide a filename for the plot output
+png(file="AMR.info_score.png")
+
+exclude_data <- subset(data, info <= 0.3)
+
+write.table(exclude_data$rs_id, file=filtered_variants, sep="\t", col.names=FALSE, row.names=FALSE, quote=FALSE)
+
+p <- ggplot(data, (aes(x=data$info)))+geom_histogram(binwidth=0.01)+labs(title="Imputation info score", x="info score", y="count")
+
+print(p)
+dev.off()
