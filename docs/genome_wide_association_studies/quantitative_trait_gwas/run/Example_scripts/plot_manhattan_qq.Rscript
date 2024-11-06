@@ -1,0 +1,21 @@
+library(qqman)
+
+options(scipen=999) # removes scientific notation from plot printout
+
+# Read in summary stats from PLINK
+data <- read.table("AMR_genotypes.filtered.qassoc", header=TRUE)
+
+# Set file name for plots
+png(file="AMR.Norovirus_response.transformed.manhattan_qq.png", width=1024, height=512)
+
+par(mfrow=c(1,2))
+
+# Generate the manhattan plot
+data_subset <- subset(data, select=c(CHR, SNP, BP, P))
+manhattan(data_subset, ylim=c(0,20), xlim = c(46699900, 51708900))
+
+# Generate the Q-Q plot
+qq(data_subset$P)
+
+dev.off()
+

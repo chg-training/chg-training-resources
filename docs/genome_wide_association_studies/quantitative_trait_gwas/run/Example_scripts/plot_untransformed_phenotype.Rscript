@@ -1,0 +1,23 @@
+library(ggplot2)
+library(moments)
+
+# Read in the phenotype file 
+data <- read.table("AMR_phenotype.txt", header=TRUE)
+
+# Provide a filename for the plot output
+png(file="AMR.Norovirus_response.png")
+
+# Calculate skewness and kurtosis of the data
+skew <- skewness(data$Noro_response)
+kurt <- kurtosis(data$Noro_response)
+label <- sprintf(
+"Skewness=%f
+Kurtosis=%f", skew, kurt)
+
+
+# Generate the histogram using the phenotype (Noro_response) column
+p <- ggplot(data, (aes(x=Noro_response)))+geom_histogram(binwidth=0.5)+geom_density()+annotate("text", x=17, y=150, label=label)+labs(title="Antibody responses to Norovirus", x="Antibody response", y="count")
+
+print(p)
+
+dev.off()

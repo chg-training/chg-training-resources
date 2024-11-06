@@ -1,0 +1,22 @@
+# Function to calculate observed heterozygosity
+calulate_obs_het <- function(non_missing, obs_hom)
+{
+	obs_het <- (non_missing-obs_hom)/non_missing
+	return(obs_het)
+}
+
+
+# Read in the summary file for heterozygosity
+data <- read.table("AMR_genotypes.heterozygosity.het", header=TRUE)
+
+# Rename column haves in heterozygosity stats file for simplicity
+colnames(data) <- c("FID", "IID", "OBS_HOM", "EXP_HOM", "NON_MISS", "F")
+
+# Provide a filename for the output
+obshet_file="AMR_genotypes.heterozygosity.obshet"
+
+
+# Calculate observed heterozygosity for each sample
+data$OBS_HET <- mapply(calulate_obs_het, data$NON_MISS, data$OBS_HOM)
+
+write.table(data, file=obshet_file, sep="\t", col.names=TRUE, row.names=FALSE, quote=FALSE)
