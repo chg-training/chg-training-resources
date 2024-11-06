@@ -1,8 +1,8 @@
 ---
-sidebar_position: 6
+sidebar_position: 6.5
 ---
 
-# Part 2: QC of phenotype data
+# Part 2: Transforming the phenotype data
 
 Most commonly-used GWAS software implement
 [logistic](../../statistical_modelling/regression_modelling/logistic_regression_1.md) or [linear

@@ -17,14 +17,16 @@ reference panel then using intersecting markers to identify reference haplotypes
 and fill the gaps in the genotyped sample. The choice of reference population is important when imputing genotype data.
 Different populations will have different frequencies of alleles, and varying LD across the genome, both of which can
 affect the accuracy of imputation. Populations may also have novel variants that are not present elsewhere, that are not
-likely to be successfully imputed if it is not present within the reference population. We have provided imputed
-genotype data for each of the sample datasets in GWAS_workshop_files/Imputed_data. The imputed data is generated from
-the genotype data that you have been working with above, and imputed using SHAPEIT and IMPUTE2 with the entire 1000
+likely to be successfully imputed if it is not present within the reference population. 
+
+We have provided imputed genotype data for each of the sample datasets in `Imputed_data/`. The imputed data is generated
+from the genotype data that you have been working with above, and imputed using SHAPEIT and IMPUTE2 with the entire 1000
 Genomes phase 3 dataset as the reference panel.
 
-IMPUTE2 provides data in the Oxford format. Genotype data is stored in .gen files and the associated sample information
-is saved in the .sample file. GCTA does not support this format, so to run the regression using a GRM, you will need to
-convert to "best-guess" phenotypes using PLINK then provide these files to GCTA.
+IMPUTE2 provides data in the [Oxford format](./file_formats.md#oxford-format). Genotype data is stored in `.gen` files
+and the associated sample information is saved in the `.sample` file. GCTA does not support this format, so to run the
+regression using a GRM, you will need to convert to "best-guess" phenotypes using PLINK then provide these files to
+GCTA.
 
 ## QC of imputed data
 
