@@ -4,6 +4,8 @@ sidebar_position: 2
 
 # Genome-wide association with quantitative antibody levels
 
+** Author: Amanda Chong **
+
 In this tutorial, you will be exploring a dataset simulated from data in the **1000 Genomes Project**.  You will use
 this data to test for an association between genotype and antibody response to
 [norovirus](https://www.nature.com/articles/nature15393) in an admixed population derived from the Americas. 
