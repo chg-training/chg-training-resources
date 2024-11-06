@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Computing relatedness
+# Estimating relatedness
 
 Now let's estimate the relatedness between different individuals in the dataset.
 
