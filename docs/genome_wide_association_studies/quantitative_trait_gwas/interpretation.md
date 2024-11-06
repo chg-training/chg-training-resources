@@ -34,7 +34,7 @@ other SNPs that are linked with the significant SNPs, and carry forward only tho
 that are potentially significant ($p < 1x10^{-5}$). 
 
 We can make use of linkage disequilibrium to define both significant signals, and potential genomic regions of interest.
-For this tutorial, we define linked SNPs as those with an $R^2 \geq 0.2$. `plink`` offers a `--clump`` utility which can be
+For this tutorial, we define linked SNPs as those with an $R^2 \geq 0.2$. `plink` offers a `--clump` utility which can be
 used to group SNPs in this way based on a PLINK summary statistics file:
 
 ```sh
