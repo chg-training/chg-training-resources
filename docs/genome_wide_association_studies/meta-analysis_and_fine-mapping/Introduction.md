@@ -20,15 +20,15 @@ there are two reasons to try something else:
 
 ### Getting the data
 
-The data for this practical is in two files, `study1.z` and `study2.z`.  Load them now and take a look:
+The data for this practical is in two files, `study1.z` and `study2.z` which you can find [in this folder](https://github.com/chg-training/chg-training-resources/tree/main/docs/genome_wide_association_studies/meta-analysis_and_fine-mapping).  Load them now and take a look:
 
 **Note.** I am using the [tidyverse](https://www.tidyverse.org) for these examples. If you don't have that or don't want to get
 it, you can use base R functions like `read.table()` instead.
 
 ```
 library(tidyverse)
-study1 = read_delim( "study1.z", delim = " " )
-study2 = read_delim( "study2.z", delim = " " )
+study1 = read_delim( "https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/genome_wide_association_studies/meta-analysis_and_fine-mapping/study1.z", delim = " " )
+study2 = read_delim( "https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/genome_wide_association_studies/meta-analysis_and_fine-mapping/study2.z", delim = " " )
 
 ```
 
