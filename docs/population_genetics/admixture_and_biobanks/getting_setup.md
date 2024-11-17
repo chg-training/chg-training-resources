@@ -120,6 +120,12 @@ We expect three output files from this step:
 
 3. `g1k_chr21.eigenval` file contains the corresponding eigenvalues, one per line. 
 
+:::tip Nnte
+
+In case of interest, a longer tutorial using `plink` to compute principal components for a GWAS study can be found [here](../principal_components_analysis/).
+
+:::
+
 ## Loading the genotype data
 
 Lastly let's convert some genotype data from vcf format (standard, but hard to work with) into a .tsv file for easier downstream work. To do this we will use the `vcfR` package, let's get that now.  It resides in [bioconductor](https://bioconductor.org) so we'll use `BiocManager` to get it:
