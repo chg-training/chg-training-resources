@@ -40,6 +40,15 @@ If `curl -O` doesn't work for any reason, try using `wget` instead, or download 
 
 You will also need to get hold of the . For this practical we'll use plink 2.0 'alpha' for this practical, which you can download from [the plink download page](https://www.cog-genomics.org/plink/2.0/).  Pick the appropriate version for your platform, download it, unzip it, and copy the `plink2` executable into the current folder.
 
+:::tip Note
+
+When you first run plink, you may also need to give your system permission to run it.
+
+On a mac, this can be found under `(apple menu) -> System Settings -> (search for Security) -> choose "Security settings"`.
+You then choose 'Allow anyway' and, next time you run plink, you should be given an option to allow it to run.
+
+:::
+
 ---
 
 ## Perform LD Pruning in PLINK
