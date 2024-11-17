@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Getting setup
 
-## Download data
+## Getting the data
 
 To get set up, start in the terminal.  Make a new folder, say `admixture`, and `cd` into it:
 ```sh
@@ -12,28 +12,35 @@ mkdir admixture
 cd admixture
 ```
 
-Now download the needed data as follows:
+Now download the needed data as follows.  We have put the data in [this folder](https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/admixture/).  First, download a [**gzipped VCF file**](https://samtools.github.io/hts-specs/VCFv4.2.pdf) of variants and genotype calls on chromosome 21.  
 
 ```
-# chromosome 21 only
-curl -O https://tinyurl.com/45c6f2na/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz
+curl -O https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/admixture/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz
+```
 
-# index file
-curl -O https://tinyurl.com/45c6f2na/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz.tbi
+Also download the corresponding **index (.tbi) file** (which provides quick access to the above data, by position):
+```
+curl -O https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/admixture/ALL.chr21.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz.tbi
+```
 
-# population file
-curl -O https://tinyurl.com/45c6f2na/integrated_call_samples_v3.20130502.ALL.panel
+Lastly, to make sense of the above data you need to know which samples come from which population - let's download a **metadata file** with tha information now:
+
+```
+curl -O https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/admixture/integrated_call_samples_v3.20130502.ALL.panel
 ```
 
 :::tip Note
 
-The data comes from the 1000 Genomes Project - specifically [this FTP folder](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502).  If your platform doesn't have `curl`, try `wget` instead, e.g.:
-```
-wget https://tinyurl.com/45c6f2na/integrated_call_samples_v3.20130502.ALL.panel
-```
+The data comes from the 1000 Genomes Project - specifically [this FTP folder](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502). 
+If `curl -O` doesn't work for any reason, try using `wget` instead, or download using your browser.
+
 :::
 
-You will also need to get hold of [plink](https://www.cog-genomics.org/plink/2.0/). We'll use plink 2.0 'alpha' for this practical.  Pick the appropriate version for your platform, download it, unzip it, and copy the `plink2` executable into the current folder.
+## Getting the software
+
+You will also need to get hold of the . For this practical we'll use plink 2.0 'alpha' for this practical, which you can download from [the plink download page](https://www.cog-genomics.org/plink/2.0/).  Pick the appropriate version for your platform, download it, unzip it, and copy the `plink2` executable into the current folder.
+
+---
 
 ## Perform LD Pruning in PLINK
 
