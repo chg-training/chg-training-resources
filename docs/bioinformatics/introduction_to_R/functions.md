@@ -106,7 +106,7 @@ Or we could compute their *mean* or *average*:
 A very useful function is `sprintf()` which can be used to format numbers into strings.
 For example to convert the number 5 to a string:
 ```
-> sprintf( "%d" % 5 )
+> sprintf( "%d", 5 )
 ```
 
 The first argument is the **format string**, which here uses '%d' to say 'format a decimal integer here'.  
