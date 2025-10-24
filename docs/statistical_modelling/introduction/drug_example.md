@@ -53,7 +53,7 @@ Questions 1 and 2 are clearly the right questions to ask, but there's also a **3
 
 :::
 
-Question 3 is usually answered by computing a **P-value**.
+Question 3 is sort-of-but-not-quite an answer to Question 1.  It is usually answered by computing a **P-value**.
 
 We'll attack Question 3 first and to make progress we'll take the following approach:
 
@@ -108,6 +108,8 @@ You might find your P-values seem quite large - maybe they're very close to one.
 
 Great! We've answered question 3.  Many people stop here and take the P-value as the output of their analysis.
 
-However, if you look back at what question 3 is - you'll see it's not the same as the scientific questions we wanted answered. In particular it *doesn't* answer: how much evidence is there that the drug has an effect?  Nor does it tell us what estimates of the effects we should take.
+However, if you look back at what question 3 is - you'll see it's not quite the same as the scientific questions we wanted answered. In particular it *doesn't* answer: how much evidence is there that the drug has an effect?  Nor does it tell us what estimates of the effects we should take.
 
-Questions 1 and 2 are in fact **fundamentally harder** because they are about the scientific question rather than just the maths of our likelihood function.  We'll now turn to a framework which helps reason about it, using [Bayes theorem](./bayes.md).
+One reason for this is that question 3 makes no mention of what a 'true' effect might look like.  Questions 1 and 2 are in fact **fundamentally harder** because they reflect the underlying scientific questions rather than just the maths of our likelihood function under a particular assumed parameter value.
+
+We'll now turn to a framework which helps reason about it, using [Bayes theorem](./bayes.md).
