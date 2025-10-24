@@ -23,6 +23,14 @@ disease: [rs61028892 data](https://raw.githubusercontent.com/chg-training/chg-tr
 Both datasets above come from the [1000 Genomes Project Phase 3
 dataset](https://www.internationalgenome.org/data-portal/data-collection/phase-3).
 
+You should be able to load these into R like this:
+```
+library( tidyverse )
+data = readr::read_tsv(
+	"https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/introduction/data/1000_genomes_o_blood_group_grouped.tsv"
+)
+```
+
 :::tip Challenge
 
 Load one or both of these datasets into R using `read_tsv()`.  Then  use `dbeta()` to plot the posterior distribution of
@@ -53,7 +61,8 @@ compute_posterior_density = function(
 	at = seq( from = 0, to = 1, by = 0.01 ),
 	prior = c( nA = 0, nB = 0 )
 ) {
-	tibble(
+	# I'm using tidyverse's version of a dataframe, called 'tibble':
+	tibble::tibble(
 		nA = nA,
 		nB = nB,
 		at = at, 

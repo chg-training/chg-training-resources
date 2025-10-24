@@ -15,8 +15,7 @@ Here are some of the commonly-used ones:
 | **Normal**<br />or **Gaussian** | $x\in\text{Real numbers}$ | <center>$$\frac{1}{\sqrt{2\pi v}} e^{-\frac{1}{2}\frac{(x-\mu)^2}{v}}$$</center><br /><center><small>(`dnorm()` in R)</small></center> | Mean $\mu$<br />Variance $v$| Ubiquitously useful |
 | **Beta** | $x\in[0,1]$ | <center>$$\frac{1}{B(\alpha,\beta)} x^{\alpha-1} (1-x)^{\beta-1}$$</center><br /><center><small>(`dbeta()` in R)</small></center> | 'Shape' parameters<br />$\alpha$ and $\beta$ | E.g. allele frequency estimates | 
 
-If you don't understand the maths above, **don't worry**.
-You can understand these distributions by plotting what they look like as we'll do below.
+If you don't understand the maths above, **don't worry**.  You can understand these distributions by plotting what they look like as we'll do below.
 
 :::tip Normalising constants
 
@@ -32,7 +31,7 @@ $$
 
 This bits can look complicated but the **don't depend on $x$**.  In fact, they are just **normalising constants**: their purpose is to ensure the distribution sums to $1$ over all the possible values of $x$.
 
-**Question**. However, the expression $n \choose x$ in front of the binomial isn't a normalising constant in the same why - why not?
+**Question**. The expression $n \choose x$ in front of the binomial isn't a normalising constant in the same way - why not?
 
 :::
 

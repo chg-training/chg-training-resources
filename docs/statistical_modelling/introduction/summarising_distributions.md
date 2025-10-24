@@ -32,13 +32,15 @@ What happens to the mean, the variance and the entropy if we change the distribu
 
 ## Understanding variance
 
-Variance is a measure of the 'uncertainty' of a distribution.  It measures the average squared distance of values to the mean.
+Variance is a measure of how 'spread out' a distribution is (around its mean).  It measures the *average squared distance* of values to the mean.
 
-Intuitively, what this means is that if a lot of the distribution is far from the mean (i.e. the distribution is 'spread out'), the variance will be large.  While if most of the values are close to the mean, the variance will be small.
+If a lot of the mass of distribution is far from the mean (i.e. the distribution is 'spread out'), the variance will be large.  While if most of the values are close to the mean, the variance will be small.
 
 :::tip note
 
-Why 'squared distance' instead of something else, like 'absolute distance' here?  There's nothing to stop you measuring 
+Why 'squared distance' instead of something else, like 'absolute distance' here?  There's nothing to stop you measuring 'spread-outiness' by some other mechanism, like the absolute distance to the mean.  
+
+One reason to focus on variance, however, is that it corresponds well to the variation of variables that are normally distributed.  And as it turns out, most variables are approximately normally distributed (if they summarise lots of data) so that this is often the natural choice.
 
 :::
 
