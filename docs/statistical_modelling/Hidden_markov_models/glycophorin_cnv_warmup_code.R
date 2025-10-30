@@ -55,7 +55,8 @@ plot.copy.numbers <- function(
 }
 
 # Load data
-data = read.delim( "glycophorin_binned_coverage.tsv.gz", header = T, as.is = T, sep = "\t" )
+#data = read.delim( "glycophorin_binned_coverage.tsv.gz", header = T, as.is = T, sep = "\t" )
+data = readr::read_tsv( "https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/glycophorin_binned_coverage.tsv.gz" )
 View(data)
 
 # Split data
@@ -124,7 +125,6 @@ prior = c(
     `cn=4` = 0.02, 
     `cn=5` = 0.02
 ) 
-```
 
 # Compute expected posterior state
 expected.posterior.state = array(

@@ -1,17 +1,22 @@
 ---
-sidebar_position: 2
+sidebar_position: 10
 ---
 
-# Modelling CNVs using a Hidden Markov Model #
+# Modelling CNVs using a HMM #
 
-** !! Note !! ** To run this part of the practical, you first need to have computed a set of log-likelihoods for
-each sample at each site in the relevant dataset. The code to do this was explained in the
-[warmup tutorial](glycophorin_cnv_warmup.md), which you can also find in this directory.
+:::tip Note
 
-If you haven't run it in this R session, please run this now:
+To run this part of the practical, you first need to have [followed the warm-up tutorial](glycophorin_cnv_warmup.md) and [computed a set of log-likelihoods](./modelling_copy_number_variation.md) for each sample at each site in the relevant dataset.
+
+(If you haven't got this in your current R session, you should be able to get up to speed by downloading this file:
+```
+https://github.com/chg-training/chg-training-resources/blob/main/docs/statistical_modelling/Hidden_markov_models/glycophorin_cnv_warmup_code.R
+```
+and running it in R like this
 ```R
     source( 'glycophorin_cnv_warmup_code.R' )
 ```
+:::
 
 You should now have the data (`X`, `sites`, `samples`) loaded, and you should have a 532 x 200 x 6 array called `copy.number.lls` loaded.  Check by writing:
 ```R
@@ -26,13 +31,12 @@ The forward.backward() function implements (guess what?) the HMM forward-backwar
 and transition probabilities, and the prior. First, the alpha and beta values (forward and backward algorithm
 probabilities) are computed. Then, the two are combined to compute state probabilities (gamma) at each site.
 
-These computations and notation are all as in the Rabiner HMM tutorial:
-<https://web.ece.ucsb.edu/Faculty/Rabiner/ece259/Reprints/tutorial%20on%20hmm%20and%20applications.pdf>
+These computations and notation are all as described in the [Rabiner HMM tutorial](https://web.ece.ucsb.edu/Faculty/Rabiner/ece259/Reprints/tutorial%20on%20hmm%20and%20applications.pdf).
 
-The only complication is that to avoid numerical over/underflow we work in log space, so have to change expressions
-accordingly. Multiplications get converted to additions in log space.  But to avoid numerical issues, *additions* of
-probabilities are best converted by using the `log.sum.exp()` function (that should already be loaded), rather than
-using `log( sum( exp()))` directly.
+The only complication is that to avoid numerical over/underflow we will **alays work in log space**, so have to change
+expressions accordingly. Multiplications get converted to additions in log space.  But to avoid numerical issues,
+*additions* of probabilities are best converted by using the `log.sum.exp()` function (that should already be loaded),
+rather than using `log( sum( exp()))` directly.
 
 ```R
 # a generally useful function:
@@ -172,11 +176,16 @@ compute.transitions <- function(
 
 The next function puts this all together to implement the CNV-finding HMM.
 It takes:
-* a matrix of per-site, per-sample copy number logliklihoods to be used as emission probabilities.
+* a matrix of per-site, per-sample copy number loglikelihoods to be used as emission probabilities.
 * prior probabilities for each copy number state
 * and a lambda used to determine expected length of transition
 
-It also takes a last parameter (`site.multipliers`) that can used to control for per-site variation, but we're not using it here.
+:::tip Note
+
+The function also takes a last parameter (`site.multipliers`) that can used to control for per-site variation, but we're
+not using it here.
+
+:::
 
 ```R
 # Function cnv.hmm()

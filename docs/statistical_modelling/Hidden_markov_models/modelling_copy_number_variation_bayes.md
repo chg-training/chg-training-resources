@@ -122,6 +122,12 @@ plot.copy.numbers( expected.posterior.state[,clustered.order], title = "Expected
 
 **Note** when you get here, please email me (gavin.band@chg.ox.ac.uk) with the results of your last plot!
 
-## Future directions
-This is the end of this part of the tutorial.  However, this model still isn't good enough because it still only works marginally at each site and sample.  In fact, we know how copy number variants generally arise (unequal crossover leading to long runs of duplicated or deleted DNA) and we'd like to include that information in the model too, if only we could figure out how to put it in.  In the [next part of the tutorial](glycophorin_cnv_hmm.md) we will see how that can be done by linking this to a type of model known as a Hidden Markov Model, that models copy number state across the region.
+## What next?
+
+So, you can use a **likelihood function** along wiht a prior in **Bayes theorem** to estimate copy number in a set of bins.
+
+However, this model **still isn't good enough** because it still only works marginally at each site and sample.  Copy number variants typically arise through recombinations between misaligned sequences ('unequal crossover' or 'non-allelic homologous recombination', although a number of other mechanisms can occur as well). So they lead to long runs of duplicated or deleted DNA and we'd like to include that information in the model too, if only we could figure out how to put it in.  
+
+In the [next part of the tutorial](./glycophorin_cnv_hmm.md) we will see how that can be done by linking this to a type
+of model known as a Hidden Markov Model, that models copy number state across the region.
 
