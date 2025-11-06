@@ -25,7 +25,7 @@ curl -O https://raw.githubusercontent.com/chg-training/chg-training-resources/ma
 
 Now load it into your R session:
 ```
-data = read_delim( "o_bld_group_data.tsv", delim = "\t" )
+data = readr::read_delim( "o_bld_group_data.tsv", delim = "\t" )
 ```
 
 ## What's in the data?
@@ -109,7 +109,7 @@ summary(fit)$coeff
 
 Woah.  The estimate is $-0.334 / 0.039 = 8.6$ standard errors from zero!
 
-## Including covariates.
+## Including covariates
 
 But wait!  Just as before there are some covariates in the data.
 
@@ -128,9 +128,24 @@ summary(fit2)$coeff
 
 Compare the names of the outcome parameters, with the set of countries in the data.  Do you notice anything?
 
-This illustrates the way that regression handles categorical variables like the country by default.
-One country is chosen as a 'baseline' (in an ad hoc manner) and the variation in the other countries are measured against it.
-Which country did `glm` pick as the baseline here?  Which countries have higher O blood group frequencies and which have lower?
+This illustrates the way that regression handles categorical variables like the country by default. One country is
+chosen as a 'baseline' (in an ad hoc manner) and the variation in the other countries are measured against it. 
+
+**Question** Which country did `glm` pick as the baseline here?  Which countries have higher O blood group frequencies and which have lower?
+
+Another
+way to think of this is that R turns the categorical variable `country = c( "Gambia", "Kenya", "Tanzania", ... )` into a
+0-1 matrix like this:
+```r
+Gambia   Ghana   Cameroon   Tanzania   Kenya
+     1       0          0          0       0
+     0       0          0          0       1
+     0       0          0          1       0
+     (etc).
+```
+
+One of the columns is treated as a 'baseline' and dropped - then all the other columns are included as seperate
+variables in the regression.
 
 :::
 
@@ -166,12 +181,14 @@ summary(fit3)$coeff
 ```
 
 :::tip Note
+
 This produces a long output!  Make sure you know what it's showing.
+
+Do any ethnic groups have particularly high case or control rates?
+
 :::
 
-We could also try the principal components as well. They are computed from genome-wide genotypes and reflect population structure
-in each country. Because of the way these have been computed (seperately in each country) the right way to include them is using
-an *interaction term*.  E.g. for the first principal component:
+We could also try the [principal components](../../population_genetics/principal_components_analysis/) as well. They are computed from genome-wide genotypes and reflect population structure in each country. Because of the way these have been computed (seperately in each country) the right way to include them is using an *interaction term*.  E.g. for the first principal component:
 ```
 fit4 = glm(
     status ~ o_bld_group + country + country * PC_1,
@@ -193,6 +210,34 @@ Which of these statements do you agree with:
 * We can't tell if O blood group is protective or confers risk against severe malaria.
 
 :::
+
+:::tip What are those PCs?
+
+The PCs are principal components that reflect population structure.  They were computed seperately in each country.
+
+You can see what the look like, for example, by plotting them:
+
+```r
+library( ggplot2 )
+(
+    ggplot( data = data )
+    + geom_point( aes( x = PC_1, y = PC_2, colour = ethnicity ))
+    + facet_wrap(
+        ~country,
+        scales = "free"
+    )
+    + theme_minimal()
+)
+```
+
+What you're seeing here is that there is considerable **genetic structure** in these populations, that is reflected in
+genome-wide genetic variants as well as in reported ethnicities.
+
+As you saw above some of the ethnic groups are associated with different case / control frequencies, which means that
+population structure could be a **confounder** - in short it's a good idea to try controlling for it.
+
+:::
+
 
 ## Interpreting the parameters
 

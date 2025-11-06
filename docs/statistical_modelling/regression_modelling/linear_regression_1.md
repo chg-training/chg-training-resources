@@ -330,7 +330,7 @@ fit: namely it determines a *joint distribution over the parameters*.
 
 :::
 
-### P-values and all that
+### P-values, standard errors and all that
 
 In the above, the estimate was $0.0209$ with a standard error of $0.0125$.  What does that standard error mean?
 
@@ -355,15 +355,20 @@ possible expression values for samples with the given genotypes.
 
 :::
 
-To explore this **sampling distribution** interopretation, suppose there's actually no association and suppose -
-hypothetically - we were to repeat our estimate on a million different sets of 24 samples (with the same genotypes). The
-*sampling distribution* of the estimate we would obtain would look something like this:
+To explore this **sampling distribution** interpretation, suppose there's actually no association and suppose -
+hypothetically - we were to repeat the study a zillion times, each time taking a different set of 24 samples (with the
+same genotypes but different expression measurements). The *sampling distribution* of the estimate we would obtain would
+then look like a normal distribution with $\text{sd}=0.01245827$ - that is, like this:
 
 ```
-sampling_distribution = tibble(
-    x = seq( from = -0.1, to = 0.1, by = 0.001 )
+sampling_distribution = (
+    tibble(
+        x = seq( from = -0.1, to = 0.1, by = 0.001 )
+    )
+    %>% mutate(
+        density = dnorm( x, mean = 0, sd = 0.01245827 )
+    )
 )
-sampling_distribution$density = dnorm( x, mean = 0, sd = 0.01245827 )
 
 p2 = (
     ggplot( data = sampling_distribution )
@@ -381,14 +386,17 @@ print(p2)
 What this is saying is: our estimate is fairly well within the distribution that would be expected if there is no true association.
 Whichever way you look at this it's hard to get excited about the association.
 
-:::tip Note
+:::tip The P-value via `pnorm()`
 
-The P-value given is a two-tailed p-value, and it is just computed as the **mass of our estimate under the two tails above**. That
-looks like this:
+The P-value gives **no more information** than the beta and standard error.
+
+In fact, it is computed as the mass of the sampling distribution shown above that is 'larger' than the observed beta
+estimate, like this:
 
 ![img](images/sampling_distribution_shaded.png)
 
-To compute it, just compute this mass:
+As the plot shows, the P-value that `lm()` reports is a **two-tailed** p-value, meaning that it accounts for all values
+that are $> |\beta|$ (in either direction).  To compute it, just [compute this mass](../introduction/quantiles_and_pvalues.md):
 
 ```
 print(
@@ -398,21 +406,34 @@ print(
 ```
 
     [1] 0.09452432
-    
-**Note.** The p-value computed above is *almost* but not quite the same as the one listed in the regression output. That's because,
-for linear regression, the distribution is actually T not gaussian. However, this doesn't matter much and gets less important as
-the sample size grows, so I'm going to ignore it.
 
-Becuase of this mass-under-the-tails behaviour, the p-value is interpreted as 'the probability of seeing an effect as
+Because of this mass-under-the-tails definition, the p-value is interpreted as the probability of seeing an effect as
 large as *or larger than* the one we actually saw, if there wasn't any true effect.  
 
-However, the real point I am making here is that **the P-value gives no new information relative to the estimate and its
-standard error**. If you had to choose what to report, it should be the estimate of $\beta$ and its standard error, and
-you can also think of that as summarising the posterior.
+The real point I am making here is that **the P-value gives no new information relative to the estimate and its standard
+error**. If you had to choose what to report, it should be the estimate of $\beta$ and its standard error, because you
+can compute the P-value form that.
 
 :::
 
-Whichever way you dice it, this association does not look very exciting, right?
+:::caution Well not quite normal!
+
+**Note.** The p-value computed using `pnorm()` above (`0.0095`) is *almost* but not quite the same as the one listed in the regression output.
+That's because, for linear regression, the distribution is actually a [T
+distribution](https://en.wikipedia.org/wiki/Student's_t-distribution) rather than gaussian.
+
+However
+
+* this doesn't matter much for most regression
+* it gets less important as the sample size grows
+* and it only really applies to linear regression
+
+...so in most cases you won't go far wrong by thinking of it as computed using `pnorm()` as above.
+
+
+:::
+
+In any case - whichever way you dice it, this association does not look very exciting, right?
 
 ### Including covariates
 

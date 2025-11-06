@@ -166,9 +166,11 @@ There are three ways to work these out. Either
 
 All three of these approaches can be useful.
 
+### Making up is easy to do
+
 :::tip Example: the WTCCC GWAS paper
 
-The 'key formula' appears in Box 1 of the original [Wellcome Trust Case-Control Consortium
+The 'key formula' above appears in Box 1 of the original [Wellcome Trust Case-Control Consortium
 paper](https://doi.org/10.1038/nature05911), which was one of the earliest large genome-wide association studies. It was used to
 pick a threshold of $\alpha = 5\times 10^{-7}$ for following up on putative genetic associations. 
 
@@ -206,7 +208,7 @@ findings which were later replicated in other studies.
 
 :::
 
-### Example - estimating the discovery rates
+### Estimating false discovery rates
 
 [John Storey's 2001 paper](https://doi.org/10.1111%2F1467-9868.00346) introduced the idea that - if we have conducted lots of
 similar tests - the quantities $\Pi$ and the power can be estimated from the data itself. The proposed approach goes something
@@ -214,37 +216,36 @@ like this. Suppose we have conducted $M$ tests (of independent hypotheses) with 
 we'd need to know both the power and the true proportion $\Pi$ of true positives. However, if $M$ is large we might be able to
 estimate them as follows:
 
-* Tests with p-values greater than (say) $\lambda = \frac{1}{2}$ probably reflect the null model - i.e. those where the true
-  effect is zero. And P-values for null tests should be uniformly distributed. So, we could estimate $\Pi$ as the excess in
-  small p-values over what we'd predict from the number of large p-values:
+
+**First**, tests with large p-values (say larger than $\lambda = \frac{1}{2}$) probably reflect the null model - i.e.
+  those where the true effect is zero. Also, P-values for null tests should be uniformly distributed. So, we could
+  estimate $\Pi$ as the excess in small p-values over what we'd predict from the number of large p-values.
+
+So, if there are $N_{>\lambda}$ null p-values greater than $\lambda$, then we'd estimate a total of
+$\frac{N_{>\lambda}}{1-\lambda}$ null p-values in total, and the excess is:
   
 $$
-\Pi \approx 1 - \frac{
-    \# \{p_i|p_i > \lambda\}
-}
-{(1-\lambda)M}
+\hat{\Pi} \approx 1 - \frac{N_{>\lambda}}{1-\lambda}
 $$
 
-* We can't estimate the power directly, but could take
+**Second**, we can't estimate the power $P(p<\alpha|\beta\neq 0)$, because we don't know which p-values come from truly nonzero $\beta$s.
+But we could replace it with $P(p<\alpha)$, in other words:
 
 $$
-P(p_i<\alpha) \approx \frac{\# \{p_i|p_i < \alpha\}}{M}
+P(p_i<\alpha) \approx \frac{N_{<\alpha}}{M}
 $$
 
 Combining with the above estimate $\hat{\Pi}$ of $\Pi$ gives
 
 
-Plugging these in leads to the positive false discovery rate estimate:
+Plugging these in leads to the 'positive false discovery rate' estimate:
 $$
-P(\beta=0|p<\alpha) = \frac{\alpha}{1-\lambda} \cdot \frac{
-    \#\{p_i|p_i>\lambda\}
-}
-{
-    \# \{p_i|p_i < \alpha\}
-}
+P(\beta=0|p<\alpha) = \frac{\alpha}{1-\lambda}
+\cdot
+\frac{N_{>\lambda}}{N_{<\alpha}}
 $$
 
-and of course the corresponding true discovery rate $P(\beta\neq 0|p<\alpha)$ is one minus this quantity.
+Of course the corresponding true discovery rate $P(\beta\neq 0|p<\alpha)$ is one minus this quantity.
 
 Storey's FDR method therefore provides a way to estimate the key quantities in the key formula from the data itself -
 provided we have lots of data to work with.
