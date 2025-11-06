@@ -334,31 +334,30 @@ fit: namely it determines a *joint distribution over the parameters*.
 
 In the above, the estimate was $0.0209$ with a standard error of $0.0125$.  What does that standard error mean?
 
-Here are two ways of thinking about it.  First, in the context of bayes' theorem, this is really expressing the
-variation in the posterior distribution.  Roughtly speaking, it is saying that the posterior is (approximately) a
-Gaussian distribution with the given estimate as mode and standard deviation as the standard error.  (For linear
-regression it's actually a T distribution not a gaussian, but that doesn't matter very much.)  In other words this is
-describing what we should believe about the 'true' parameter estimate given the data we've seen.  This is a **good way**
-of thinking about it.
+Here are two ways of thinking about it.  First, a **bayesian** interpretation is that this is telling us the approximate
+**posterior distribution of the parameter** - that is, what we should believe about the parameter having seen the data.
+(In this setting, we have to have assumed $\text{prior}\equiv 1$ so that the prior doesn't affect things.).  Although
+the true posterior could be mathematically complex, it's approximately normal with that standard error.
 
-Another useful way of thinking about the standard error is that it tells us the **sampling error** of the estimate.  To
-understand this, you have to think not just of the dataset we have loaded, but also imagine what would happen if we
-generated and estimated in other datasets generated the same way.  Each dataset would generate its own estimate, which
-would differ a bit from our estimate due to all the random noise and so on.  The **standard error** tells us how much
-variability we should expect in that estimate.
+Second, a **frequentist** interpretation is that the standard error tells us about the **sampling distribution** of
+the estimate.  To understand this, you have to think not just of the dataset we have loaded, but also imagine what would
+happen if we (hypothetically) generated lots of other datasets in the same way and re-estimated. Each dataset would
+generate its own estimate, which would differ a bit from our estimate due to all the random noise and so on.  The
+**standard error** tells us how much variability we should expect in that estimate.  Approximately, we can think of this
+as saying that the **sampling distribution of the estimate** is gaussian with that standard deviation.
 
-:::tip Note
+:::caution Note
 
-In this context, an odd feature of linear regression is that it treats the predictors (i.e. the genotypes) as fixed - they are treated as
-known beforehand rather than as part of the 'observed data' for statistical purposes. So this is really about imagining
-possible expression values for samples with the given genotypes.
+The **posterior distribution of the parameters**, and the **sampling distribution of the estimate**, are not exactly the
+same. But when there's lots of data they become *approximately* the same (and both approximately normal) and so for most
+purposes we can treat them as the same.
 
 :::
 
 To explore this **sampling distribution** interpretation, suppose there's actually no association and suppose -
 hypothetically - we were to repeat the study a zillion times, each time taking a different set of 24 samples (with the
 same genotypes but different expression measurements). The *sampling distribution* of the estimate we would obtain would
-then look like a normal distribution with $\text{sd}=0.01245827$ - that is, like this:
+then look approximately like a normal distribution with $\text{sd}=0.01245827$ - that is, like this:
 
 ```
 sampling_distribution = (
@@ -386,7 +385,7 @@ print(p2)
 What this is saying is: our estimate is fairly well within the distribution that would be expected if there is no true association.
 Whichever way you look at this it's hard to get excited about the association.
 
-:::tip The P-value via `pnorm()`
+:::tip The P-value
 
 The P-value gives **no more information** than the beta and standard error.
 
