@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Getting set up
 
-To run this practical you need two things: the software and the data.
+Genome-wide genetic datasets are typically too big to load in R, so to compute PCs across them you typically need some dedicated software. In this tutorial we'll use 'plink' to compute PCs.
 
 ## Getting the software
 

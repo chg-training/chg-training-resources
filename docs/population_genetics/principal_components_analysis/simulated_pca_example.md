@@ -60,13 +60,15 @@ cols1 = sample( 1:N, 66 )
 cols2 = sample( cols1, N/3 )
 ```
 
-Let's add some structure to our data by adding some random stuff with nonzero mean to each of the subsets:
+If you look closely you'll see that we've made this complicated by making `cols2` a subset of `cols1`.  Now let's add some structure to our data by adding some random stuff with nonzero mean to each of the subsets:
+
 ```r
 X[rows1,cols1] = X[rows1,cols1] + rnorm( length(rows1) * length(cols1), mean = 0.25, sd = 0.5 )
 X[rows2,cols2] = X[rows2,cols2] + rnorm( length(rows2) * length(cols2), mean = -0.4, sd = 0.5 )
 ```
 
 Finally, let's do what we will do in practice for a GWAS, and normalising the matrix.  We will do this by **standardising the rows**:
+
 ```r
 for( i in 1:L ) {
 	X[i,] = X[i,] - mean(X[i,] )
@@ -101,11 +103,9 @@ Do you see any structure - if so is it what you expect?
 
 ## Computing principal components
 
-You can probably *just about* see the structure in the matrix above, but not very clearly - even though we know it is
-there.  But now let's see if principal components can identify it.
+You can probably *just about* see the structure in the matrix above, but not very clearly - even though we know it is there.  But now let's see if principal components can identify it.
 
-There are several equivalent ways to run a PCA but the one we will use is based on computing a matrix of "similarity" (or, as we will say for genetic data below, 'relatedness') between columns.  This similarity matrix is of dimension
-$N\times N$ and can be computed very simply indeed:
+There are several equivalent ways to run a PCA but the one we will use is based on computing a matrix of "similarity" (or, as we will say for genetic data below, 'relatedness') between columns.  This similarity matrix is of dimension $N\times N$ and can be computed very simply indeed:
 
 $$
 R = \frac{1}{L} \cdot X^t X
@@ -121,9 +121,7 @@ image(R)
 
 In case you're not used to looking at matrix maths, here's what the above means.
 
-It says: take the matrix $X$, which has dimension $L\times N$ (i.e. it has $L$ rows and $N$ columns) and *transpose* it.
-(Transposing it means 'rotating' by 90 degrees, so the rows become columns and vice versa). Then multiply it by itself.
-Like this:
+It says: take the matrix $X$, which has dimension $L\times N$ (i.e. it has $L$ rows and $N$ columns) and transpose it. (Transposing it means mirroring in the diagonal, so the rows become columns and vice versa). Then multiply it by itself. Like this:
 
 $$
 X^t X = \left(\begin{array}{cccc}
@@ -140,20 +138,13 @@ x_{L1} & \cdots & x_{LN}
 \end{array}\right)
 $$
 
-To 'multiply' you go **across rows** and **down columns**, i.e. you compute the **dot product** of each row of $X^t$ and
-each column of $X$.  (The rows of $X^t$ are just the columns of $X$, of course, so this is dot producting the columns of
-X with themselves). The entry $r_{ij}$ in row $i$ and column $j$ of the result $R$ is thus the dot product of the $i$th and $j$th
-columns of $X$:
-$$
-r_{ij} = \frac{1}{L} \sum_{l=1}^L x_{li} x_{lj}
-$$
+To 'multiply' you go **across rows** and **down columns**, i.e. you compute the **dot product** of each row of $X^t$ and each column of $X$.  (The rows of $X^t$ are just the columns of $X$, of course, so this is dot producting the columns of X with themselves). The entry $r_{ij}$ in row $i$ and column $j$ of the result $R$ is thus the dot product of the $i$th and $j$th columns of $X$: $$ r_{ij} = \frac{1}{L} \sum_{l=1}^L x_{li} x_{lj} $$
 
-Roughly speaking this dot product, quantifies the **extent to which the two columns of $X$ point in the same direction
-(in $L$-dimensional space).  Im fact it is the **covariance** between columns $i$ and $j$ (or almost - this is not quite true because we standardised the rows, not the columns of $X$, but this has a minor impact here.)
+Roughly speaking this dot product, quantifies the **extent to which the two columns of $X$ point in the same direction** (in $L$-dimensional space).  Im fact it is the **covariance** between columns $i$ and $j$ (or almost - this is not quite true because we standardised the rows, not the columns of $X$, but this has a minor impact here.)
 
 :::
 
-We can now compute principal components by computing the *eigendecomposition* of the matrix $R$:
+We can now compute principal components by computing the **eigendecomposition** of the matrix $R$:
 
 ```r
 R = t(X) %*% X
@@ -162,9 +153,7 @@ pca = eigen(R)
 
 :::tip Note
 
-As usual you can see the structure of the output objectusing `View()` or `str()`. The matrix $X$ has 100 columns, and
-the output object has 100 *eigenvalues* (`pca$values`) and 100 *eigenvectors* (`pca$vectors`), each of length 100.  The
-entries of the eigenvectors are the **principal components**.
+As usual you can see the structure of the output object using `View()` or `str()`. The matrix $X$ has 100 columns, and the output object has 100 **eigenvalues** (`pca$values`) and 100 **eigenvectors** (`pca$vectors`), each of length 100.  The entries of these eigenvectors are known as the **principal components**.
 
 :::
 
@@ -209,20 +198,17 @@ grid()
 
 ![img](images/test_pca_coloured.png)
 
-As you can see, PCA has seperated out the three populations of samples - indeed it has done it pretty well in my version
-of the data above.
+As you can see, PCA has seperated out the three populations of samples - indeed it has done it pretty well in my version of the data above.
 
 :::tip Note
 
-The sample sets are clearly seperated in the first two principal components.  But the method isn't perfect, for example,
-  it hasn't actually told us what the three sets are (we can see them allright, but would need extra work to get it to tell us what they actually are.)
+The sample sets are clearly seperated in the first two principal components.  But the method isn't perfect: for example, it hasn't actually told us what the three sets of samples are. (We can see them on the plot allright, but would need extra work to get it to tell us what they actually are.)
 
 :::
 
 ## PCA duality: computing row 'loadings'
 
-What if we don't eigendecompose $X^t X$ (of dimension $N\times N$), but decompose $X X^t$ (of dimension $L\times L$)
-instead?  Answer: we get the **row loadings**:
+What if we don't eigendecompose $X^t X$ (of dimension $N\times N$), but decompose $X X^t$ (of dimension $L\times L$) instead?  Answer: we get the **row loadings**:
 
 ```r
 loadings = eigen( (1/L) * X %*% t(X) )
@@ -252,14 +238,16 @@ plot(
 
 What may not be apparent is that these loadings are very closely related to the PCs themselves.
 
+To see this, look at the plot above.  In the first plot, rows 1-500 are elevated, while in the second plot rows 250-500 are elevated.  These are exactly the row lists we chose originally.
+
 To see this, first look at the eigenvalues from both the above decompositions:
 ```r
 plot( pca$values, loadings$values[1:100] )
 ```
 They are the same!
 
-It turns out that these two things (PCs and loadings) are 'dual' to each other - in particular the PCs are just the
-**projections of the columns of X onto the loadings**.  Specifically:
+It turns out that these two things (PCs and loadings) are 'dual' to each other.  The PCs are, in fact, just the
+**projections of the columns of X onto the loadings** - and the loadings are the projections of the rows of X onto the PCs.
 
 * The $k$th loading expresses *how much each row contributes* to the $k$th PC.
 

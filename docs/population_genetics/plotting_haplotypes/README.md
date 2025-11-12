@@ -244,7 +244,7 @@ plot_haplotypes(
 )
 ```
 
-Let's also zoom in a bit to see the haplotypes around *GRIN2D*:
+Let's also zoom in a bit to see the haplotypes around *FUT2*:
 ```
 FUT2.region = list(
 	chromosome = 'chr19',
@@ -352,6 +352,7 @@ order_haplotypes <- function( haplotypes, metadata, region ) {
 }
 
 ```
+:::
 
 Feel free to explore other regions within the data.
 
@@ -379,15 +380,11 @@ This picture is typical - **most variant alleles are rare**, and only a few are 
 
 :::tip Note
 
-These are the frequencies at **variable sites** only.  If we computed at every site, there would be an even bigger spike
-at zero - counting all the sites that are not variable between people in our data. (How many of these are there in this
-region?)
+These are the frequencies at **variable sites** only.  If we computed at every site, there would be an even bigger spike at zero - counting all the sites that are not variable between people in our data. (How many of these are there in this region?)
 
 :::
 
-This picture is for *alternate* alleles (versus reference alleles).  A better plot would show the frequencies of
- **derived** alleles (i.e. those that have arisen trhough mutation compared to the common ancestor).  To do that, we
- would need a call of the ancestral allele - which we haven't loaded right now.  So instead let's plot hte **folded site frequency spectrum**:
+This picture is for *alternate* alleles (versus reference alleles).  A better plot would show the frequencies of **derived** alleles (i.e. those that have arisen trhough mutation compared to the common ancestor).  To do that, we would need a call of the ancestral allele - which we haven't loaded right now.  So instead let's plot hte **folded site frequency spectrum**, where we ignore the difference:
 
 ```r
 hist(
@@ -405,13 +402,9 @@ hist(
 
 ## Computing diversity
 
-Another natural metric is to measure 'how much variation' there is by computing the average evolutionary distances between haplotypes. The simplest way is just to count the number of mutations that differ between each pair of haplotypes, on average across pairs.
+A natural metric is to measure 'how much variation' there is by computing the average number of mutations that separate different haplotypes - **average number of pairwise differences**, also known as **nucleotide diversity**.
 
-The idea is that (ignoring recombination for a moment) - mutations that seperate two samples represent those that have occurred since their most recent common ancestor.  Roughtly speaking the number of mutations 'counts' the evolutionary distance between the haplotypes.  A natural metric is thus **number of pairwise differences** between the two haplotypes.
-
-Let's see how distantly related the haplotypes are on average, by computing the  **average number of pairwise
-differences** between different haplotypes - also known as **nucleotide diversity** - now. To do this we'll write a
-function which loops over all pairs of haplotypes in the data.
+To do this we'll write a function which loops over all pairs of haplotypes in the data.
 
 :::tip Note
 

@@ -31,23 +31,16 @@ $$
 
 For example - it could be a matrix of genotypes in a genome-wide association study (rows are SNPs and columns are samples).  Or it could ba a matrix of expression levels (rows are genes and columns are samples).  Whatever it is, it it's a big multidimensional object, and it would be nice to have a simple way to visualise and analyse its structure.
 
-Principal components analysis (PCA) does this by re-writing the matrix in terms of a small number of 'principal components' - directions in space. The directions are *orthogonal* to each other (i.e. at right angles) so, in a sense, they each represent a seperate part of the matrix.
-Together, the principal components capture the major structure of the matrix and often reveal the most important features.
-
+Principal components analysis (PCA) does this by re-writing the matrix in terms of a small number of 'principal components' - directions in space. The directions are orthogonal (i.e. at right angles) to each other so, in a sense, they each represent an independent part of the matrix. Together, the principal components capture the major structure of the matrix and often reveal the most important features.
 
 
 ## Principal components for GWAS
 
-In this tutorial you will carry out principal components analysis on a set of human samples using the plink software
-package.  Because this is for use in a [GWAS
-study](../../genome_wide_association_studies/genome_wide_association_analysis/README.md), we will carry out many of the
-steps that are usually done in those studies, including  including *pruning SNPs for local correlation patterns*,
-*identifying and excluding closely-related individuals*, and *comparing samples to a global reference panel*.   Before
-doing that, however, we'll also try a simple simulated PCA example in R.
+In this tutorial you will carry out principal components analysis on a set of human samples using the plink software package.  Because this is for use in a [GWAS study](../../genome_wide_association_studies/genome_wide_association_analysis/README.md), we will carry out many of the steps that are usually done in those studies, including  including *pruning SNPs for local correlation patterns*, *identifying and excluding closely-related individuals*, and *comparing samples to a global reference panel*.  Before doing that, however, we'll also try a simple simulated PCA example in R.
 
-When you're ready, go and [get setup](./getting_setup.md) for the practical.  The complete set of pages is as follows:
+When you're ready, go and [get setup](./simulated_pca_example.md) for the practical.  The complete set of pages is as follows:
 
-* [Introduction](README.md) (this page)
+* [Introduction](README.md) (this page) 
 * Try a [PCA warm-up in R](./simulated_pca_example.md)
 * [Getting the software and data](./getting_setup.md)
 * [Practical overview](./overview.md)
