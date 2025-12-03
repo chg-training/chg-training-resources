@@ -77,6 +77,18 @@ const FeatureList = [
       </>
     ),
   },
+  {
+    title: 'RNA-seq and other omics',
+    url: 'rna_seq_and_other_omics',
+    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    //png: 'static/img/gwas.png',
+
+    description: (
+      <>
+        An introduction to analysis of RNA-seq and other functional data.
+      </>
+    ),
+  },
 
 ];
 
@@ -112,7 +124,7 @@ export default function HomepageFeatures() {
         </div>
         {/* Third row */}
         <div className="row">
-          {FeatureList.slice(6,7).map((props, idx) => (
+          {FeatureList.slice(6,8).map((props, idx) => (
             <Feature key={idx} {...props} />
           ))}
         </div>
