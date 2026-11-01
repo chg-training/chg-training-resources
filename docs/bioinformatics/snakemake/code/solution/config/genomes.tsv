@@ -1,0 +1,8 @@
+genome_name	url
+c_elegans	http://ftp.ebi.ac.uk/pub/ensemblorganisms/GCA/000/002/985/3/wormbase/2014_10/geneset/genes.gff3.gz
+human	http://ftp.ebi.ac.uk/pub/ensemblorganisms/GCA/000/001/405/29/ensembl/2026_04/geneset/genes.gff3.gz
+human_CHM13	http://ftp.ebi.ac.uk/pub/ensemblorganisms/GCA/009/914/755/4/ensembl/2022_07/geneset/genes.gff3.gz
+e_coli	http://ftp.ebi.ac.uk/pub/ensemblorganisms/GCA/000/005/845/2/community/2018_09/geneset/genes.gff3.bgz
+p_falciparum	http://ftp.ebi.ac.uk/pub/ensemblorganisms/GCA/000/002/765/2/community/2017_10/geneset/genes.gff3.gz
+bread_wheat	http://ftp.ebi.ac.uk/pub/ensemblorganisms/GCA/900/519/105/1/community_iwgsc/2018_04/geneset/genes.gff3.gz
+chimpanzee	http://ftp.ebi.ac.uk/pub/ensemblorganisms/GCA/000/001/515/5/ensembl/2020_03/geneset/genes.gff3.gz
