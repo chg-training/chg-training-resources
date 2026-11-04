@@ -1,8 +1,8 @@
 ---
-sidebar_position: 10
+sidebar_position: 1
 ---
 
-# What to make of a COVID test
+# Bayes example: what to make of a COVID test
 
 Let's apply Bayes formula to this question:
 

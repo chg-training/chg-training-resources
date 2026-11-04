@@ -4,8 +4,9 @@ sidebar_position: 1
 
 # From basics to Bayes
 
-**These pages still under construction.**
+**These pages are still under construction.**
 
-Welcome!  This tutorial will introduice you to key concepts in statistical analysis, and particularly Bayesian analysis.
+Welcome!  This tutorial will introduce you to key concepts in statistical analysis, with a focus on a **bayesian**
+approach.
 
 Use the links in the sidebar to navigate.

@@ -2,11 +2,13 @@
 sidebar_position: 3
 ---
 
-# The most important formula in science
+# The most important formula in science!
 
-The most important formula is... Bayes theorem!
+The most important formula is... **Bayes theorem.**.
 
-Let's write it now. Suppose $Z$ is *something we care about* - say, a scientific theory, or the chance of having disease.
+Let's write it now. Suppose $Z$ is *something we care about* - say, a scientific theory, the chance of having disease,
+or the [mass of Saturn](https://ntrs.nasa.gov/api/citations/19900014766/downloads/19900014766.pdf).
+
 We collect some data to tell us about it. Bayes' theorem now tells us that:
 
 $$
@@ -15,7 +17,7 @@ P\left(Z=z|\text{data}\right) = \frac{P\left(\text{data}|Z=z\right) \cdot P(Z=z)
 
 $$
 
-Bayes formula tells us how to update what we should believe about $Z$, given some new data:
+In other words, Bayes formula tells us how to update what we should believe about $Z$, given some new data:
 
 * The left-hand side $P(Z=z|\text{data})$ represents our new belief (distribution of $Z$ given the data).  
 * The right-hand side involves a model for the data $P(\text{data}|Z=z)$, and a term $P(Z=z)$ representing what we *used* to believe about $Z$ before we saw the data.  (There's also a denominator, which like for other distributions acts as a normalising constant.  We'll come back to this below.)
@@ -26,14 +28,14 @@ The pieces of Bayes' theorm have specific names and interpretations in statistic
 
 ## Using Bayes in practice
 
-In principle, it's easy to use Bayes.  We do this:
+In *principle*, it's easy to use Bayes.  We do this:
 
 1. Collect some data about $Z$.
 2. Write down a model of the data (the likelihood function).
 3. Work out what prior information we have about $Z$.
 4. And then apply the formula.
 
-In pratice this can be easy or difficult, depending on how complicated it is to define the likelihood and prior.  We'll do some examples in a moment to make this clear.
+In *practice* this can be easy or difficult, depending on how complicated it is to define the likelihood and prior.  We'll do some examples in a moment to make this clear.
 
 ## The denominator
 
@@ -49,7 +51,7 @@ Here are a few things to note:
 
 The denominator therefore plays the same role as 'normalising constants' for [other distributions](./some_distributions.md).
 
-## Computing the denominator
+### Computing the denominator
 
 So how do we compute the normalising constant?  Here are a few things to note.
 
@@ -57,7 +59,7 @@ So how do we compute the normalising constant?  Here are a few things to note.
 
 **Second**, in many problems everything works out 'analytically', meaning that the mathematical form of the posterior is already known - nothing more needed to compute.  (For example, the posterior might be a [beta distribution](./some_distributions.md) or a [normal distribution](./some_distributions.md)).
 
-**Lastly**, we can always compute the denominator by summing the numerator over all the possible values of $Z$.  In other words, we write it out using the [law of total probability](../probability_cheatsheet.md):
+**Thirdly**, we can always compute the denominator by summing the numerator over all the possible values of $Z$.  In other words, we write it out using the [law of total probability](../probability_cheatsheet.md):
 
 $$
 
@@ -65,14 +67,19 @@ $$
 
 $$
 
-For a continuous variable $Z$, this would be an integral.
+For a continuous variable $Z$, this third method would be an integral, not a sum.
 
 We'll do some examples of both these methods in a moment.
 
-:::caution
+:::warning
 
-Working out this sum can sometimes be harder.  In this case computational methods like **Markov Chain Monte Carlo** (MCMC), **Laplace approximations** or **Variational approximations** are typically needed.  Although these sound complicated, they're really just numerical ways to compute this denominator, and there are plenty of easy-to-use tools to do this.  
+Actually working out the sum in this third method can nevertheless sometimes be quite hard - especially if it's a
+continuous $Z$ variable.  In this case computational methods like **Markov Chain Monte Carlo** (MCMC), [Laplace
+approximations](https://en.wikipedia.org/wiki/Laplace%27s_approximation) or **Variational approximations** are typically needed.
 
-We won't get into these for now because there are plenty of useful examples where they aren't needed.
+Although the details are complicated, these are really just numerical ways to compute this denominator, and there are
+plenty of easy-to-use tools around that help.
+
+We won't get into these for now because there are also plenty of useful examples where they aren't needed.
 
 :::
