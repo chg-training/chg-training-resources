@@ -88,7 +88,7 @@ So let's try:
 # Function to compute overall likelihood
 total_likelihood = function( sum_of_dice, die_model = rep( 1/6, 6 ) ) {
 	prod(
-		two_dice_likelihood( sum_of_dice, probabilities )$probability
+		two_dice_likelihood( sum_of_dice, die_model )$probability
 	)
 }
 ```
