@@ -8,24 +8,47 @@ In this file: [on github](https://raw.githubusercontent.com/chg-training/chg-tra
 
 I've wrapped up the above simulation into two key functions:
 
-* `simulate.population()` which simulates from the model as above.
-* `plot.simulation()` which makes a multi-panel plot of the result.
+* `simulatePopulation()` which simulates from the model as above.
+* `plotSimulation()` which makes a multi-panel plot of the result.
 
-To get this code, save it somewhere and `source()` it into your session:
-```
+To get this code, you can `source()` it into your session in R, or `import` it in Python:
+
+<div className="r-py-columns">
+
+```r
 source( "simulation_and_visualisation.R" )
 ```
+```python
+from simulation_and_visualisation import (
+  simulatePopulation, plotSimulation
+)
+```
+</div>
 
 You can run it like this:
+<div className="r-py-columns">
+
+```r
+sim = simulatePopulation( L = 20, N = 100, G = 100 )
+plotSimulation(sim)
 ```
-sim = simulate.population( L = 20, N = 100, G = 100 )
-plot.simulation(sim)
+```python
+sim = simulatePopulation(L=20, N=100, G=100)
+plotSimulation(sim)
 ```
+</div>
 
 or on one line:
+
+<div className="r-py-columns">
+
 ```
-plot.simulation( simulate.population( L = 20, N = 100, G = 100 ) )
+plotSimulation( simulatePopulation( L = 20, N = 100, G = 100 ) )
 ```
+```python
+plotSimulation(simulatePopulation(L=20, N=100, G=100))
+```
+</div>
 
 It produces a plot like this:
 

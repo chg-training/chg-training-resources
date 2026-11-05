@@ -1,4 +1,4 @@
-simulate.population <- function(
+simulatePopulation <- function(
   L,       # number of bi-allelic variants
   N,       # population size
   G,       # number of generations
@@ -101,7 +101,7 @@ plot.haplotypes <- function( haplotypes ) {
   )
 }
 
-plot.simulation <- function(
+plotSimulation <- function(
 	sim,
 	G = NULL # specify generation to plot up to - if NULL, use final generation
 ) {
