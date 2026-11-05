@@ -167,32 +167,45 @@ plot.simulation <- function(
 
   # Frequencies
   haplotype.frequencies = compute.haplotype.frequencies( sim )
-  variant.frequencies = compute.variant.frequencies( sim )
+  variant.frequencies   = compute.variant.frequencies( sim )
 
-  palette = rainbow( sim$H )
-  blank.plot( xlim = c( 1, sim$G ), ylim = c( 0, 1 ) )
-  for( i in 1:sim$H ) {
-    points( 1:G, haplotype.frequencies[1:G,i], col = palette[i], type = 'l' )
+  plot.haplotype.frequencies <- function( frequencies ) {
+    blank.plot( xlim = c( 1, G*1.1 ), ylim = c( 0, 1 ), xlab = "Generations", ylab = "Haplotype frequencies")
+    palette = rainbow( H )
+    for( i in 1:H ) {
+      points( 1:G, frequencies[,i], col = palette[i], type = 'l' )
+      if( frequencies[G,i] > 0 ) {
+        text( G*1.02, frequencies[G,i], sprintf( "Hap %d", i ), adj = c( 0, 1 ), xpd = NA, col = palette[i] )
+      }
+    }
+    grid()
+    axis(1)
+    axis(2)
   }
-  axis( 1 )
-  axis( 2 )
+
+  plot.haplotype.frequencies( haplotype.frequencies )
   mtext( "Haplotype frequencies", 2, line = 2, cex = 0.5 )
   mtext( "Generations", 1, line = 2, cex = 0.5 )
   mtext( "Haplotype frequency evolution", 3, line = 1 )
-  
   grid()
 
-  palette = rainbow( sim$L )
-  blank.plot( xlim = c( 1, sim$G ), ylim = c( 0, 1 ), ylab = "Variant frequencies")
-  for( i in 1:sim$L ) {
-    points( 1:G, variant.frequencies[1:G,i], col = palette[i], type = 'l' )
+  plot.variant.frequencies <- function( frequencies ) {
+    blank.plot( xlim = c( 1, G*1.1 ), ylim = c( 0, 1 ), xlab = "Generations", ylab = "Variant frequencies")
+    palette = rainbow( sim$L )
+    for( i in 1:sim$L ) {
+      points( 1:G, frequencies[1:G,i], col = palette[i], type = 'l' )
+      if( frequencies[G,i] >= 0.01 & frequencies[G,i] <= 0.99 ) {
+        text( G*1.02, frequencies[G,i], sprintf( "Pos %d", i ), adj = c( 0, 1 ), xpd = NA, col = palette[i] )
+      }
+    }
+    axis( 2 )
+    axis( 1 )
   }
-  axis( 2 )
-  axis( 1 )
+
+  plot.variant.frequencies( variant.frequencies )
   mtext( "Variant frequencies", 2, line = 2, cex = 0.5 )
   mtext( "Generations", 1, line = 2, cex = 0.5 )
   mtext( "Variant frequency evolution", 3, line = 1 )
-  grid()
 
   # LD matrices
   breaks = c( -0.01, seq( from = 0.1, to = 1, by = 0.1 ))
@@ -207,9 +220,11 @@ plot.simulation <- function(
   
   legend(
     "topleft",
-    col = ld.colours[c(2,4,6,8,10)],
-    legend = sprintf( "<=%.2f", breaks[c(3,5,7,9,11)]),
-    pch = 15,
-    bty = 'n'
+    pt.bg = ld.colours[c(2,4,6,8,10)],
+    legend = sprintf( "≤%.1f", breaks[c(3,5,7,9,11)]),
+    pch = 22,
+    text.col = 'white',
+  #  bty = 'n',
+    bg = rgb( 0.2, 0.2, 0.2, 0.5 )
   )
 }
