@@ -17,9 +17,15 @@ To get started
 
 :::
 
-3. Lastly, point your web browser at this folder:
+3. Lastly, point your web browser at these files:
 ```
-https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/sequence_data_sightseeing_tour/quiz/
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/1.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/2.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/3.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/4.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/5.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/6.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/7.bam
 ```
 
 :::tip Challenge
