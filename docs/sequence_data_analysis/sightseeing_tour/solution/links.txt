@@ -1,0 +1,10 @@
+original	tinyurl
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/10x.bam	https://tinyurl.com/2zjt93xe
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/ATAC-monocytes.bam	https://tinyurl.com/5bvpdm97
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/illumina.bam	https://tinyurl.com/gmsseq
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/nanopore.bam	https://tinyurl.com/3f9rtex3
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/pacbio.bam	https://tinyurl.com/4s3ctd56
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/pacbio-rnaseq-T-helper.bam	https://tinyurl.com/bdhe5hke
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/rnaseq-b-cells.bam	https://tinyurl.com/5ay24ess
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/rnaseq-cytotoxic-T.bam	https://tinyurl.com/r7ewzhkd
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/rnaseq-monocytes.bam	https://tinyurl.com/yc8czudj

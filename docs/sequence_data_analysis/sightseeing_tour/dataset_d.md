@@ -6,14 +6,14 @@ sidebar_position: 4
 
 **Dataset URLs**:
 ```
-https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/sequence_data_sightseeing_tour/rnaseq-monocytes.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/rnaseq-monocytes.bam
 ```
 **Additional dataset URLs, for other cell types**:
 ```
-https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/sequence_data_sightseeing_tour/rnaseq-cytotoxic-T.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/rnaseq-cytotoxic-T.bam
 ```
 ```
-https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/sequence_data_sightseeing_tour/rnaseq-b-cells.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/rnaseq-b-cells.bam
 ```
 
 RNA-seq sequences (guess what?) RNA instead of DNA - usually messenger RNA (mRNA).

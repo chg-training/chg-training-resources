@@ -6,7 +6,7 @@ sidebar_position: 5
 
 **Dataset E URL**:
 ```
-https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/sequence_data_sightseeing_tour/ATAC-monocytes.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/ATAC-monocytes.bam
 ```
 
 Dataset E is [ATAC-seq](https://en.wikipedia.org/wiki/ATAC-seq) from monocytes.  ATAC-seq is a way of measuring regions of open chromatin.

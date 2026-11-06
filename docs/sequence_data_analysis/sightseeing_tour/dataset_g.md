@@ -6,7 +6,7 @@ sidebar_position: 9
 
 **Dataset G URL**:
 ```
-https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/sequence_data_sightseeing_tour/pacbio-rnaseq-T-helper.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/pacbio-rnaseq-T-helper.bam
 ```
 
 :::caution Warning

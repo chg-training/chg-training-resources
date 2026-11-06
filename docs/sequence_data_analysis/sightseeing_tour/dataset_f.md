@@ -6,7 +6,7 @@ sidebar_position: 8
 
 **Dataset link**:
 ```
-https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/sequence_data_sightseeing_tour/10x.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/10x.bam
 ```
 
 Yet another type of data is linked-read sequencing. This is Illumina short-read sequencing, but including molecular

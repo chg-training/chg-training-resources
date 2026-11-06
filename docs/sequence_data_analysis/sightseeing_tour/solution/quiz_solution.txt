@@ -1,0 +1,9 @@
+quiz	original
+1.bam ATAC-monocytes.bam
+2.bam illumina.bam
+3.bam nanopore.bam
+4.bam rnaseq-monocytes.bam
+5.bam pacbio.bam
+6.bam 10x.bam
+7.bam pacbio-rnaseq-T-helper.bam
+

@@ -6,7 +6,7 @@ sidebar_position: 2
 
 **File URL**: 
 ```
-https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/sequence_data_sightseeing_tour/illumina.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/illumina.bam
 ```
 (For index URL, add `.bai`).
 

@@ -6,11 +6,11 @@ sidebar_position: 3
 
 **Dataset B URL**:
 ```
-https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/sequence_data_sightseeing_tour/nanopore.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/nanopore.bam
 ```
 **Dataset C URL**:
 ```
-https://www.chg.ox.ac.uk/bioinformatics/training/gms/data/sequence_data_sightseeing_tour/pacbio.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/pacbio.bam
 ```
 (For index URLs, add `.bai`).
 
