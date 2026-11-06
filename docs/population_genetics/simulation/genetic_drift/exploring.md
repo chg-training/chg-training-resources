@@ -2,7 +2,7 @@
 sidebar_position: 6
 ---
 
-# Exploring the simulations.
+# Exploring the simulations
 
 In this file: [on github](https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/simulation_and_visualisation.R) (right click and choose 'Save as' to save it).
 

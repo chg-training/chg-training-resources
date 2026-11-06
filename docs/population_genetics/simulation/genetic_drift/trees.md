@@ -8,7 +8,7 @@ So far we've been thinking about the patterns of haplotypes - frequencies, LD an
 
 But what about the underlying patterns of inheritance?  Let's add something now to track the 'genealogy'.
 
-## Tracking paterns
+## Tracking parents
 
 Currently our `evolve()` function looks like this:
 
@@ -43,13 +43,13 @@ def choose_parents( N ):
 ```
 </div>
 
-To use this in our simulation we need to update the code to track it.  Let's create another matrix to track the parents:
-```r
+To use this in our simulation we need to update the code to track it.  Let's create another matrix to track the parents.  (We'll also turn down the simulation size so we can plot it later:
+
 <div className="r-py-columns">
 
 ```r
-N = 100 # number of individuals
-G = 100 # number of generations
+N = 40 # number of individuals
+G = 50 # number of generations
 population = matrix(
 	NA, nrow = G, ncol = N,
   dimnames = list(
@@ -62,8 +62,9 @@ population = matrix(
 parents = population
 ```
 ```python
-N = 100  # number of individuals
-G = 100  # number of generations
+
+N = 40  # number of individuals
+G = 50  # number of generations
 
 population = np.empty((G, N), dtype=int)
 # Add an empty `parents` matrix too
@@ -110,4 +111,35 @@ fig, axes = plt.subplots(ncols=2, figsize=(10, 4))
 ax = plot_haplotypes(haplotypes[population[0]], "Gen 0", axes[0])
 ax = plot_haplotypes(haplotypes[population[G-1]], f"Gen {G-1}", axes[1])
 ```
+</div>
+
+Excellent!  What about plotting the inheritance patterns?
+
+OK let's make a grid of all the individuals over time.
+
+<div className="r-py-columns">
+
+```r
+library( dplyr )
+long_form = (
+	tibble( individual    = 1:N )
+	%>% cross_join( tibble( generation    = 1:G ))
+	%>% group_by( individual, generation )
+	%>% dplyr::mutate( haplotype = population[generation, individual] )
+)
+
+par( mfrow = c( 1, 1 ))
+plot(
+	long_form$generation,
+	long_form$individual,
+	pch = 21,                   # filled circles
+	bg  = long_form$haplotype,  # fill colour
+	col = NA,                   # no outline on shapes
+	xlab = "Generations",
+	ylab = "Individual",
+	bty = 'n'                   # no border
+)
+
+```
+
 </div>
