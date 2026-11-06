@@ -32,6 +32,10 @@ R also has a concept of the *current* or *working directory*.  You can see what 
 
 If you start R from the command-line, the working directory will be the directory you started it
 from.  If you start it from the operating system, it's likely to be your home directory.
+Usually you will want to set a particular directory to be the working directory for the work you happen to be doing - 
+this is where R will look for files to read in or save any plots you write to a file. (You can still specify paths to other directories within the relevant commands).
+
+To set the working directory, use the `setwd()` function with the path to the relevant directory inside the brackets. Or, in RStudio, it can be set via the Session menu.
 
 Just like in the command-line, you can create and move around directories - R this uses the `dir.create()` function.
 For example:

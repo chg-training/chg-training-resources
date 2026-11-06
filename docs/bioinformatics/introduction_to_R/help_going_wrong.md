@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Help! it's not working!
+# Help - it's not working!
 
 If something in the above examples isn't working - first of all, don't panic!
 This page will try to help you get it fixed.
@@ -12,7 +12,7 @@ This page will try to help you get it fixed.
 The first thing to know about is what to do if you are really stuck.
 
 If you can't seem to get back to the basic prompt (`>`) for any reason - try pressing
-`Ctrl-C`.  (In Rstudio, you can also try pressing `<escape>`.)
+`Ctrl-C`.  (In Rstudio, you can also try pressing the 'escape' key `Esc`.)
 
 Pressing `Ctrl-C` will **cancel the current command**, including any command that is running right now or any that you
 have partially written, and return you to the prompt.  In short it behaves similarly to the way it behaves in the
@@ -42,9 +42,12 @@ Error in 2023 = 2022 : invalid (do_set) left-hand side to assignment
 Usually these **are** helpful, but only once you have the experience to know what it means.  This particular one means
 what it says: we can't set 2023 to 2022 (otherwise we'd have invented time travel.)  It is indeed an invalid 'left-hand
 side' to the 'assignment'.
+But we could assign 2022 to a valid variable name such as:
+```
+> year_before_2023 = 2022
+```
 
-Solving syntax errors is sometimes more of an art than a science, but hq
-ere are some general suggestions for solving them:
+Solving syntax errors is sometimes more of an art than a science, but here are some general suggestions for solving them:
 
 1. Read the error message carefully.  Usually the last line or so will tell you the actual problem - see if you can
    figure out what it means.
@@ -55,8 +58,7 @@ ere are some general suggestions for solving them:
 
 :::tip Note
 
-On this course, we are of course supporting you, so another good way is to ask the instructor team -
-or each other.
+If you are following this training on an in-person course, you can ask the instructor team - or each other.
 
 :::
 
@@ -70,19 +72,20 @@ Another type of syntax 'error' happens if you don't quite finish a line:
 ```
 
 Here, you'll see a `+` instead of the regular `>` prompt on the next line.  This is R's **command
-continuation prompt** and it happens because R thinks we hadn't finished the command.
+continuation prompt** and it happens because R has received an incomplete command.
 
 :::tip Question
 What was 'unfinished' about this command?
 :::
 
 You might have meant this on purpose (sometimes it's useful to write commands over several lines)
-but if not - fear not.  Your options are: 1. finish the command (here by adding the closing `)`) or
+but if not - fear not.  Your options are: 
+1. finish the command (here by adding the closing `)`) or
 2. press `Ctrl-C` or `escape` to cancel it and get back to the regular prompt.
 
 ## Bugs
 
-Perhaps the worse thing that can happen is that the code appears to work but **gives the wrong answer**.
+Perhaps a worse thing that can happen is that the code appears to work but **gives the wrong answer**.
 For example:
 
 ```

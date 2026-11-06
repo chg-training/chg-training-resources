@@ -27,7 +27,7 @@ So that `[1]` is just there to tell you we are on the first value in the result,
 
 You can see this, for example, by creating a longer vector - say all the numbers from 1 to 100:
 ```
-% 1:100
+> 1:100
 ```
 You should see something like:
 ```

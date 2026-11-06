@@ -4,8 +4,6 @@ sidebar_position: 2
 
 # Introduction to R
 
-*Suggested prerequsite courses:* ***Introduction to the Command Line***, ***Programming Concepts***.
-
 This short course is designed to teach the basics of the **R programming language**.
 
 To use R, the very first thing you'll need to do is get R running.  For this tutorial you can choose one of two options:
@@ -20,6 +18,7 @@ Or **Option 2**: you can download and install R and RStudio, and run it locally 
 [Rstudio download page](https://posit.co/download/rstudio-desktop/) and then download 'R' and 'RStudio Desktop'.
 
 Once you have done this, install both packages and then start RStudio.  You should see something like this:
+
 ![img](images/rstudio.png)
 
 The R prompt is in the left hand pane - you can type your commands in there.
@@ -45,7 +44,7 @@ these differences, you can use the JupyterHub notebook.
 
 ## Checking it works
 
-Whichever way you start R, you should now have an **R prompt**.
+Whichever way you start R, you should now have an R session running with an **R prompt** showing in the console, indicating that it is ready to accept some input.
 
 To check your R is really working, let's try out a command.  For example we could print a message:
 ```
@@ -54,9 +53,8 @@ To check your R is really working, let's try out a command.  For example we coul
 
 :::caution Note
 
-The `>` is just there to indicate the prompt - don't type that!  Type the command and press `<enter>` to run it.
-
-Or if you are using JupyterHub, press `<shift>-<enter>` instead.
+The `>` is just there to indicate the prompt - don't type that bit!  Type the command itself i.e. `print( "Hello there!" )` and press `<enter>` to run it. 
+(Or if you are using JupyterHub, press `<shift>-<enter>` instead).
 
 :::
 
