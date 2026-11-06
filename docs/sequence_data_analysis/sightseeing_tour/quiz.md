@@ -19,13 +19,13 @@ To get started
 
 3. Lastly, point your web browser at these files:
 ```
-https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/1.bam
-https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/2.bam
-https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/3.bam
-https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/4.bam
-https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/5.bam
-https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/6.bam
-https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/7.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/quiz/1.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/quiz/2.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/quiz/3.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/quiz/4.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/quiz/5.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/quiz/6.bam
+https://tools.ndm.ox.ac.uk/gms/sightseeing_tour/quiz/7.bam
 ```
 
 :::tip Challenge
