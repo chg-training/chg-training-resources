@@ -34,3 +34,46 @@
 body {
 	font-family: "Arimo", "helvetica neue", helvetica, arial, sans-serif;
 }
+
+/* Docusaurus code-block wrappers */
+
+.r-py-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.r-py-columns pre, .r-py-columns pre code {
+  font-size: 0.85rem;   /* Smaller text */
+  padding: 0.4rem;     /* Less space around the code */
+}
+
+.r-py-columns > div {
+  position: relative;
+  min-width: 0;
+}
+
+/* Language labels */
+.r-py-columns > div::after {
+  position: absolute;
+  bottom: 0;
+  right: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #777;
+  pointer-events: none;
+}
+
+.r-py-columns > div:first-child::after {
+  content: "R";
+}
+
+.r-py-columns > div:nth-child(2)::after {
+  content: "Python";
+}
+
+@media (min-width: 997px) {
+  .container {
+    max-width: 1600px;
+  }
+}

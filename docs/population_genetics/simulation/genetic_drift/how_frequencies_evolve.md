@@ -12,27 +12,54 @@ If you look at the 'before' and 'after' haplotypes, you'll probably see some fea
 But how do these evolve over time? To see that let's write some quick functions to compute the haplotype and variant
 frequencies across time:
 
-```
+<div className="r-py-columns">
+
+```r
 compute.haplotype.frequencies <- function( population, haplotypes ) {
   # We compute the frequency of each haplotype at each generation
   result = matrix(
-	nrow = G,
-	ncol = H,
-	dimnames = list(
-	  sprintf( "generation=%d", 1:G ),
-	  sprintf( "haplotype=%d", 1:H )
-	)
+    nrow = G, ncol = H,
+    dimnames = list(
+      sprintf( "generation=%d", 1:G ),
+      sprintf( "haplotype=%d", 1:H )
+    )
   )
   for( i in 1:G ) {
-	currentGeneration = population[i,]
-	result[i,] = sapply( 1:H, function(h) { length( which( currentGeneration == h )) } ) / N
+    currentGeneration = population[i,]
+    result[i,] = sapply(
+		1:H,
+		function(h) { length( which( currentGeneration == h )) }
+	) / N
   }
   return( result )
 }
 ```
+```python
+def compute_haplotype_frequencies(population, haplotypes):
+  # We compute the frequency of each haplotype at each generation
+  G, N = population.shape
+  H = haplotypes.shape[0]
+  result = np.empty((G, H))
+
+  # NB: instead of R's sapply, below we can use
+  # np.bincount which efficiently counts the number
+  # of 0s, 1s, 2s, 3s etc in an array
+  for i in range(G):
+    current_generation = population[i]
+	result[i] = np.bincount(  
+		current_generation,
+		minlength=H,
+	) / N
+  return result
+```
+</div>
+
 
 And to plot them:
-```
+
+<div className="r-py-columns">
+
+```r
 # Utility function to plot an empty canvas
 blank.plot <- function( xlim = c( 0, 1 ), ylim = c( 0, 1 ), xlab = "", ylab = "" ) {
   plot(
@@ -48,25 +75,77 @@ blank.plot <- function( xlim = c( 0, 1 ), ylim = c( 0, 1 ), xlab = "", ylab = ""
 
 
 plot.haplotype.frequencies <- function( frequencies ) {
-	blank.plot( xlim = c( 1, G*1.1 ), ylim = c( 0, 1 ), xlab = "Generations", ylab = "Haplotype frequencies")
-	palette = rainbow( H )
-	for( i in 1:H ) {
+  blank.plot(
+	xlim = c( 1, G*1.1 ), ylim = c( 0, 1 ),
+    xlab = "Generations", ylab = "Haplotype frequencies"
+  )
+  palette = rainbow( H )
+  for( i in 1:H ) {
 	points( 1:G, frequencies[,i], col = palette[i], type = 'l' )
 	if( frequencies[G,i] > 0 ) {
-		text( G*1.02, frequencies[G,i], sprintf( "Hap %d", i ), adj = c( 0, 1 ), xpd = NA, col = palette[i] )
+		text(
+			G*1.02, frequencies[G,i],
+			sprintf( "Hap %d", i ),
+			col = palette[i],
+			adj = c( 0, 1 ), xpd = NA
+		)
 	}
-	}
-	grid()
-	axis(1)
-	axis(2)
+  }
+  grid()
+  axis(1)
+  axis(2)
 }
 ```
+```python
+# To match the R function: take in an axes obj and format it
+def blank_plot(ax, **kwargs):
+  if ax is None:
+    fig, ax = plt.subplots()
+  ax.set(**kwargs)
+  ax.spines["top"].set_visible(False)  # no axis line on top
+  ax.spines["right"].set_visible(False) # no axis line on right
+  return ax
+
+
+
+
+
+
+def plot_haplotype_frequencies(frequencies, ax=None):
+  G, H = frequencies.shape
+  ax = blank_plot(
+	ax, xlim=(1, G*1.1), ylim=(0, 1),
+	xlabel="Generations", ylabel="Haplotype frequencies",
+  )
+  palette = plt.cm.rainbow(np.linspace(0, 1, H))
+  for i in range(H):
+    ax.plot(range(G), frequencies[:, i], color=palette[i])
+    if frequencies[G-1, i] > 0:
+      ax.text(
+        G*1.02, frequencies[G-1, i],
+        f"Hap {i+1}",
+        color=palette[i],
+        ha="left", va="top"
+      )
+
+
+  ax.grid()
+  return ax
+```
+</div>
 
 And run it:
+<div className="r-py-columns">
+
 ```r
 frequencies = compute.haplotype.frequencies( population, haplotypes )
 plot.haplotype.frequencies( frequencies )
 ```
+```python
+frequencies = compute_haplotype_frequencies(population, haplotypes)
+ax = plot_haplotype_frequencies(frequencies)
+```
+</div>
 
 You might see something a bit like this:
 ![img](../solutions/frequencies.png)
