@@ -16,14 +16,14 @@ Currently our `evolve()` function looks like this:
 
 ```r
 evolve <- function( currentGeneration ) {
-	parents = sample( 1:N, size = N, replace = TRUE )
-	return( currentGeneration[parents] )
+  parents = sample( 1:N, size = N, replace = TRUE )
+  return( currentGeneration[parents] )
 }
 ```
 ```python
 def evolve(current_generation):
-	parents = np.random.choice(N, size=N, replace=True)
-	return current_generation[parents]
+  parents = np.random.choice(N, size=N, replace=True)
+  return current_generation[parents]
 ```
 </div>
 
@@ -32,14 +32,14 @@ Let's change this to something *even simpler* that tracks the parents instead:
 
 ```r
 choose.parents <- function( N ) {
-	parents = sample( 1:N, size = N, replace = TRUE )
-	return( parents )
+  parents = sample( 1:N, size = N, replace = TRUE )
+  return( parents )
 }
 ```
 ```python
 def choose_parents( N ):
-	parents = np.random.choice(N, size=N, replace=True)
-	return parents
+  parents = np.random.choice(N, size=N, replace=True)
+  return parents
 ```
 </div>
 
@@ -51,7 +51,7 @@ To use this in our simulation we need to update the code to track it.  Let's cre
 N = 40 # number of individuals
 G = 50 # number of generations
 population = matrix(
-	NA, nrow = G, ncol = N,
+  NA, nrow = G, ncol = N,
   dimnames = list(
     sprintf( "generation=%d", 1:G ),
     sprintf( "individual=%d", 1:N )
@@ -120,26 +120,83 @@ OK let's make a grid of all the individuals over time.
 <div className="r-py-columns">
 
 ```r
-library( dplyr )
-long_form = (
-	tibble( individual    = 1:N )
-	%>% cross_join( tibble( generation    = 1:G ))
-	%>% group_by( individual, generation )
-	%>% dplyr::mutate( haplotype = population[generation, individual] )
-)
+plot.population = function( population, parents, ordering ) {
 
-par( mfrow = c( 1, 1 ))
-plot(
-	long_form$generation,
-	long_form$individual,
-	pch = 21,                   # filled circles
-	bg  = long_form$haplotype,  # fill colour
-	col = NA,                   # no outline on shapes
-	xlab = "Generations",
-	ylab = "Individual",
-	bty = 'n'                   # no border
-)
+  # Figure out the order for nodes:
+  ordering = matrix( NA, nrow = G, ncol = N )
+  ordering[1,] = 1:N
+  for( j in 2:G ) {
+    parent_order = ordering[j-1, parents[j,] ]
+    ordering[j,order(ordering[j-1,parents[j,]])] = 1:N
+  }
 
+  # Convert the data to 'long' form for plotting
+  long_form = cbind(
+    expand.grid( generation = 1:G, individual = 1:N ),
+    haplotype  = as.vector( population ),
+    ordering   = as.vector( ordering ),
+    parent     = as.vector( parents )
+  )
+
+  # Figure out how to draw the tree connections
+  connections = (
+    long_form %>% filter( generation > 1 )
+    %>% left_join(
+      long_form %>% filter( generation < G )
+      %>% mutate( next_generation = generation + 1 )
+      %>% select( parent = individual, parent_generation = generation, next_generation, parent_ordering = ordering ),
+      by = c( "parent", generation = "next_generation" )
+    )
+  )
+
+  # Plot the dots
+  palette = rainbow( H )
+  plot(
+    long_form$generation,
+    long_form$ordering,
+    xlim = c ( 1, G*1.1 ),                 # to match haplotype
+    bg = palette[ long_form$haplotype ],  # fill colour
+    pch = 21,                              # filled circles
+    cex = 0.5,                             # small size
+    col = NA,                              # no outline on shapes
+    xlab = "Generations",
+    ylab = "Individual",
+    bty = 'n'                              # no border
+  )
+
+  # Plot the segments
+  segments(
+    x0 = connections$parent_generation,
+    x1 = connections$generation,
+    y0 = connections$parent_ordering,
+    y1 = connections$ordering,
+    col = 'grey'
+  )
+}
+
+plot.population( population, parents, ordering )
+```
+</div>
+
+And now we could add the lines of inheritance:
+<div className="r-py-columns">
+
+```r
+  segments(
+    x0 = 1:(G-1), x1 = 2:G,
+    y0 = parents[2:G,], y1 = rep( 1:N, G-1 )
+  )
 ```
 
-</div>
+Argh!  To make this understandable we need to somehow sort the columns in each generation so that the children are
+nearer the parents.
+
+This is a bit fiddly to do, but luckily we've got you covered:
+
+```r
+source( "https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/plot.population.R" )
+
+plot.population( population, parents )
+```
+
+Cool!

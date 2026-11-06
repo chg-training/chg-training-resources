@@ -75,8 +75,10 @@ blank.plot <- function( xlim = c( 0, 1 ), ylim = c( 0, 1 ), xlab = "", ylab = ""
 
 
 plot.haplotype.frequencies <- function( frequencies ) {
+  G = nrow( frequencies ) # number of generations
+  H = ncol( frequencies ) # number of haplotypes
   blank.plot(
-	xlim = c( 1, G*1.1 ), ylim = c( 0, 1 ),
+	  xlim = c( 1, G*1.1 ), ylim = c( 0, 1 ),
     xlab = "Generations", ylab = "Haplotype frequencies"
   )
   palette = rainbow( H )
@@ -114,8 +116,8 @@ def blank_plot(ax, **kwargs):
 def plot_haplotype_frequencies(frequencies, ax=None):
   G, H = frequencies.shape
   ax = blank_plot(
-	ax, xlim=(1, G*1.1), ylim=(0, 1),
-	xlabel="Generations", ylabel="Haplotype frequencies",
+	  ax, xlim=(1, G*1.1), ylim=(0, 1),
+	  xlabel="Generations", ylabel="Haplotype frequencies",
   )
   palette = plt.cm.rainbow(np.linspace(0, 1, H))
   for i in range(H):
@@ -161,3 +163,36 @@ But of course yours will look different - it's a stochastic simulation.
 The effects of random inheritance on the evolution of haplotypes are also known as *genetic drift*.
 
 :::
+
+You might also want to see how the alleles are spread through the population - here's another plot that shows that:
+
+<div className="r-py-columns">
+
+```r
+long_form = (
+  expand.grid( individual = 1:N, generation = 1:G )
+  %>% group_by( individual, generation )
+	%>% dplyr::mutate( haplotype = population[generation, individual] )
+)
+
+par( mfrow = c( 2, 1 ))
+
+plot.haplotype.frequencies( frequencies )
+
+palette = rainbow( H )
+plot(
+	long_form$generation,
+	long_form$individual,
+  xlim = c ( 1, G*1.1 ),                 # to match haplotype
+	bg  = palette[ long_form$haplotype ],  # fill colour
+	pch = 22,                              # filled squares
+  cex = 0.5,                             # small size
+	col = NA,                              # no outline on shapes
+	xlab = "Generations",
+	ylab = "Individual",
+	bty = 'n'                              # no border
+)
+
+```
+
+Hmm!
