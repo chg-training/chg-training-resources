@@ -120,65 +120,30 @@ OK let's make a grid of all the individuals over time.
 <div className="r-py-columns">
 
 ```r
-plot.population = function( population, parents, ordering ) {
-
-  # Figure out the order for nodes:
-  ordering = matrix( NA, nrow = G, ncol = N )
-  ordering[1,] = 1:N
-  for( j in 2:G ) {
-    parent_order = ordering[j-1, parents[j,] ]
-    ordering[j,order(ordering[j-1,parents[j,]])] = 1:N
-  }
-
-  # Convert the data to 'long' form for plotting
-  long_form = cbind(
-    expand.grid( generation = 1:G, individual = 1:N ),
-    haplotype  = as.vector( population ),
-    ordering   = as.vector( ordering ),
-    parent     = as.vector( parents )
+plot.population = function( population ) {
+  library( dplyr )
+  long_form = (
+    expand.grid( individual = 1:N, generation = 1:G )
+    %>% dplyr::group_by( individual, generation )
+    %>% dplyr::mutate( haplotype = population[generation, individual] )
   )
-
-  # Figure out how to draw the tree connections
-  connections = (
-    long_form %>% filter( generation > 1 )
-    %>% left_join(
-      long_form %>% filter( generation < G )
-      %>% mutate( next_generation = generation + 1 )
-      %>% select( parent = individual, parent_generation = generation, next_generation, parent_ordering = ordering ),
-      by = c( "parent", generation = "next_generation" )
-    )
-  )
-
-  # Plot the dots
+  
   palette = rainbow( H )
-  blank.plot(
-    xlim = c( 1, G*1.1 ),
-    ylim = c( 1, N )
-  )
   plot(
     long_form$generation,
-    long_form$ordering,
+    long_form$individual,
     xlim = c ( 1, G*1.1 ),                 # to match haplotype
-    bg = palette[ long_form$haplotype ],  # fill colour
-    pch = 21,                              # filled circles
+    bg  = palette[ long_form$haplotype ],  # fill colour
+    pch = 22,                              # filled squares
     cex = 0.5,                             # small size
     col = NA,                              # no outline on shapes
     xlab = "Generations",
     ylab = "Individual",
     bty = 'n'                              # no border
   )
-
-  # Plot the segments
-  segments(
-    x0 = connections$parent_generation,
-    x1 = connections$generation,
-    y0 = connections$parent_ordering,
-    y1 = (connections$ordering + connections$parent_ordering) / 2, # group samples a little bit
-    col = 'grey'
-  )
 }
 
-plot.population( population, parents, ordering )
+plot.population( population )
 ```
 </div>
 
@@ -192,7 +157,7 @@ And now we could add the lines of inheritance:
   )
 ```
 
-Argh!  To make this understandable we need to somehow sort the columns in each generation so that the children are
+**Argh!**  To make this understandable we need to somehow sort the columns in each generation so that the children are
 nearer the parents.
 
 This is a bit fiddly to do, but luckily we've got you covered:
@@ -204,4 +169,14 @@ plot.population.with.tree( population, parents )
 ```
 </div>
 
-Cool!
+![image](../solutions/trees.png)
+
+:::tip Note
+
+If you think about this plot a bit, it's showing how **changes in haplotype frequency** and **inheritance** are really
+two sides of the same coin (at least in populations that stay roughly the same size).  For example, haplotypes that
+increase in frequency do so because lots of individuals inherit the same allele.  
+
+In these pages we've explored **random genetic drift**, which is one effect of these inheritance patterns.  Of course, another is **natural selection** where the number of offspring carrying each haplotype might systematically depend on the haplotype itself.
+
+:::

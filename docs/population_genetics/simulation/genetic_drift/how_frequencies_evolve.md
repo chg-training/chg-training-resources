@@ -171,7 +171,7 @@ You might also want to see how the alleles are spread through the population - h
 ```r
 long_form = (
   expand.grid( individual = 1:N, generation = 1:G )
-  %>% group_by( individual, generation )
+  %>% dplyr::group_by( individual, generation )
 	%>% dplyr::mutate( haplotype = population[generation, individual] )
 )
 
