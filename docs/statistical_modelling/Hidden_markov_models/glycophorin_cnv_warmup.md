@@ -20,7 +20,7 @@ In this practical the plan is to try to genotype CNVs in one such region - the r
 of the most abundant red cell surface proteins. Malaria parasites are known to interact with
 Glycophorin A during invasion, and we got interested in this because it turns out that these CNVs
 can provide protection against malaria. The practical is based on data from this paper
-<https://dx.doi.org/10.1126/science.aam6393> where we investigated that protection.
+[dx.doi.org/10.1126/science.aam6393](https://dx.doi.org/10.1126/science.aam6393) where we investigated that protection.
 
 To call CNVs we will look at *sequence coverage data* (i.e. how many reads aligned to each genomic
 location from short-read sequence data) and look for variation in coverage that might indicate loss
