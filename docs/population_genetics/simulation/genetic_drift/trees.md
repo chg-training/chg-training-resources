@@ -156,11 +156,14 @@ And now we could add the lines of inheritance:
     y0 = parents[2:G,], y1 = rep( 1:N, G-1 )
   )
 ```
+</div>
 
 **Argh!**  To make this understandable we need to somehow sort the columns in each generation so that the children are
 nearer the parents.
 
-This is a bit fiddly to do, but luckily we've got you covered:
+This is a bit fiddly to do, but luckily we've got you covered with a pre-written function:
+
+<div className="r-py-columns">
 
 ```r
 source( "https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/plot_population_with_tree.R" )
