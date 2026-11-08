@@ -37,7 +37,7 @@ Here's the complete program.  This time we'll start with a not-very-diverse set 
 L = 5000                      # number of sites
 H = highest.haplotype = 10    # number of haplotypes at start
 N = 250                       # number of individuals in the population
-G = 2000                      # number of generations
+G = 1000                      # number of generations
 mutation_rate = 0.05          # mutation rate per locus per generation
 
 image_dir = sprintf( "simulation/N=%d,L=%d,mu=%.3f", N, L, mutation_rate )

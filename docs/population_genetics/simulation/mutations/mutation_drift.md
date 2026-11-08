@@ -56,7 +56,9 @@ Let's add that expectation on the graph:
 abline( a = 2 * N * mutation_rate, b = 0, col = 'red' )
 ```
 
-You will probably see that it is not especially similar!
+You will probably see that it is not especially similar!  Over 2,000 generations, mine looks like this:
+
+![image](../solutions/diversity.png)
 
 The expected value is just that - an *expected* or *average* value.  It is what you would expect to see, on average, if
 you ran the simulation many times over - or if you ran it for a very long time and looked at the long-run average.
