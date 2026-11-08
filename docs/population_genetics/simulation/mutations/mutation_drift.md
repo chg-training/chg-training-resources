@@ -4,13 +4,17 @@ sidebar_position: 5
 
 # Mutation vs drift
 
-This simulation illustrates the fate of mutations under genetic drift.
+The simulation we just did illustrates the fate of mutations under genetic drift.
 
 If mutations don't have any selective forces on them - so they are **neutral** - they behave as follows.  They are created when they mutate, drift around in frequency for some time, and ultimately are either lost or fix in the population.
 
 If you watch your population for a while, though, you'll see it never seems to lose all its polymorphism.  Many of the
-original variants have been lost, but new ones have popped up to replace them.  Congratulaions, your population is showing
-**mutation-drift balance**.  It's a balance because the rate at which mutations are being lost, is in balance with the rate at which new mutations are being added.  The result is a population that retains polymorphism through time (but the polymorphisms are constantly changing.)
+original variants have been lost, but new ones have popped up to replace them.  And you'll probably see that the total number of haplotypes in your population probably also stays relative stable - maybe around 60-70 if you used the same parameters as me.
+
+This means **congratulations** are in order.  Your population is showing **mutation-drift balance**!  The rate at which
+mutations are being lost due to drift, becomes balanced with the rate at which new mutations are being added due to
+mutation.  The result is a population that retains polymorphism through time (but the polymorphisms are constantly
+changing.)
 
 To quantify this let's look at the basic measure of diversity in the population - **nucleotide diversity**, or the
 average number of pairwise differences between haplotypes.  It is often denoted $\pi$.  Here is a function that computes

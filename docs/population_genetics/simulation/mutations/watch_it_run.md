@@ -18,7 +18,7 @@ images.  I'll call it 'simulation' but, for later reference, will also keep the 
 the filename:
 
 ```r
-mutation_rate = 0.2
+mutation_rate = 0.1
 image_dir = sprintf( "simulation/N=%d,L=%d,mu=%.3f", N, L, mutation_rate )
 
 dir.create( image_dir, recursive = TRUE,  showWarnings = FALSE )
@@ -34,11 +34,11 @@ echo = function( message, ... ) {
 
 Here's the complete program.  This time we'll start with a not-very-diverse set of haplotypes:
 ```r
-L = 5000     # number of sites
-H = highest.haplotype = 10       # number of haplotypes at start
-N = 250      # number of individuals in the population
-G = 1000      # number of generations
-mutation_rate = 0.1 # mutation rate per locus
+L = 5000                      # number of sites
+H = highest.haplotype = 10    # number of haplotypes at start
+N = 250                       # number of individuals in the population
+G = 2000                      # number of generations
+mutation_rate = 0.05          # mutation rate per locus per generation
 
 image_dir = sprintf( "simulation/N=%d,L=%d,mu=%.3f", N, L, mutation_rate )
 dir.create( sprintf( "%s/haplotypes", image_dir), recursive = TRUE,  showWarnings = FALSE )
@@ -69,6 +69,11 @@ for( generation in 2:G ) {
   if( generation %% 5 == 1 ) {
     filename = sprintf( "%s/haplotypes/generation_%04d.png", image_dir, generation )
     echo( "++ Plotting generation %d to \"%s\"...\n", generation, filename )
+    echo(
+      "   (%d different haplotypes seen so far, %d still present.)\n",
+      highest.haplotype,
+      length( unique( population[generation, ]))
+    )
     png( file = filename, width = 1000, height = 400 )
     plot.haplotypes( haplotypes[population[generation,],], sort = TRUE )
     dev.off()
@@ -106,3 +111,4 @@ For example after 66 generations, mine looks like this:
 Remember we have [sorted](./sorting.md) these haplotypes - that's why similar ones appear together in the plot.
 
 :::
+
