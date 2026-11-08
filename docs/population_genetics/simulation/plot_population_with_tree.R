@@ -1,4 +1,7 @@
-plot.population = function( population, parents ) {
+plot.population.with.tree = function(
+  population,
+  parents
+) {
   # Figure out the order for nodes:
   ordering = matrix( NA, nrow = G, ncol = N )
   ordering[1,] = 1:N
@@ -15,22 +18,27 @@ plot.population = function( population, parents ) {
     parent     = as.vector( parents )
   )
 
-  # Figure out how to draw the tree connections
+  # Connect each individual to its parent
   connections = (
-    long_form %>% filter( generation > 1 )
     %>% left_join(
       long_form %>% filter( generation < G )
       %>% mutate( next_generation = generation + 1 )
       %>% select( parent = individual, parent_generation = generation, next_generation, parent_ordering = ordering ),
       by = c( "parent", generation = "next_generation" )
+      %>% mutate(
+        # 
+        y_position = case_when(
+          is.na(parent_ordering) ~ ordering,
+          .default = (clustering * parent_ordering) + (( 1 - clustering ) * ordering )
+      )
     )
   )
 
   # Plot the dots
   palette = rainbow( H )
   plot(
-    long_form$generation,
-    long_form$ordering,
+    connections$generation,
+    connections$y_position,
     xlim = c ( 1, G*1.1 ),                 # to match haplotype
     bg = palette[ long_form$haplotype ],  # fill colour
     pch = 21,                              # filled circles

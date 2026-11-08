@@ -198,9 +198,9 @@ nearer the parents.
 This is a bit fiddly to do, but luckily we've got you covered:
 
 ```r
-source( "https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/plot_population.R" )
+source( "https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/plot_population_with_tree.R" )
 
-plot.population( population, parents )
+plot.population.with.tree( population, parents )
 ```
 </div>
 
