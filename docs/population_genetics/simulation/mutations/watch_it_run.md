@@ -57,15 +57,14 @@ population = matrix(
 )
 population[1,] = sample( 1:H, N, replace = TRUE )
 
-
-# Evolve!
+# Evolve population!
 for( generation in 2:G ) {
   echo( "++ generation %d of %d...\n", generation, G )
 
   # Evolve the population, now with mutations
   population[generation,] = evolve( population[generation-1,], mutation_rate )
 
-  # Let's just plot every 5th generation
+  # Let's just plot every 5th generation to avoid too many plots!
   if( generation %% 5 == 1 ) {
     filename = sprintf( "%s/haplotypes/generation_%04d.png", image_dir, generation )
     echo( "++ Plotting generation %d to \"%s\"...\n", generation, filename )
@@ -79,7 +78,7 @@ for( generation in 2:G ) {
     dev.off()
   
     # !! IMPORTANT!! Use gc() to return memory to operating system!
-	# Without this you may use up all your RAM
+	  # Without this you may use up all your RAM
     gc()
   }
 
@@ -92,13 +91,13 @@ for( generation in 2:G ) {
 
 This will take a while to run.  Leave it running while it goes.
 
-While it's running, point your operating system's image viewer at the output directory (`image_dir`) above to have a
-look at what's happening.  You should see your population evolving in real time!  
+While it's running, point your operating system's image viewer at the output directory (the one in `image_dir` above) to
+have a look at what's happening.  You should see your population evolving in real time!  
 
 :::tip Question
 Can you see the new mutations?  (They'll be a different colour).
 
-You should see some of these arising and drifting around in frequency.
+You should see some of these arising and drifting around in frequency.  What's happening to the original mutations?
 
 :::
 
