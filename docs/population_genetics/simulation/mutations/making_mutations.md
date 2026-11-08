@@ -27,7 +27,7 @@ To make this a bit more efficient we will also pre-allocate enough memory for 10
 ```r
 haplotypes = rbind(
 	haplotypes,
-	matrix( NA, nrow = 10000, ncol = L )
+	matrix( NA, nrow = 25000, ncol = L )
 )
 highest.haplotype = H
 
@@ -49,11 +49,25 @@ mutate <- function( which_haplotype ) {
 
 :::caution Bad programming alert!
 
-The syntax `<<-` used above is important!  It tells R to alter the **global** `haplotypes` matrix and the
-`highest.haplotype` variable - rather than a local copy which only exists inside the function.
+The syntax `<<-` used above tells R to alter the **global** `haplotypes` matrix and the `highest.haplotype` variable. If
+you don't do this, R makes a local copy which only exists inside the function - and then not very helpfully edits it.
 
-It is unusual to use this in R (I had to look it up), and in general using a global variable like this is **bad
-programming practice**, but it will work for our simulation so we're going with for the moment...
+It is a unusual to use this type of edit-a-global approach in R (I had to look up how to do it), and in general using a
+global variable is **bad programming practice**, but it will work for our simulation so we're going with for the
+moment...
+
+:::
+
+:::warning Warning
+
+In the above I've allocated memory for 25,000 possbile haplotypes each with $L = 5,000$ SNPs!
+That's going to use a fair bit of memory.  You can tell how much using `Object.size()`:
+```r
+object.size( haplotypes )
+```
+Mine says $500,200,216$ bytes, that is, 500Mb of memory.
+
+We could do more coding to help reduce memory space but we'll go with this simple approach here.
 
 :::
 

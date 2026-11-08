@@ -47,24 +47,40 @@ $$
 E(\pi) = 2\times N\times \mu
 $$
 
-We could add that expectation on the graph:
+Let's add that expectation on the graph:
 ```r
 abline( a = 2 * N * mutation_rate, b = 0, col = 'red' )
 ```
 
-It might not be particularly similar!  The expected value is just that - an *expected* value, that is, on average, over
-many runs of the simulation (or over a long simulation time period).  So our actual population might not be particularly
-close to it in this simulation.
+You will probably see that it is not especially similar!
 
+The expected value is just that - an *expected* or *average* value.  It is what you would expect to see, on average, if
+you ran the simulation many times over - or if you ran it for a very long time and looked at the long-run average.
+There's quite a bit of random drift in our $N=250$ population so the estimate varies quite widely around the average.
+So our actual population might not be particularly close to it in this simulation.
+
+:::tip Note
+The expectation formally applies under an 'infinite sites model'.
+
+In our simulations, the same base can mutate more than once - we only have 5,000 sites to work with - so we may get slightly less diversity than the theoretical expectation.
+
+:::
 
 :::caution Warning
 
-You should be aware that
+Before getting carried away interpreting this, there are a few things to be aware of.
 
-- the population size here is, (of course), *much much* lower than real population sizes.  For humans the 'effective' size of human populations is often taken in the 10s of thousands (even though the true size is billions).
+First, the population size here is - of course - *much much* lower than most real population sizes.  When thinking about
+real populations it's common to think as if they behaved a bit like this simple model, but using an 'effective'
+population size that is substantially smaller than the true, census population size.  For example, in many broad human populations the effective population size is often taken to be maybe tens of thousands (even though the total population size is much larger).  
 
-- the mutation rate here is **much, much** higher than real mutation rates.  For example in humans the mutation rate is thought to be around $1\times 10^-8$ mutations per base per generation (although [maybe it's changing](https://pmc.ncbi.nlm.nih.gov/articles/PMC1832099/)).  So it would be around $5\times 10^-5$ in a 5kb region.
+Still - our simulation only has a few *hundred* individuals and so drift is very strong indeed.
 
-These matter quantitatively - but not so much qualitatively, since these simple populations evolve in much the same way (as long as we scale time).
+Second - the mutation rate here is **much, much** higher than most real mutation rates.  For example in humans the
+mutation rate is thought to be around $1\times 10^-8$ mutations per base per generation (although this depends on parental age).  So it would be around $5\times 10^-5$ in a 5kb region.  In malaria parasites, the mutation rate is estimated to be [around $5\times 10^-10$](https://doi.org/10.1371/journal.pgen.1004812) SNPs per base per erythrocyte cycle (although there may be many cycles between transmission events.)
+
+Our simulation may be more like species that mutate quickly - like RNA viruses - the rate is [much higher](https://www.sciencedirect.com/science/chapter/monograph/pii/B9780123849397100031) - say around $10^{-3}$ to $10^{-5}$ per base per generation, which would indeed translate to quite a high rate across around 5kb region.
+
+These differences definitely matter **quantitatively**.  Qualitatively, at least at the level of this tutorial, they matter less because our simple Wright-Fisher populations evolve in much the same way regardless of population size - as long as we scale time appropriately.
 
 :::

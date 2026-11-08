@@ -36,7 +36,7 @@ Here's the complete program.  This time we'll start with a not-very-diverse set 
 ```r
 L = 5000     # number of sites
 H = highest.haplotype = 10       # number of haplotypes at start
-N = 100      # number of individuals in the population
+N = 250      # number of individuals in the population
 G = 1000      # number of generations
 mutation_rate = 0.1 # mutation rate per locus
 
@@ -44,7 +44,7 @@ image_dir = sprintf( "simulation/N=%d,L=%d,mu=%.3f", N, L, mutation_rate )
 dir.create( sprintf( "%s/haplotypes", image_dir), recursive = TRUE,  showWarnings = FALSE )
 
 # initialise haplotypes
-haplotypes       = matrix( NA, nrow = H + 25000, ncol = L )
+haplotypes       = matrix( NA, nrow = 25000, ncol = L )
 haplotypes[1:H,] = rbinom( n = H*L, size = 1, prob = 0.001 )
 
 # initialise population

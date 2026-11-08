@@ -19,7 +19,7 @@ generations.
 
 ```r
 N = 250 # number of individuals
-G = 500 # number of generations
+G = 1000 # number of generations
 population = matrix(
   NA, nrow = G, ncol = N,
   dimnames = list(
