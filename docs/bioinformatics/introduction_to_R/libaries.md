@@ -87,4 +87,4 @@ Don't worry - this is normal!  Tidyverse is in fact a large meta-package - a col
 
 This message is telling you what you've installed, and making a couple of warnings about functions that have been overridden by the new package.  We'll generally want the tidyverse versions of functions like `filter()`, so this is fine.
 
-Once you have the tidyverse installed, let's use it to [look at some data](working_with_data.md).
+Once you have the tidyverse installed, let's use it to [look at some data](./working_with_data.md).

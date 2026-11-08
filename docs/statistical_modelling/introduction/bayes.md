@@ -45,11 +45,11 @@ Here are a few things to note:
 
 1. The denominator is 'constant' in that it does not depend on $Z$. (There's no '$Z$' in $P(\text{data})$).
 
-2. Like all [distributions](./distributions.md), the posterior distribution is supposed to sum to $1$ over possible values of $Z$.
+2. Like all [distributions](./definition_of_distribution.md), the posterior distribution is supposed to sum to $1$ over possible values of $Z$.
 
 3. The denominator is *just the value needed* there to make the posterior sum to $1$ over all possible values of $Z$.
 
-The denominator therefore plays the same role as 'normalising constants' for [other distributions](./some_distributions.md).
+The denominator therefore plays the same role as 'normalising constants' for [other distributions](./distributions/).
 
 ### Computing the denominator
 

@@ -18,7 +18,7 @@ If you receive 'Cannot Be Opened Because the Developer Cannot be Verified' Error
 
 1. Open `Finder`.
 
-2. Locate ADMIXTURE software you’re trying to open.
+2. Locate ADMIXTURE software you're trying to open.
 
 3. `Control+Click` the app.
 

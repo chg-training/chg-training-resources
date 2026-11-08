@@ -411,7 +411,7 @@ To do this we'll write a function which loops over all pairs of haplotypes in th
 How many pairs of distinct haplotypes are there?  The answer is of course the number of ways of drawing two things from $N$ things - known as '$N$ choose 2':
 
 $$
-N\quad\text{choose}\quad2 = \frac{N\cdot(N-1)}{2} \\
+N\quad\text{choose}\quad2 = \frac{N\cdot(N-1)}{2}
 
 $$
 

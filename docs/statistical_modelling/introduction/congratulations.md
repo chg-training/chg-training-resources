@@ -6,8 +6,8 @@ sidebar_position: 3.9
 
 Congratulations!  If you got this far you've
 
-- explored the idea of probability distributions and [calculated an example](./distributions.md)
-- created some R functions to [sample from, and evaluate your example](./dice_example1/README.md)
+- explored the idea of probability distributions and [calculated an example](./definition_of_distribution.md)
+- created some R functions to [sample from, and evaluate your example](./dice_example1/)
 - conducted a real Bayesian statistical inference involving [dice and blu-tack](./dice_example2/)
 
 This last example was also interesting because - although we are working on the right of this picture:

@@ -4,7 +4,7 @@ sidebar_position: 1.5
 
 # Adding mutations
 
-In the [genetic drift](./genetic_drift/README.md) part we saw that genetic drift causes a **loss of haplotypes** from
+In the [genetic drift](../genetic_drift/README.md) part we saw that genetic drift causes a **loss of haplotypes** from
 the population, and **generates LD**.  More precisely, haplotypes 'drift' around in frequency until some of them are
 lost - others 'fixed' - if you keep going long enough, eventually all variation is lost.
 

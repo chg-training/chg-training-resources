@@ -34,8 +34,8 @@ human/NA12878_ERR3239334-Illumina_Novaseq_6000-chr19_region-read2.fastq.gz
 ```
 
 **Note.** We looked at the fastqc output from this sample already - see it here if you want a refresh:
-[read 1 link](ERR3239334-Illumina_NovaSeq_6000_read1_fastqc.html)
-[read 2 link](ERR3239334-Illumina_NovaSeq_6000_read2_fastqc.html).
+[read 1 link](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/ERR3239334-Illumina_NovaSeq_6000_read1_fastqc.html)
+[read 2 link](https://www.chg.ox.ac.uk/~gav/projects/oxford_statgen_summer_school/sequence_data_analysis/fastqc_examples/human/ERR3239334-Illumina_NovaSeq_6000_read2_fastqc.html).
 
 To count kmers we will use [`jellyfish`](https://github.com/zippav/Jellyfish-2).  First let's change into the right directory:
 

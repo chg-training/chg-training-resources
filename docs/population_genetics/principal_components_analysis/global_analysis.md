@@ -4,8 +4,6 @@ sidebar_position: 7
 
 # Plotting samples against a global reference panel
 
-[Up to the table of contents](Introduction.md) / [Back to the PC computation step](computing_PCs.md)
-
 A common strategy for identifying samples with unusual ancestry is to plot samples against a global
 reference dataset, such as that produced by the 1000 Genomes project (1000G). A common way to do
 this is to compute a PCA of the external samples and project the GWAS dataset onto it. In plink,

@@ -158,5 +158,5 @@ on the results to the next command in the pipeline.  At the end, you can redirec
 
 ## Next steps
 
-Finally we will learn about a set of commands that can perform complex [filtering operations](09_filtering_files.md) on
+Finally we will learn about a set of commands that can perform complex [filtering operations](./09_filtering_files.md) on
 files.

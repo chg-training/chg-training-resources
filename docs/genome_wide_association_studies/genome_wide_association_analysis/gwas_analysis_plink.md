@@ -117,7 +117,7 @@ Congratulations! This is your first GWAS forest plot (albeit with only one row).
 ## Renaming output files
 
 Running `plink --logistic` is all very well, but it's a bit annoying to have files named simply `plink.logistic.assoc`
-and so on.  Instead lets re-run plink telling it to rename its output files (important since we’ll be generating lots of
+and so on.  Instead lets re-run plink telling it to rename its output files (important since we'll be generating lots of
 them in the practicals).  The `--out` option can be used to do this:
 
 ```sh

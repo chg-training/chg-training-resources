@@ -23,5 +23,5 @@ cat gencode.v41.annotation.gff3  | awk '$3=="gene"' | grep 'gene_type=protein_co
     20017
 
 This is a much more sensible number - there are about 20,000 protein-coding genes in the human genome.
-That’s a lot but we are big animals!
+That's a lot but we are big animals!
     

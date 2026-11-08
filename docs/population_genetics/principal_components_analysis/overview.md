@@ -4,8 +4,6 @@ sidebar_position: 3
 
 # Overview of the practical
 
-[Up to the table of contents](Introduction.md) / [Back to the setup page](getting_setup.md) / [Forward to the page on LD pruning](ld_pruning.md)
-
 In this practical we will use `plink` to do several things to the data:
 
 * to remove closely-related samples

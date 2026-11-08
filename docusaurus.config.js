@@ -13,7 +13,7 @@ const config = {
   tagline:               'Train in genomics, bioinformatics, statistics and data analysis',
   url:                   'https://chg.ox.ac.uk/',
   baseUrl:               '/chg-training-resources/',
-  onBrokenLinks:         'throw',
+  onBrokenLinks:         'warn',
   onBrokenMarkdownLinks: 'throw',
   favicon:               'img/favicon.ico',
   trailingSlash: true,

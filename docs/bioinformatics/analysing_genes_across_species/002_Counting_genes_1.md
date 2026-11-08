@@ -205,7 +205,7 @@ dbGetQuery( db, "SELECT dataset, COUNT(*) FROM gff WHERE type=='gene' GROUP BY d
 This has one **big advantage** over the plain R code - it doesn't load the whole dataframe into R,
 but just the result of the query.
 
-The same advantage can be had by using [dbplyr](dbplyr.tidyverse.org]) as well - see the next tab.
+The same advantage can be had by using [dbplyr](https://dbplyr.tidyverse.org) as well - see the next tab.
 
 </TabItem>
 <TabItem value="dbplyR" label="dbplyr code">

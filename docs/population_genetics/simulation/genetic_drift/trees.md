@@ -151,6 +151,10 @@ plot.population = function( population, parents, ordering ) {
 
   # Plot the dots
   palette = rainbow( H )
+  blank.plot(
+    xlim = c( 1, G*1.1 ),
+    ylim = c( 1, N )
+  )
   plot(
     long_form$generation,
     long_form$ordering,
@@ -169,7 +173,7 @@ plot.population = function( population, parents, ordering ) {
     x0 = connections$parent_generation,
     x1 = connections$generation,
     y0 = connections$parent_ordering,
-    y1 = connections$ordering,
+    y1 = (connections$ordering + connections$parent_ordering) / 2, # group samples a little bit
     col = 'grey'
   )
 }
@@ -194,9 +198,10 @@ nearer the parents.
 This is a bit fiddly to do, but luckily we've got you covered:
 
 ```r
-source( "https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/plot.population.R" )
+source( "https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/plot_population.R" )
 
 plot.population( population, parents )
 ```
+</div>
 
 Cool!

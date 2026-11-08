@@ -98,7 +98,7 @@ Error in Rd_info(db[[i]]) :
   missing/empty \title field in '/private/var/folders/1j/6glxfbj173d604n6mx1zh30c0000gn/T/Rtmp14vvWH/Rbuild772d141c32f6/gmsgff/man/read_gff.Rd'
 Rd files must have a non-empty \title.
 See chapter 'Writing R documentation' in manual 'Writing R Extensions'.
-* removing ‘/private/var/folders/1j/6glxfbj173d604n6mx1zh30c0000gn/T/Rtmp14vvWH/Rinst772d4755beca/gmsgff’
+* removing ‘/private/var/folders/1j/6glxfbj173d604n6mx1zh30c0000gn/T/Rtmp14vvWH/Rinst772d4755beca/gmsgff'
       -----------------------------------
 ERROR: package installation failed
 
@@ -201,6 +201,6 @@ This was pretty easy, however [`r-pks.org` site](https://r-pkgs.org) advises to 
 
 Congratulations!  You have a fully functional, fully tested gff-loading package! 
 
-If you want to try next steps, try [Writing a command-line program](../)] that
-Now let's use it to [write a useful command-line program](../a_command_line_program/).
+If you want to try next steps, try using this to [write a useful command-line
+program](../a_command_line_program/README.md).
 

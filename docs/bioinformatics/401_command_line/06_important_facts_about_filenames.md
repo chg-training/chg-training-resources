@@ -9,7 +9,7 @@ It is worth remembering that:
 * File names in Linux, just like command and option names, are case sensitive.  The names `File.txt` and `file.txt`
   refer to different files.
 
-* File names beginning with a period (“.”) character are 'hidden', so if you type `ls` you won’t see them unless you
+* File names beginning with a period (“.”) character are 'hidden', so if you type `ls` you won't see them unless you
 also use the option `-a`. Some applications usually place their configuration/settings files in your home directory as
 hidden files (if you try `ls -a ~` you may see there are quite a lot of them.)
 

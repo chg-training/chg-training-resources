@@ -157,7 +157,7 @@ dim(chr21)
 
 ## Re-coding the genotype data
 
-Since `.vcf` files have a lot information included that isn’t necessary for our analysis, we will extract the genotypes and convert it into a form that we can easily use in R. So, here, we extract the character data containing the genotypes, and convert it into numeric scores that we can later use in our analysis.
+Since `.vcf` files have a lot information included that isn't necessary for our analysis, we will extract the genotypes and convert it into a form that we can easily use in R. So, here, we extract the character data containing the genotypes, and convert it into numeric scores that we can later use in our analysis.
 
 If you've looked at a VCF file you'll know they can be a bit complex - luckily the `vcfR` package has a `vcfR::extract.gt()` function that can do the work for us:
 

@@ -4,13 +4,13 @@ sidebar_position: 6
 
 # Making a regional association plot
 
-In this part of the practical, we will hone our R plotting skills to make beautiful regional association plots (‘hitplots’) of
+In this part of the practical, we will hone our R plotting skills to make beautiful regional association plots (‘hitplots') of
 the most associated regions in our scan.
 
 :::tip Note
 
 This section of the practical is optional - it is about making publication-ready plots of the results. You should only carry
-it out if you’ve successfully completed the other parts and have time to go on.
+it out if you've successfully completed the other parts and have time to go on.
 
 :::
 
@@ -36,8 +36,8 @@ data <- data[data$TEST == "ADD",]
 
 ### Computing linkage disequilibrium values
 
-We’ll start by getting plink to compute LD between the most-associated SNP in each of the strongest three association peaks
-and the other SNPs in the dataset. First let’s identify what the top SNPs in each region are (we'll take those with the lowest
+We'll start by getting plink to compute LD between the most-associated SNP in each of the strongest three association peaks
+and the other SNPs in the dataset. First let's identify what the top SNPs in each region are (we'll take those with the lowest
 P-value here):
 
 ```R
@@ -48,9 +48,9 @@ data[ which( data$BP < 1.5E7 )[1],]
 data[ which( data$BP > 4.5E7 )[1],]
 ```
 
-Note down the rsids (in the ‘SNP’ column) of the three SNPs. As a sanity check, all three should have a P-value less than
-$1\times 10^{-6}$. In this practical we’ll concentrate on the third SNP, which has the lowest P-value, but a question will ask
-you to repeat this for the other two SNPs. Now in the terminal let’s use plink to compute LD:
+Note down the rsids (in the ‘SNP' column) of the three SNPs. As a sanity check, all three should have a P-value less than
+$1\times 10^{-6}$. In this practical we'll concentrate on the third SNP, which has the lowest P-value, but a question will ask
+you to repeat this for the other two SNPs. Now in the terminal let's use plink to compute LD:
 
 ```sh
 ./plink \
@@ -66,9 +66,9 @@ you to repeat this for the other two SNPs. Now in the terminal let’s use plink
 
 (We've added `--threads 1` to this command to make sure plink doesn't use lots of threads.)
 
-This command says to compute pairwise $r^{2}$ and $D’$ statistics (which are measures of LD) between the three lead SNPs and
-all other SNPs within a window around them. Only SNPs with $r^2 > 0.05$ will appear in the output file. (We’ve restricted the
-computation to control samples. If these are population controls then we are therefore estimating LD in the population). Let’s
+This command says to compute pairwise $r^{2}$ and $D'$ statistics (which are measures of LD) between the three lead SNPs and
+all other SNPs within a window around them. Only SNPs with $r^2 > 0.05$ will appear in the output file. (We've restricted the
+computation to control samples. If these are population controls then we are therefore estimating LD in the population). Let's
 load the result into our R session:
 
 ```R

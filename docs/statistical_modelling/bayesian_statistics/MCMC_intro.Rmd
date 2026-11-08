@@ -23,7 +23,7 @@ library(coda)
 
 MCMC methods are a collection of algorithms to sample from a distribution. Why do we want to sample from a distribution?
 
-In the context of Bayesian statistics, the posterior distribution is the object of inference. Once your model produces a posterior distribution, the model’s work is done. But your work has just begun. It is necessary to summarize and interpret the posterior distribution. Exactly how it is summarized depends upon your purpose. But common questions include:
+In the context of Bayesian statistics, the posterior distribution is the object of inference. Once your model produces a posterior distribution, the model's work is done. But your work has just begun. It is necessary to summarize and interpret the posterior distribution. Exactly how it is summarized depends upon your purpose. But common questions include:
 
   - How much posterior probability lies below some parameter value?
   - How much posterior probability lies between two parameter values?
@@ -33,7 +33,7 @@ In the context of Bayesian statistics, the posterior distribution is the object 
 
 To answer the above questions, one needs to know integral calculus as you need to calculate the area under the posterior function. However we can convert this into a counting problem with sampling from posterior distribution. The posterior distribution is a probability distribution. And like all probability distributions, we can imagine drawing samples from it. The sampled events in this case are parameter values. The posterior defines the expected frequency that different parameter values will appear, once we start plucking samples out of it. 
 
-Working with samples transforms a problem in calculus into a problem in data summary, into a frequency format problem. An integral in a typical Bayesian context is just the total probability in some interval. That can be a challenging calculus problem. But once you have samples from the probability distribution, it’s just a matter of counting values in the interval. An empirical attack on the posterior allows the scientist to ask and answer more questions about the model, without relying upon a captive mathematician. For this reason, it is easier and more intuitive to work with samples from the posterior, than to work with probabilities and integrals directly.
+Working with samples transforms a problem in calculus into a problem in data summary, into a frequency format problem. An integral in a typical Bayesian context is just the total probability in some interval. That can be a challenging calculus problem. But once you have samples from the probability distribution, it's just a matter of counting values in the interval. An empirical attack on the posterior allows the scientist to ask and answer more questions about the model, without relying upon a captive mathematician. For this reason, it is easier and more intuitive to work with samples from the posterior, than to work with probabilities and integrals directly.
 
 ** In essence: if you have a good set of samples from a distribution, then you know everything about that distribution and just by counting you can produce any summary about that distribution.**
 

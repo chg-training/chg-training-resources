@@ -13,7 +13,7 @@ range of species of interest.
 
 :::tip Note
 
-You can also  try the [command-line genes tutorial](/bioinformatics/exploring_genes_in_bash/)
+You can also try the [command-line genes tutorial](../../bioinformatics/exploring_gene_annotations_in_bash/README.md)
 tutorial first.
 
 :::

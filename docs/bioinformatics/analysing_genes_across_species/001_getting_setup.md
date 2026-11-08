@@ -69,7 +69,7 @@ In the command-line you can now run the program like this:
 Rscript --vanilla gff_to_sqlite.R --input Homo_sapiens.GRCh38.107.chr.gff3.gz --output genes.sqlite --attributes biotype Name
 ```
 which will produce a new file called `genes.sqlite`.  If you're not used to using sqlite files, you can see some ways to
-access that data [on this page](../programming_with_gene_annotations3/appendices/sqlite_access.md).
+access that data [on this page](../a_command_line_program/appendices/sqlite_access.md).
 
 :::tip Note
 

@@ -6,7 +6,7 @@ sidebar_position: 5
 
 ## Reading the man pages
 
-If you’re unsure about what a command does, or its specific syntax, you can type `man` followed by the command. For example,
+If you're unsure about what a command does, or its specific syntax, you can type `man` followed by the command. For example,
 
 ```
 man ls
@@ -39,7 +39,7 @@ produces the following output:
            --author
      Manual page ls(1) line 1 (press h for help or q to quit)
 
-Use the arrows on your keyboard to scroll up and down the manual; then press `q` to exit when you’re done reading.
+Use the arrows on your keyboard to scroll up and down the manual; then press `q` to exit when you're done reading.
 
 Note that options, like commands, are **case-sensitive** - so `-a` and `-A` are different options!
 

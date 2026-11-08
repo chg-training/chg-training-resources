@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Some population-genetic statistics
 
-If you followed the [basic simulation section](popgen_simulation.md) you'll know that random inheritance
+If you followed the [basic simulation section](../genetic_drift/) you'll know that random inheritance
 patterns in the population cause haplotypes to be lost over time, and others to increase in frequency. As a result genetic
 diversity is lost.
 

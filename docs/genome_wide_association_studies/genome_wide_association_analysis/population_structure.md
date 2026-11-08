@@ -105,7 +105,7 @@ and answer the following:
   Browser](https://genome.ucsc.edu/cgi-bin/hgGateway). (Note that our data is using GRCh37/hg19 coordinates.). Could they be
   functional?
 
-* What factors explain the differences in association p-values in the different analyses we’ve done?
+* What factors explain the differences in association p-values in the different analyses we've done?
 
 :::
 

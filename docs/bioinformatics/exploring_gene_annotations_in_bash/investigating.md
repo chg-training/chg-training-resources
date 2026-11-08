@@ -67,7 +67,7 @@ level** which reflects how confident GENCODE is about the transcript. See
 [the Ensembl page](https://www.ensembl.org/info/genome/genebuild/transcript_quality_tags.html)
 for a description of these.
     
-One of these transcripts (ENST00000425340.3) is also marked as ‘Ensemble canonical’ which means
+One of these transcripts (ENST00000425340.3) is also marked as ‘Ensemble canonical' which means
 "[a single, representative transcript identified at every locus](https://www.ensembl.org/info/genome/genebuild/canonical.html)".
 So let's focus on that transcript and dig a bit deeper
 

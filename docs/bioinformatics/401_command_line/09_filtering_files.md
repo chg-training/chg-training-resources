@@ -221,5 +221,5 @@ Congratulations!  You reached the end of this tutorial.  Remember you can see ev
 % history
 ```
 
-Now try some [test questions](10_questions.md) or read some more [advanced topics](./appendices/).
+Now try some [test questions](10_questions.md) or read some more [advanced topics](./appendices/README.md).
 

@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # Challenge questions
 
-The SNP [rs601338](https://www.ncbi.nlm.nih.gov/snp/rs601338) controls ’secretor status’ (i.e. whether A/B
+The SNP [rs601338](https://www.ncbi.nlm.nih.gov/snp/rs601338) controls 'secretor status' (i.e. whether A/B
 antigens are secreted into bodily fluids) Individuals with GG or GA genotypes at this SNP are secretors, and
 individuals with homozygous AA genotypes are non-secretors - as described in [this paper based on the ALSPAC
 cohort](https://doi.org/10.12688/wellcomeopenres.14636.2).

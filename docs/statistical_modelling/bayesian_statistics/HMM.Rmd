@@ -157,7 +157,7 @@ observed weather pattern.
 In this example, unless we have a barometer, we cannot observe the underlying state path of the underlying parameter. All we can
 observe are the weather patterns that could be emitted from either state. Hence, the state path is unobserved, or hidden,
 providing the first word of the term hidden Markov model (HMM) used for this type of model. One might think that the model in
-figure above is of little use in weather prediction, when we don’t know the state we are in – high pressure or low pressure –
+figure above is of little use in weather prediction, when we don't know the state we are in – high pressure or low pressure –
 but only a sequence of observed weather patterns for the past few days. However, as we shall see later on, having observed the
 sequence R, S, R, R, S over the last five days would give us a probability of sunshine tomorrow of about 63%.
 

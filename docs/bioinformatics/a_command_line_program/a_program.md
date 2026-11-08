@@ -753,8 +753,7 @@ sqlite3 -mode csv -header 'SELECT * FROM gff WHERE type =='gene' LIMIT 10'  gene
 ```
 (This should be run on the command-line, not in R/python).
 
-You can similarly load pieces of the data into R or python, or other languages.  For more examples of this see the
-[appendix](../programming_with_gene_annotations3/appendices/sqlite_access.md).
+You can similarly load pieces of the data into R or python, or other languages.  For more examples of this see [appendix](./appendices/sqlite_access.md).
 
 ## Final touches
 

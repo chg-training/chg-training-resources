@@ -4,8 +4,6 @@ sidebar_position: 5
 
 # Removing closely-related samples
 
-[Up to the table of contents](Introduction.md) - [Back to the page on LD pruning](ld_pruning.md) - [Forward to compute the PCs](computing_PCs.md)
-
 We want our top PCs to reflect the relatedness structure across the majority of samples in our GWAS dataset.
 Although all samples in our dataset are nominally unrelated, a few duplicated or related samples may have
 slipped in through the sampling process or through sample handling. As with correlated SNPs, this can seriously

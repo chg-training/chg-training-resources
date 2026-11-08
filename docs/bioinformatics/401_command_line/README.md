@@ -10,12 +10,12 @@ interacting with the computer using only the keyboard.  If you haven't seen one 
 ![img](images/terminal.png)
 
 Many of the programs and tools used in bioinformatics are designed to work only from command-line, so for genomic
-analysis it’s very important to get familiar with how the terminal works.
+analysis it's very important to get familiar with how the terminal works.
 
 ## Why should we learn to use the command line?
 
 Here are some reasons:
-* For many tasks it’s faster than using a GUI (Graphic User Interface).
+* For many tasks it's faster than using a GUI (Graphic User Interface).
 * It's flexible: you can combine multiple programs, making the output of one the input of the next in a pipeline.
 * Most bioinformatics tools are made for the command-line.
 * It can efficiently handle big files that gui based tools might struggle to open.
