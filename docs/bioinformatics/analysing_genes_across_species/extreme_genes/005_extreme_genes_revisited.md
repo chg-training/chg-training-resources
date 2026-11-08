@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Extreme genes revisited
 
-Phew!  If you reached this point you have [computed the coding sequence length](./006_long_genes_2.md) of each transcript, and have produced a [table of genes linked to a 'canonical' transcript](./007_canonical_transcripts.md).  You may also have computed the [number of exons in each gene](./007_how_many_exons.md).
+Phew!  If you reached this point you have [computed the coding sequence length](./002_long_genes_2.md) of each transcript, and have produced a [table of genes linked to a 'canonical' transcript](./003_canonical_transcripts.md).  You may also have computed the [number of exons in each gene](./004_how_many_exons.md).
 
 You're in good shape to find 'extreme' genes!
 

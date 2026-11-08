@@ -11,7 +11,7 @@ through the directory structure, and create simple directories and files.
 
 ## Directories (also known as folders)
 
-If you typed `pwd` in the [earlier examples](basics.md) you'll have seen something like this:
+If you typed `pwd` in the [earlier examples](02_basics.md) you'll have seen something like this:
 ```
 % pwd
 /home/duncan

@@ -129,5 +129,5 @@ complete.
 ## Getting started coding​
 
 In this tutorial we're going to write some code to process these data files. When you're ready, [get started
-writing some code](Getting_started_writing_some_code.md).
+writing some code](003_Getting_started_writing_some_code.md).
 

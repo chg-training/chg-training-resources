@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Bring on the violins
 
-Density plots like [this](./distribution2.md) look kindof nice, but can be difficult to interpret with many groups
+Density plots like [this](./003_distribution2.md) look kindof nice, but can be difficult to interpret with many groups
 overlaid over each other.  Another way to plot multiple densities is a *violin plot*.
 
 To make one, we'll reorganise the plot to have the continent on the x axis and the gdp distribution

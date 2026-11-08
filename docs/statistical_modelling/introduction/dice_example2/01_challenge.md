@@ -25,7 +25,7 @@ Make sure you know what's in the `data` data frame now - try histogramming or vi
 
 You could perhaps compare to some simulated data too to see if it looks like the simulations.
 
-For example to compare to a simulation where 5 is never rolled (using the [code from earlier](../dice_example103_unfair_distribution.md)):
+For example to compare to a simulation where 5 is never rolled (using the [code from earlier](../dice_example1/03_unfair_distribution.md)):
 
 ```
 simulation = simulate_two_dice(

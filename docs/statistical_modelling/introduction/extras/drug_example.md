@@ -57,12 +57,12 @@ Question 3 is sort-of-but-not-quite an answer to Question 1.  It is usually answ
 
 We'll attack Question 3 first and to make progress we'll take the following approach:
 
-1. Model the data using a [distribution](./some_distributions.md).
+1. Model the data using a [distribution](../distributions/).
 2. Use the distribution to compute a P-value
 
 ## Modelling the data using a binomial distribution
 
-In the example above we could work as follows: we could assume that the 'true' rate of recovery for people in treatment class X is some fraction, say $\pi$.  Then, a reasonable way to model the row for treatment X would be a [binomial distribution](./some_distributions.md).  In maths we might write:
+In the example above we could work as follows: we could assume that the 'true' rate of recovery for people in treatment class X is some fraction, say $\pi$.  Then, a reasonable way to model the row for treatment X would be a [binomial distribution](../distributions/).  In maths we might write:
 $$
 \#(\text{recovered}) \sim \text{binom}\left(n = \#\text{total participants},p = \pi\right)
 $$
@@ -89,7 +89,7 @@ For treatment A and B, use the cumulative distribution function of the binomial 
 
 **How unlikely was it to see such an extreme number of recovered individuals 'by chance'**? (i.e. if the treatment had no true effect).
 
-**Hint 1.** The cdf for the binomial can be computed using `pbinom()`.  As with [`dbinom()`](./some_distributions.md), it uses the notation `prob` instead of $\pi$ and `size` instead of $n$.  And the 'quantile' (i.e. the observation) goes in as `q`.  So if we were doing this for the placebo row, you could compute the cdf using something like this:
+**Hint 1.** The cdf for the binomial can be computed using `pbinom()`.  As with [`dbinom()`](../distributions/), it uses the notation `prob` instead of $\pi$ and `size` instead of $n$.  And the 'quantile' (i.e. the observation) goes in as `q`.  So if we were doing this for the placebo row, you could compute the cdf using something like this:
 ```
 pbinom( q = <something>, size = <something>, prob = 0.07 )
 ```
@@ -112,4 +112,4 @@ However, if you look back at what question 3 is - you'll see it's not quite the 
 
 One reason for this is that question 3 makes no mention of what a 'true' effect might look like.  Questions 1 and 2 are in fact **fundamentally harder** because they reflect the underlying scientific questions rather than just the maths of our likelihood function under a particular assumed parameter value.
 
-We'll now turn to a framework which helps reason about it, using [Bayes theorem](./bayes.md).
+We'll now turn to a framework which helps reason about it, using [Bayes theorem](../bayes.md).

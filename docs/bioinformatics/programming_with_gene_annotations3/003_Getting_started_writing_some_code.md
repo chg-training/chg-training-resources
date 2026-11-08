@@ -51,7 +51,7 @@ questions.
 
 ## Diving straight in - parsing data
 
-If you [looked at the gene annotation data](What_gene_annotation_data_looks_like.md), you'll know
+If you [looked at the gene annotation data](002_What_gene_annotation_data_looks_like.md), you'll know
 that it comes in rows of data that are tab-delimited. That's good and will be a good fit to a
 dataframe structure. But the data is also relational (meaning that the records refer to each other,
 via the `Parent` attribute). And since this has several levels (e.g. exons are associated with
@@ -312,8 +312,8 @@ This prints an error, something like:
 <TabItem value="python" label="In python">
 
     Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-      File "<stdin>", line 5, in test_read_gff
+      File "\<stdin\>", line 1, in \<module\>
+      File "\<stdin\>", line 5, in test_read_gff
     NameError: name 'read_gff' is not defined
 
 </TabItem>
@@ -339,14 +339,13 @@ For these reasons I thought we'd get the test in up-front here.
 
 :::
 
-When your function passes the test, you're done! Go ahead and [turn it into a
-module](making_a_module.md).
+When your function passes the test, you're done!
 
 ## Getting it to work
 
 To figure out how to write `read_gff()` let's try a few things. Start an R or python
 session now if you haven't already.  Also make sure you have installed [the
-tidyverse](/prerequisites/tidyverse.md) (in R) or [pandas](/prerequisites/pandas.md) (in python)
+tidyverse](/prerequisites/tidyverse.md) (in R) or [pandas](../../prerequisites/python.md#python-for-data-science) (in python)
 because that's what we'll use.  You can find the documentation for these packages here:
 
 ### A first go
@@ -404,7 +403,7 @@ Running the above command prints out a bunch of stuff and then says, right near 
 If you're not used to this kind of thing, errors like this may seem pretty cryptic. But they are
 often more helpful than they look at first. This one tells us for example that a problem occurred
 on line 8 of the input file. It expected to see 1 field there but found 9. [Look back at the input
-data](What_gene_annotation_data_looks_like.md). Is there something different about line 8 than
+data](002_What_gene_annotation_data_looks_like.md). Is there something different about line 8 than
 earlier lines?  (Hint: yes there is!).
 
 </TabItem>
@@ -467,7 +466,7 @@ It sort of works!
 ### Adding column names
 
 At the moment`X` doesn't have the right column names. In fact, how could it? The [file didn't have
-them in](What_gene_annotation_data_looks_like.md).
+them in](002_What_gene_annotation_data_looks_like.md).
 
 <Tabs groupId="language">
 <TabItem value="R" label="In R">
@@ -770,5 +769,5 @@ If not, why not?
 
 ## Next steps
 
-Once you've got your code working - go ahead and [turn it into a module](making_a_module.md).
+So far so good - but now you need to [extract attributes](./004_extracting_attributes.md).
 

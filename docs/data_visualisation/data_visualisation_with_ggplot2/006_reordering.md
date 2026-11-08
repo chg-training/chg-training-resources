@@ -22,7 +22,7 @@ d$orderedContinent = reorder( d$continent, d$gdpPercap, FUN = median )
 ```
 
 You should see something like:
-
+```
     # A tibble: 1,704 × 7
        country     continent  year lifeExp      pop gdpPercap orderedContinent
        <fct>       <fct>     <int>   <dbl>    <int>     <dbl> <fct>           
@@ -38,7 +38,7 @@ You should see something like:
     10 Afghanistan Asia       1997    41.8 22227415      635. Asia            
     # … with 1,694 more rows
     # ℹ Use `print(n = ...)` to see more rows
-
+```
 Importantly the new variable is in a different order:
     $ levels(d$orderedContinent)
     [1] "Africa"   "Americas" "Asia"     "Europe"   "Oceania" 

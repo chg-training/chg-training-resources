@@ -147,7 +147,7 @@ data points:
 
 Something fishy is going on... what could it be?
 
-**Note.** This will actually be one of our **[challenge questions](challenges.md)**. Leave it for now as
+**Note.** This will actually be one of our **[challenge questions](Challenge_questions.md)**. Leave it for now as
 we'll need to align reads to make progress on it.
 
 ### Sequence duplication levels, adapter content and over-represented sequences

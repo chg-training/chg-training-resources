@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-[Up to table of contents](README.md) / [Go to next page](What_gene_annotation_data_looks_like.md).
+[Up to table of contents](README.md) / [Go to next page](002_What_gene_annotation_data_looks_like.md).
 
 One of the amazing achievements of the last 100 years is the identification and mapping of genes -
 DNA sequences that encode proteins or other functional molecules - across many hundreds of species.
@@ -60,4 +60,4 @@ again. So that's what we'll focus on.
 
 ## What gene annotation data look like
 
-When you've had enough coding philosophy, [go and see what gene annotation data looks like](What_gene_annotation_data_looks_like.md).
+When you've had enough coding philosophy, [go and see what gene annotation data looks like](002_What_gene_annotation_data_looks_like.md).

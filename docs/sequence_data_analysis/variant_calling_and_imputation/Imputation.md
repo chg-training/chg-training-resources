@@ -4,8 +4,8 @@ sidebar_position: 6
 
 # Imputing a set of microarray data
 
-Ok, so we've [called genetic variants](Variant_calling.md), we've [QCd
-them](Variant_quality_controls.md), and we've [phased them into haplotypes](Phasing.md). What can
+Ok, so we've [called genetic variants](./Variant_calling.md), we've [QCd
+them](./Variant_quality_control.md), and we've [phased them into haplotypes](Phasing.md). What can
 we do with that?
 
 One of the important ways that genetic variation reference panels is used is to **impute**

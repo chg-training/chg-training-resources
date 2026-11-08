@@ -31,7 +31,7 @@ What you'll note about these summaries is that they all have the **same form**. 
 
 :::tip Challenge
 
-On the [previous page](./distributions.md) you computed the distribution of the sum of two dice rolls.
+On the [previous page](./definition_of_distribution.md) you computed the distribution of the sum of two dice rolls.
 
 Now compute the **mean**, the **variance**, and the entropy.
 

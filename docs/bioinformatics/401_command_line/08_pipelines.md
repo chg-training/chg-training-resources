@@ -52,7 +52,7 @@ Many commands can also accept input from stdin. A good example is `wc`: if it's 
 stdin instead.
 
 The best way to get input in to stdin is to **pipe** it in, using the `|` character.  For example, if you read [the
-section on working with files](working_with_files.md) you know that the
+section on working with files](07_working_with_files.md) you know that the
 `cat` command will print out the contents of a file:
 
 ```
@@ -81,7 +81,7 @@ pipeline, so I don't generally use this.
 
 Although this particular command could be done more simply just by writein `wc -l myfiles.txt`, the pipelining here is
 much more flexible and more powerful.  For example, suppose we wanted to count the number of words in the first
-row of the sonnet we were reading.  We could combine commands from the [working with files](working_with_files.md) page:
+row of the sonnet we were reading.  We could combine commands from the [working with files](07_working_with_files.md) page:
 ```
 % cat sonnet.txt | head -n 1 | wc -w
 ```
@@ -105,7 +105,7 @@ The number of words in the first and last line:
 % cat sonnet.txt | tail -n 1 | wc -w
 ```
 
-...or the number of lines that contain the word 'fair' (using `grep`, which we shall [cpver on the next page](basics.md)).
+...or the number of lines that contain the word 'fair' (using `grep`, which we shall [cpver on the next page](02_basics.md)).
 ```
 % cat sonnet.txt | grep 'fair' | wc -l
 ```

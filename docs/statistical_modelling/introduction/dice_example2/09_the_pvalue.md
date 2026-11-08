@@ -49,7 +49,7 @@ The model being used in a P-value calculation is commonly referred to as the 'nu
 ## Example: are our dice really like the model?
 
 In our example we have data from real dice with blu-tack stuck on.  If you believed our [bayesian
-inference](./bayesian.md) our chosen model is that 3 never turns up, and that all the other numbers turn up with equal probability ($20\%$, since there are 5 other numbers).
+inference](./06_bayesian.md) our chosen model is that 3 never turns up, and that all the other numbers turn up with equal probability ($20\%$, since there are 5 other numbers).
 
 Of course the *real* dice could still behave differently to this model.  After all, Who knows what that does to the
 dynamics of the dice rolls?
@@ -144,7 +144,7 @@ For our purposes, let's use this number - the log likelihood ratio - as a way to
 To compute a P-value is now easy.  We'll simulate a thousand datasets from the null model (or favourite dice model) and
 then we'll see how surprising the the log-likelihood ratio we saw above was in each of the simulations.
 
-Let's do that now.  First let's make sure you have our `simulate_two_dice()` function from the [earlier section](./unfair.md).
+Let's do that now.  First let's make sure you have our `simulate_two_dice()` function from the [earlier section](../dice_example1/02_unfair.md).
 
 ```r
 simulate_two_dice <- function(

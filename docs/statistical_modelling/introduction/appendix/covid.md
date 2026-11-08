@@ -12,7 +12,7 @@ Suppose you test +ve for COVID using a lateral flow test.  How convinced should 
 
 :::
 
-Like **many scientific** problems, this one can be solved by applying [Bayes' formula](./bayes.md).  Let's try now:
+Like **many scientific** problems, this one can be solved by applying [Bayes' formula](../bayes.md).  Let's try now:
 
 $$
 

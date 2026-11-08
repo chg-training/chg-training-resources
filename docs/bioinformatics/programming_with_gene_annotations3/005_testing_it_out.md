@@ -326,6 +326,5 @@ this in your system monitor, or by opening a terminal and running:
 ## Next steps
 
 A better way to solve the memory issue to store the data in a database and only load what's needed into memory - we'll
-see a way to do that [later](./008_Converting_gff_to_sqlite.md).  But first let's [package up the
-code](./007_making_a_module.md).
+see a way to do that [later](../a_command_line_program/).  But first let's [package up the code](../making_an_R_package/)
 

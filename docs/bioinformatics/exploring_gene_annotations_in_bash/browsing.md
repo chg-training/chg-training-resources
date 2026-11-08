@@ -7,7 +7,7 @@ sidebar_position: 9
 Can it be right that only a small fraction of these genes is coding? To confirm our results, let’s look up on
 the UCSC genome browser:
 
-1. Visit <https://genome.ucsc.edu> and click ‘Genome Browser’ (choose the Euro mirror)
+1. Visit [genome.ucsc.edu](https://genome.ucsc.edu) and click ‘Genome Browser’ (choose the Euro mirror)
 
 2. In ‘Position/Search Term’ type the gene name - say FUT2. (Make sure the 'Human Assembly' is set to
 `GRCh38/hg38` in the dropdown above). This may give you a list of genes - if so click on the one with the right

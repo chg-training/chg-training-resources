@@ -20,8 +20,7 @@ install.packages(
 )
 ```
 
-This will install the **gmsgff** package - this is the [same as the one you developed](../programming_with_gene_annotations3/007_making_a_module.md) with some additions that came from the [challenge
-questions](../programming_with_gene_annotations3/009_challenge_questions.md).  
+This will install the **gmsgff** package - this is the [same as the one you developed](../making_an_R_package/README.md) with some additions that came from the [challenge questions](../programming_with_gene_annotations3/004b_more_attributes.md).
 
 For example you can use it to load GFF data like this:
 ```
@@ -53,7 +52,7 @@ this, or use your system activity monitor.  How much memory does the process use
 ## A command-line program
 
 If you completed the tutorial you should also have a command-line program `gff_to_sqlite.R` which can be used to
-[convert a GFF file into sqlite format](../programming_with_gene_annotations3/008_Converting_gff_to_sqlite.md).  
+[convert a GFF file into sqlite format](../a_command_line_program/README.md)
 
 :::tip Note
 

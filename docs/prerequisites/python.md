@@ -69,7 +69,7 @@ ipython
 
 It looks pretty much like before, but you'll have a prompt that says `In [1]` instead of `>>>`.  It has helpful features like tab-completion of commands and filenames and syntax colouration.  
 
-## python for data sciecne
+## python for data science
 
 To get a relaly good data science experience in python, we need a few packages.  The key ones are
 `numpy` (which provides good support for matrices, arrays, and numeric manipulation), `pandas`

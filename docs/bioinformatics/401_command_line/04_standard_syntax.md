@@ -27,7 +27,7 @@ So we could have written the command above as
 
 :::tip Note
 
-Remember you can read about what these options do by [viewing the man page](help.md).  
+Remember you can read about what these options do by [viewing the man page](03_help.md).  
 Can you figure out from the man page what this command `ls -lh ./` does?  (The `./` just denotes the current directory.)
 Now try it and see.
 

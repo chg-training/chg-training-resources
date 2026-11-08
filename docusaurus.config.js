@@ -9,13 +9,13 @@ const katex = require('rehype-katex');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'The CHG training resources',
-  tagline: 'Train in genomics, bioinformatics, statistics and data analysis',
-  url: 'https://chg.ox.ac.uk/',
-  baseUrl: '/chg-training-resources/',
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  title:                 'The CHG training resources',
+  tagline:               'Train in genomics, bioinformatics, statistics and data analysis',
+  url:                   'https://chg.ox.ac.uk/',
+  baseUrl:               '/chg-training-resources/',
+  onBrokenLinks:         'throw',
+  onBrokenMarkdownLinks: 'throw',
+  favicon:               'img/favicon.ico',
   trailingSlash: true,
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.

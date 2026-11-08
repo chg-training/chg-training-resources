@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # How much of the genome is *really* in genes?
 
-If you followed the [previous section](./009_an_algorithm_to_merge_regions.md) you'll have a function `merge_regions()`
+If you followed the [previous section](./002_an_algorithm_to_merge_regions.md) you'll have a function `merge_regions()`
 that can 'merge' a set of possibly overlapping regions into a set that don't overlap (but cover the same regions).
 Let's use this to correct our computation of the proportion of genome in genes now.
 
@@ -81,7 +81,7 @@ compute_length_of_regions <- function( input_regions ) {
 ```
 
 So let's go back to [our code to compute the total length of genes on each
-chromosome](./008_How_much_of_the_genome_is_in_genes.md#naive-approach) and make it use this function:
+chromosome](./001_naive_approach.md) and make it use this function:
 
 ```r
 compute_lengths_per_chromosome = function(
@@ -110,7 +110,7 @@ compute_lengths_per_chromosome = function(
 
 :::tip Note
 
-If you compare this to the [previous, incorrect code](./008_How_much_of_the_genome_is_in_genes.md#naive-approach) you'll
+If you compare this to the [previous, incorrect code](./001_naive_approach.md) you'll
 see it's the same, except that we've used our `compute_length_of_regions()` instead of just summing the lengths.
 (But I've kept the naive calculation in there as well for comparison.)
 

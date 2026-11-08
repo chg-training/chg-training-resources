@@ -17,7 +17,7 @@ You can get this software in a few different ways:
 
 * If you are working on a JupyterHub instance we have setup, these tools should be installed
   already.
-* If you have set up a [conda installation as described here](prerequiesites/README.md) (including the bioconda and conda-forge channels),
+* If you have set up a [conda installation as described here](../../prerequisites/) (including the bioconda and conda-forge channels),
   you should be able to install everything except IGV with the command
 
 ```sh

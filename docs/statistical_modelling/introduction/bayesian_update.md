@@ -130,8 +130,7 @@ $$
 where $B()$ is a particular function called the *[beta function](https://en.wikipedia.org/wiki/Beta_function)*.  (If you read its definition, you'll see it is, essentially, defined as just the function needed to normalise this distribution.)
 
 Therefore, even though in principle we'd have to work out the normalising constant to figure out the posterior (as we
-did in the [covid example](./covid.md) - here it is **determined by the maths**.  Someone has worked it out for us
-already, how nice of them!
+did in the [dice example](./dice_example2/) and the [covid example](./appendix/covid.md)) - here it is **determined by the maths**.  Someone has worked it out for us already, how nice of them!
 
 :::
 

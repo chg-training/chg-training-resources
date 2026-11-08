@@ -17,7 +17,7 @@ This page describes the first three of these.  For example, here is a picture of
 
 I've annotated this with various pieces of information.
 
-On the **left** is shown the *probability density function* or **pdf** which you [plotted already](./normal.).  You could compute this using `dnorm()` in R as we did [on this page](./some_distributions.md).
+On the **left** is shown the *probability density function* or **pdf** which you [plotted already](./normal.).  You could compute this using `dnorm()` in R as we did [on this page](./normal.md).
 
 To fix terminology I've labelled a particular point on the X axis - the $5\%$ quantile.  That means: the value $x$ such that **exactly 5% of the mass of the distribution is $\leq x$**.
 

@@ -79,7 +79,7 @@ How many samples are in the data?  How many of each genotype?
 :::
 
 There's only one A/A genotype in the data. This might look a bit odd at first, but if you look up rs1419114 on
-<https://ensembl.org> you'll see why. The frequency of the `A` allele in non-African populations is around $\frac{1}{10}$ or
+[ensembl.org](https://ensembl.org) you'll see why. The frequency of the `A` allele in non-African populations is around $\frac{1}{10}$ or
 less. So assuming the two chromosomes are drawn independently we'd only expect about $24 \times \frac{1}{100}$, so not so
 surprising we got only one.
 
@@ -395,7 +395,7 @@ estimate, like this:
 ![img](images/sampling_distribution_shaded.png)
 
 As the plot shows, the P-value that `lm()` reports is a **two-tailed** p-value, meaning that it accounts for all values
-that are $> |\beta|$ (in either direction).  To compute it, just [compute this mass](../introduction/quantiles_and_pvalues.md):
+that are $> |\beta|$ (in either direction).  To compute it, just [compute this mass](../introduction/distributions/pdf_cdf_quantiles.md):
 
 ```
 print(

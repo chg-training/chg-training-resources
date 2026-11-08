@@ -102,4 +102,4 @@ In any case - for our purposes, let's use the 'regions', 'chromosomes', and 'sup
 
 :::
 
-Ok!  Armed with chromosome lengths, we are ready to ask [how much of the genome is in genes?](./008_How_much_of_the_genome_is_in_genes.md)
+Ok!  Armed with chromosome lengths, we are ready to ask [how much of the genome is in genes?](./how_much_in_genes/README.md)

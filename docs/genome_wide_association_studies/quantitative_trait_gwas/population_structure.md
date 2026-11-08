@@ -12,7 +12,7 @@ other unidentified or random effects. The inclusion of covariates within the reg
 for known potential effects. Commonly included covariates, particularly for disease related traits, are age and sex. 
 
 To account for genetic ancestry and ethnicity within a study population, two common methods are to calculate
-[Principal Components](../../population_genetics/principal_components_analysis/README.md) and include these within
+[principal components](../../population_genetics/principal_components_analysis/) and include these within
 the model as covariates; or to calculate a **relationship matrix** to be included within the model. In this part of the
 tutorial, we will use a calculated relationship matrix to accommodate our multi-ethnic population, and LMMs as
 implemented in GCTA. Generating the genetic relatedness matrix (GRM) The first step is to generate our GRMs. Usually,

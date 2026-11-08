@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Extreme genes!
 
-We just saw an example of an [extreme gene](./004_filter_join_merge.md#transcripts-example) - a gene with more
+We just saw an example of an [extreme gene](../004_filter_join_merge.md#transcripts-example) - a gene with more
 transcripts than any other - 150 of them!
 
 :::tip Challenge

@@ -89,7 +89,7 @@ You're all set!  Now go the the [pipeline page](pipeline.md).
 
 ## Table of contents
 
-* [This introduction](./introduction.md)
+* [This introduction](./Introduction.md)
 * [Building the pipeline](./pipeline.md)
 * [Pipeine tips and tricks](./tips_and_tricks.md)
 

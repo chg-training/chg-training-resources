@@ -45,7 +45,7 @@ We got it!  Copy its ID to the clipboard - in my file it is `ENSG00000176920.13`
 
 $$
 \text{end coordinate} - \text{start coordinate} + 1
-$$
+```
 
 This is because both start and end are expressed in a *1-based, closed coordinate system* i.e. they both point
 at bases included in the gene.  (Think of a gene with only two bases in it to see why this is.)

@@ -5,5 +5,5 @@ sidebar_position: 10
 
 There are lots of other programming languages out there - useful for different tasks. Here are some:
 
-[C++](C++.md)
+[C++](./cpp.md)
 [javascript](javascript.md)

@@ -202,6 +202,5 @@ This was pretty easy, however [`r-pks.org` site](https://r-pkgs.org) advises to 
 Congratulations!  You have a fully functional, fully tested gff-loading package! 
 
 If you want to try next steps, try [Writing a command-line program](../)] that
-Now let's use it to [write a useful command-line
-program](Converting_gff_to_sqlite.md).
+Now let's use it to [write a useful command-line program](../a_command_line_program/).
 

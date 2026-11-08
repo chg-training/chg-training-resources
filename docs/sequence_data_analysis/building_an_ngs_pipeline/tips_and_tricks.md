@@ -155,7 +155,7 @@ sheet in the config file:
 ```
 
 and then have your snakefile load the samples using (for example)
-[pandas](/prerequisites/pandas.md):
+[pandas](../../prerequisites/python.md#python-for-data-science).
 
 ```
 import pandas

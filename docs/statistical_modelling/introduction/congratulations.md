@@ -4,7 +4,6 @@ sidebar_position: 3.9
 
 # Intermission
 
-
 Congratulations!  If you got this far you've
 
 - explored the idea of probability distributions and [calculated an example](./distributions.md)
@@ -18,7 +17,7 @@ This last example was also interesting because - although we are working on the 
 ...actually all the models we tested were derived from our scientific understanding on the left.
 To illustrate this, consider:
 
-:::tip Question
+:::tip Questions
 
 How do you know that (for example) I didn't just make a mistake in writing down the numbers?
 

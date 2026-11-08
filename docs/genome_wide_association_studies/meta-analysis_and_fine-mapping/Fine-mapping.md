@@ -7,7 +7,7 @@ sidebar_position: 3
 [Up to the table of contents](README.md) / [Back to the meta-analysis section](Meta-analysis.md)
 
 If you followed the [meta-analysis section](Meta-analysis.md) you should now have a dataframe with meta-analysis results.  It looks something like this:
-
+```
     > meta_analysis
     # A tibble: 730 x 16
        rsid             chromosome position allele1 allele2 study1.beta study1.se   study1.P log10_study1.BF study2.beta study2.se study2.P meta.beta meta.se   meta.P log10_meta.BF
@@ -22,6 +22,7 @@ If you followed the [meta-analysis section](Meta-analysis.md) you should now hav
      8 19:49151323:T:G          19 49151323 T       G            0.202     0.228  0.376              -0.0925     -0.146      0.295  0.310      0.0176  0.0894 8.44e- 1       -0.0497
      9 19:49151460:C:CA         19 49151460 C       CA          -0.283     0.153  0.0636              0.936      -0.218      0.197  0.134     -0.142   0.0894 1.12e- 1        0.830 
     10 19:49152118:C:T          19 49152118 C       T           -0.609     0.328  0.0632              0.634      -0.604      0.423  0.0767    -0.0723  0.0894 4.19e- 1        0.319 
+```
 
 We can look at the strongest signals in the data (either by P-value or Bayes factor) and compare across the studies and the meta-analysis.
 

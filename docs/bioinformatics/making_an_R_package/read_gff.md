@@ -17,7 +17,7 @@ If you don't have it - here is the code:
 
 Use your own code, if it works, or see the tabs for my version.
 
-**Note** in my version I've implemented the [challenge questions about extra attributes](../programming_with_gene_annotations3/b_more_attributes.md), which are kindof useful to have!
+**Note** in my version I've implemented the [challenge questions about extra attributes](../programming_with_gene_annotations3/004b_more_attributes.md), which are kindof useful to have!
 
 </TabItem>
 
