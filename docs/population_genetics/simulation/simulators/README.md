@@ -1,12 +1,12 @@
 ---
-sidebar_position: 0
+sidebar_position: 2
 ---
 
-# Using simulation software
+# Ancestry-based simulators
 
-Population-genetic simulations help connect patterns in genome data to the evolutionary processes that produced them. Simulations let us explore how those patterns can arise and which statistical summaries might help distinguish between competing hypotheses.
+Why should we care about population-genetic simulation? Well, it can help connect patterns in genome data to the evolutionary processes that produced them. In particular, simulations let us explore how genetic patterns arise, and which statistical summaries might help distinguish between competing hypotheses as to their origin and function.
 
-Here we’ll explore two powerful approaches to population genetics simulation:
+In this practical we’ll explore how ancestry can be used to unite two powerful approaches to population genetics simulation:
 forward-time simulation, like the [simple simulator we built earlier](../genetic_drift/),
 and backward-time simulation. Each has different strengths:
 
@@ -52,12 +52,9 @@ and backward-time simulation. Each has different strengths:
   </section>
 </div>
 
-We will explore how ancestry-recording allows both forward and backward approaches to be
-combined, and how this can enable biobank-scale simulation.
-
-A particular focus be be the tree sequence toolkit ([tskit](https://tskit.dev/)), 
+A particular focus will be the tree sequence toolkit ([tskit](https://tskit.dev/)), 
 which is easier to use through its Python interface. To help students who are more
 familiar with R, we'll develop the concepts jointly in R and Python, and gradually
-move to pure Python code as we introduce simulation packages.
+move to pure Python code as we introduce _tskit_ and _msprime_.
 
-We'll get going by revisiting our inheritance-tracking simulation code:
+Let's first revisit how simulations track inheritance:

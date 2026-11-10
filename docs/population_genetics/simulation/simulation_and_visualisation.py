@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.collections import LineCollection
 
 
 def simulatePopulation(L, N, G, H=10, initial_frequency=0.2):
@@ -189,3 +190,115 @@ def plotSimulation(sim, G=None):
     axes[2, 1].set_title(f"LD ($r^2$) at generation {G}")
 
     fig.tight_layout(rect=(0, 0, 1, 0.93))
+
+
+def surviving_lineages(nodes, edges):
+    # Find nodes ancestral to the final generation
+    # The assumes edges are in oldest to youngest order
+    nodes_time = nodes[:, 1]
+    use = (nodes_time == nodes_time.max())
+
+    for edge in reversed(edges):
+        if use[edge[1]]:
+            use[edge[0]] = True
+
+    return use
+
+def realign_nodes(nodes, edges, spread=0.1):
+    """Realign extinct nodes around surviving lineages for plotting.
+
+    ``nodes`` has columns ``align`` and ``time``. Edge parent and child values
+    are zero-based row indices into ``nodes``.
+    """
+    if not np.isscalar(spread) or not np.isfinite(spread) or not 0 <= spread <= 1:
+        raise ValueError("spread must be a finite number between 0 and 1")
+
+    nodes = np.array(nodes, copy=True)
+    ids = np.arange(nodes.shape[0])
+    original_align = nodes[:, 0].copy()
+    align = original_align.copy()
+    times = nodes[:, 1]
+    live = surviving_lineages(nodes, edges)
+    generations = np.sort(np.unique(times))[::-1]
+    N = np.count_nonzero(times == times.min())
+
+    # Group child IDs by parent, corresponding to the R split() call.
+    kids = {}
+    for parent, child in edges:
+        kids.setdefault(parent, []).append(child)
+
+    # Move surviving ancestors toward the mean position of their surviving
+    # children, processing from the final generation back toward the past.
+    for generation in generations[:-1]:
+        generation_ids = ids[times == generation]
+        for parent in generation_ids[live[generation_ids]]:
+            children = np.asarray(kids.get(parent, []), dtype=int)
+            if children.size == 0:
+                continue
+            children = children[live[children]]
+            if children.size == 0:
+                continue
+
+            centre = np.mean(align[children])
+            align[parent] = (1 - spread) * centre + spread * original_align[parent]
+
+    # Put non-lineage nodes between lineage positions in their original
+    # left-to-right order. The end gaps extend to positions 1 and N.
+    for generation in generations:
+        generation_ids = ids[times == generation]
+        generation_ids = generation_ids[
+            np.lexsort((generation_ids, original_align[generation_ids]))
+        ]
+        live_ids = generation_ids[live[generation_ids]]
+        extinct_ids = generation_ids[~live[generation_ids]]
+
+        if extinct_ids.size == 0:
+            continue
+        if live_ids.size == 0:
+            align[generation_ids] = np.linspace(1, N, generation_ids.size)
+            continue
+
+        rank = np.empty(nodes.shape[0], dtype=int)
+        rank[generation_ids] = np.arange(generation_ids.size)
+        live_rank = rank[live_ids]
+        extinct_rank = rank[extinct_ids]
+        boundaries = np.concatenate(([ -1 ], live_rank, [generation_ids.size]))
+        boundary_x = np.concatenate(([1.0], align[live_ids], [float(N)]))
+
+        for k in range(boundaries.size - 1):
+            left_rank, right_rank = boundaries[k:k + 2]
+            gap_ranks = extinct_rank[
+                (extinct_rank > left_rank) & (extinct_rank < right_rank)
+            ]
+            if gap_ranks.size == 0:
+                continue
+
+            positions = np.linspace(
+                boundary_x[k], boundary_x[k + 1], gap_ranks.size + 2
+            )[1:-1]
+            align[generation_ids[gap_ranks]] = positions
+
+    nodes[:, 0] = align
+    return nodes
+
+def plot_nodes_and_edges(nodes, edges, ax=None, title="", label_mrca=False):
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(10, 10))
+    nodes_align, nodes_time = nodes.T 
+    edges_parent, edges_child = edges.T
+    ancestral_nodes = surviving_lineages(nodes, edges)
+    use_edge = ancestral_nodes[edges_child]
+    ax.add_collection(LineCollection(nodes[edges], colors="0.85"))
+    ax.add_collection(LineCollection(nodes[edges[use_edge]], colors="blue", linewidths=2))
+    ax.scatter(nodes_align, nodes_time, s=8, color="black", zorder=2)
+    ax.set(ylabel="time", xticks=[], ylim=[max(nodes_time)+1, -1], title=title)
+
+    # Optionally label the MRCA
+    if label_mrca:
+        # find the times that have only one ancestral node
+        _, idx, counts = np.unique(
+            nodes_time[ancestral_nodes], return_counts=True, return_index=True)
+        mrca_id = np.where(ancestral_nodes)[0][max(idx[counts == 1])]
+        ax.text(*nodes[mrca_id,:], f"\nMRCA\nnode\n#{mrca_id}", ha="center", va="top", linespacing=0.8)
+
+    return ax
