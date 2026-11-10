@@ -77,3 +77,38 @@ body {
     max-width: 1600px;
   }
 }
+
+.simulation-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.simulation-option {
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-card-border-radius);
+  background: var(--ifm-card-background-color);
+}
+
+.simulation-option h3 {
+  margin: 0 0 0.5rem;
+}
+
+.simulation-option__example {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+}
+
+.simulation-option__example img {
+  width: 4rem;
+  height: 3rem;
+  object-fit: contain;
+}
+
+.simulation-option__example figcaption {
+  font-size: 0.9rem;
+}
