@@ -228,3 +228,122 @@ plotSimulation <- function(
     bg = rgb( 0.2, 0.2, 0.2, 0.5 )
   )
 }
+
+
+surviving_lineages = function(nodes, edges) {
+    # return an array denoting the nodes that are ancestral
+    # to those in the last generation
+    use = nodes[, "time"] == max(nodes[, "time"])
+
+    for (j in rev(seq_len(nrow(edges)))) {
+        if (use[edges[j, "child"]])
+            use[edges[j, "parent"]] = TRUE
+    }
+    use
+}
+
+realign_nodes <- function(nodes, edges, spread = 0.1) {
+    if (!is.numeric(spread) || length(spread) != 1L ||
+        !is.finite(spread) || spread < 0 || spread > 1) {
+        stop("spread must be a single number between 0 and 1")
+    }
+
+    gen = nodes[, "time"]
+    original_align = nodes[, "align"]
+    align = original_align
+    live = surviving_lineages(nodes, edges)
+    generations = sort(unique(gen), decreasing = TRUE)
+    N = sum(gen == min(gen))
+
+    kids = split(edges[, "child"], edges[, "parent"])
+
+    # Move surviving ancestors toward the centre of their surviving children.
+    # This changes lineage shape according to spread.
+    for (g in generations[-1]) {
+        ids = which(gen == g)
+
+        for (p in ids[live[ids]]) {
+            children = kids[[as.character(p)]]
+            if (is.null(children)) next
+
+            children = children[live[children]]
+            if (!length(children)) next
+
+            centre = mean(align[children])
+            align[p] = (1 - spread) * centre +
+                spread * original_align[p]
+        }
+    }
+
+    # Place non-lineage nodes in the gaps around lineage nodes, preserving
+    # the original left-to-right order within each generation.
+    for (g in generations) {
+        ids = which(gen == g)
+        ids = ids[order(original_align[ids], ids)]
+
+        live_ids = ids[live[ids]]
+        extinct_ids = ids[!live[ids]]
+
+        if (!length(extinct_ids)) next
+        if (!length(live_ids)) {
+            # No lineage nodes here; spread all nodes across 1..N.
+            align[ids] = seq(1, N, length.out = length(ids))
+            next
+        }
+
+        live_rank = match(live_ids, ids)
+        extinct_rank = match(extinct_ids, ids)
+
+        # Process each gap between surviving nodes, including both ends.
+        boundaries = c(0L, live_rank, length(ids) + 1L)
+        boundary_x = c(1, align[live_ids], N)
+
+        for (k in seq_len(length(boundaries) - 1L)) {
+            left_rank = boundaries[k]
+            right_rank = boundaries[k + 1L]
+
+            in_gap = extinct_rank > left_rank & extinct_rank < right_rank
+            gap_ranks = extinct_rank[in_gap]
+            if (!length(gap_ranks)) next
+
+            left_x = boundary_x[k]
+            right_x = boundary_x[k + 1L]
+
+            # Divide the available interval evenly among nodes in this gap.
+            positions = seq(
+                left_x,
+                right_x,
+                length.out = length(gap_ranks) + 2L
+            )[-c(1L, length(gap_ranks) + 2L)]
+
+            align[ids[gap_ranks]] = positions
+        }
+    }
+
+    nodes[, "align"] = align
+    nodes
+}
+
+plot_nodes_and_edges <- function(nodes, edges) {
+    nodes_time = nodes[, "time"]
+    nodes_align = nodes[, "align"]
+    edges_parent = edges[, "parent"]
+    edges_child = edges[, "child"]
+
+    plot(nodes, type="n", ylim = c(max(nodes_time), 0), xlab="", xaxt = "n")
+    segments(
+        nodes_align[edges_parent], nodes_time[edges_parent],
+        nodes_align[edges_child], nodes_time[edges_child],
+        col = "grey85"
+    )
+
+    ancestral_nodes = surviving_lineages(nodes, edges)
+    use_edge = ancestral_nodes[edges[, "child"]]
+    segments(
+        nodes_align[edges_parent[use_edge]], nodes_time[edges_parent[use_edge]],
+        nodes_align[edges_child[use_edge]], nodes_time[edges_child[use_edge]],
+        col = "red", lwd = 2
+    )
+    points(nodes, pch = 16, cex=0.5)  # plot points on top
+}
+
