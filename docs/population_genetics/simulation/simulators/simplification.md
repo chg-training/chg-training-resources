@@ -9,7 +9,7 @@ That should save some typing!
 
 ```python
 ts = msprime.sim_mutations(
-    WFsimulation(20, 40, 100, random_seed=42), rate=5e-4, random_seed=42
+    simForwardWF(20, 40, 100, random_seed=42), rate=5e-4, random_seed=42
 )
 ```
 

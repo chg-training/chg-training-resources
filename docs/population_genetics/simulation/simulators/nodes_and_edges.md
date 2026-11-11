@@ -4,8 +4,10 @@ sidebar_position: 1
 
 # Long-format nodes and edges
 
-In our [previous Wright Fisher model](../genetic_drift/) we saved haplotypes as numbers in a
-matrix of _generations_ × _population_size_. However, as we saw, it can help to use a so-called "long-format" in which individuals are saved as rows in a long list.
+In the basic Wright Fisher model we devised in the [previous practical](../genetic_drift/)
+we saved haplotypes as numbers in a matrix of _generations_ × _population_size_. However,
+as we saw, it can help to use a so-called "long-format" in which individuals are saved as
+rows in a long list.
 
 So in the code below we:
 
@@ -22,6 +24,9 @@ To make the simulation repeatable, we also allow a random_seed to be specified.
 <div className="r-py-columns">
 
 ```r
+
+
+
 WFsimulation <- function(N, G, random_seed = NULL) {
     if (!is.null(random_seed)) set.seed(random_seed)
     # Allocate matrix to store N*(G+1) nodes; each node is a row
@@ -55,7 +60,7 @@ import numpy as np
 from scipy.stats import rankdata  # equivalent of R's rank()
 
 def WFsimulation(N, G, random_seed=None):
-    rng = np.random.default_rng(random_seed)
+    rng = np.random.default_rng(random_seed)  # make a random number generator
     # Allocate array to store N*(G+1) nodes; each node is a row
     nodes = np.empty((N * (G + 1), 2))
     ALIGN, TIME = 0, 1  # shorthand to index first and second col

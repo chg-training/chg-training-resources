@@ -18,29 +18,33 @@ so we'll switch to only show Python code. Fortunately, _tskit_ actually makes th
 simpler: we just store the nodes as rows in a "nodes table", and the edges as rows in
 an "edges table". 
 
-A few more things: saving the edges is spun off
-into its own function, `add_ancestry()`,
+A few more things to note. For future extensions, choosing parents and saving edges
+is spun off into its own simple 2-line function, `add_ancestry()`,
 and the empty tables are created by calling `tables = tskit.TableCollection(L)`.
 Here, L is the length of the genome we are simulating, which for simplicity we'll
-assume to be a single chromomsome.
+assume to be a single chromomsome. Also we wrap the per-generation loop in a call
+to `tqdm()` which should give us a nice progressbar for long-running simulations -
+that will come in handy later. We'll call the _tskit_ version `simForwardWF()` to
+distinguish it from the more basic `WFsimulation()` on the previous page.
 
 ```python
 import numpy as np
 import tskit
+from tqdm.auto import tqdm  # this is used to make a progressbar 
 
 def add_ancestry(edges, child_id, parent_ids, L, rng):
     # link children to one random parent: we can modify this later  
     parent_id = rng.choice(parent_ids) # select a single parent
     edges.add_row(parent=parent_id, child=child_id, left=0, right=L)
 
-def WFsimulation(N, G, chrom_length, random_seed=None):
+def simForwardWF(N, G, chrom_length, show_progressbar=False, random_seed=None):
     rng = np.random.default_rng(random_seed)
     tables = tskit.TableCollection(chrom_length)
     tables.time_units="generations"  # optional
     flags = tskit.NODE_IS_SAMPLE
     parent_ids = [tables.nodes.add_row(flags, time=G) for _ in range(N)]
 
-    for g in reversed(range(G)):
+    for g in tqdm(reversed(range(G)), total=G, disable=not show_progressbar):
         child_ids = [tables.nodes.add_row(flags, time=g) for _ in range(N)]
         for child in child_ids:
             add_ancestry(tables.edges, child, parent_ids, chrom_length, rng)
@@ -75,7 +79,7 @@ ancestry makes sense. That enables all sorts of extra functionality, e.g. plotti
 the ancestry:
 
 ```python
-ts = WFsimulation(20, 40, 100, random_seed=42)
+ts = simForwardWF(20, 40, 100, random_seed=42)
 ts.draw_svg(size=(1000, 700), node_labels={}, symbol_size=2, y_axis=True)
 ```
 
@@ -86,3 +90,11 @@ in Scalable Vector Graphics ([SVG](https://en.wikipedia.org/wiki/SVG)) format.
 
 ![img](../solutions/fwd_tskit.svg)
 
+Note that (as before) this simulator assumes one chromosome per individual. This
+is the equivalent of modelling a *haploid* species, such as moss or malaria.
+In reality, most species, including humans, are *diploid*, so that for any
+chromosome an individual possesses a paternal and a maternal version.
+In _tskit_ this is captured by assigning multiple nodes to a row in an
+*individuals table*. For example, when simulating a human genome, each
+individual should have two nodes. To avoid confusion, we'll talk about nodes
+when elaborating on our simulator.

@@ -20,6 +20,8 @@ This is called the Jukes-Cantor model, and is much more realistic than our previ
 
 ```python
 import msprime
+
+# Use the `ts` variable previously simulated using simForwardWF()
 mutated_ts = msprime.sim_mutations(ts, rate=5e-4, random_seed=None)
 ```
 
@@ -159,7 +161,7 @@ def plot_ts_haplotypes(ts, sample_node_ids=None, ax=None):
         sample_node_ids = ts.samples()
     if ax is None:
         fig, ax = plt.subplots(
-            1, figsize=(1/5 * ts.num_sites, len(sample_node_ids) * 1/5))
+            1, figsize=(1/5 * ts.num_sites, len(sample_node_ids) * 1/6))
 
     big_matrix = ts.genotype_matrix(samples=sample_node_ids)
     ax.imshow(
