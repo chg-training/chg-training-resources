@@ -118,17 +118,61 @@ Once again - I'm not advocating this as Good Coding Practice.  I'm just getting 
 
 :::
 
-At this point we may be able to try this.
+At this point we may be able to try this.  I've gathered the code in a script to make it run:
 
-Make sure you have set 
-Try:
+As above make sure you are in the right place in your filesystem (say a 'simulation' folder) and you have set parameters:
 ```r
-L = 5000                   # number of sites
+L = 1000                   # number of sites
 H = 10                     # number of haplotypes at start
-N = 250                    # number of individuals in the population
-G = 1000                   # number of generations
-mutation_rate_per_locus = 0.05       # mutation rate per locus per generation
-recombination_rate = 0.05
-
-source( ")
+N = 100                    # number of individuals in the population
+G = 250                    # number of generations
+mutation_rate_per_locus = 0.2       # mutation rate per locus per generation
+recombination_rate = 0.2
 ```
+
+You can run the simulation like this:
+```r
+source( "https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/simulation_with_recombination.R")
+```
+
+The results should appear in a folder called `=250,L=5000,mu=0.050,rho=0.050` or similar.
+
+Let's plot them:
+```r
+{
+	par( mfrow = c( 1, 2 ))
+	par( mar = c( 4, 4, 1, 0.5 ))
+	plot.haplotypes( l_haplotypes[l_population[G,],] )
+	par( mar = c( 4, 0.5, 1, 1 ))
+	plot.haplotypes( r_haplotypes[r_population[G,],] )
+}
+
+```
+
+And let's plot LD:
+```r
+compute.ld <- function( haplotypes ) {
+  cor( haplotypes )
+}
+
+plot.ld <- function( haplotypes ) {
+  # By default `image()` chooses its own colour set, but we'll
+  # specify a fixed set using the breaks` and `col` arguments
+  breaks = c( -0.01, seq( from = 0.1, to = 1, by = 0.1 ))
+  ld.colours = c( 'grey95', rev( heat.colors( length(breaks)-2 )))
+  r = compute.ld( haplotypes )
+  image(
+    r^2,
+    col = ld.colours,
+    breaks = breaks
+  )
+}
+
+combined_haplotypes = cbind(
+	l_haplotypes[l_population[G,],],
+	r_haplotypes[r_population[G,],]
+)
+
+plot.ld( combined_haplotypes )
+```
+

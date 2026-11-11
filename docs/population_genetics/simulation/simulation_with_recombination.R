@@ -21,6 +21,10 @@ r_population = matrix( NA, nrow = G, ncol = N )
 l_population[1,] = sample( 1:l_highest, N, replace = T )
 r_population[1,] = sample( 1:r_highest, N, replace = T )
 
+echo = function( message, ... ) {
+  cat( sprintf( message, ... ))
+}
+
 plot.haplotypes <- function(
     haplotypes,
     sort = FALSE,
@@ -48,8 +52,21 @@ plot.haplotypes <- function(
   )
 }
 
-echo = function( message, ... ) {
-  cat( sprintf( message, ... ))
+compute.ld <- function( haplotypes ) {
+  cor( haplotypes )
+}
+
+plot.ld <- function( haplotypes ) {
+  # By default `image()` chooses its own colour set, but we'll
+  # specify a fixed set using the breaks` and `col` arguments
+  breaks = c( -0.01, seq( from = 0.1, to = 1, by = 0.1 ))
+  ld.colours = c( 'grey95', rev( heat.colors( length(breaks)-2 )))
+  r = compute.ld( haplotypes )
+  image(
+    r^2,
+    col = ld.colours,
+    breaks = breaks
+  )
 }
 
 mutate_lr <- function( l_haplotype, r_haplotype ) {
