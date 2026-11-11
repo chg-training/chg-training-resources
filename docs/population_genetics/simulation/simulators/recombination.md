@@ -71,8 +71,6 @@ The bar at the bottom is meant to show position along the genome.
 The background shading shows the genomic region covered by each tree.
 For instance, in the plot above, the first tree covers positions 0 to 16073
 (on your computer, or with a different random seed, it might be different).
-We call these "local trees", as they only apply to a restricted region of the
-chromosome.
 
 What's happened is that every time a recombination occurs, the chunk of genome to the
 left vs the right of the breakpoint takes a different path through the ancestry. Each
@@ -80,14 +78,27 @@ recombination breakpoint in the ancestry therefore results in a new tree. The
 breakpoint positions correspond to the point along the genome that one tree switches to
 the next.
 
-The _tskit_ library is specifically designed to analyse this sort of ancestry.
+We can extract the "local tree" at a particular position along the genome like this
+(usually the branches near the root of the tree are much longer, so it can be helpful
+to plot time on a log scale, using `time_scale="log_time"`):
+
+```python
+position=50_000  # get the tree at 50kb along the genome
+tree = ts.at(position)
+
+tree.draw_svg(size=(400, 400), node_labels=ts.samples(), y_axis=True, time_scale="log_time")
+```
+![img](../solutions/fwd_recombination_tree.svg)
+
+
+The _tskit_ library is specifically designed to analyse recombinant ancestry along the genome.
 In particular, you might notice that one tree is very similar to the tree next to it. For 
 example, nodes 7 and 8 stay grouped together as we go along the genomes. That means we
 don't need to store each tree separately. Instead, the edges that connect nodes 7 and 8
 to their common ancestor span from a left position of 0 to a right position of tens of thousands of basepairs.
 
-We can extract the tree using `ts.trees()`. Here's an example of counting the number of
-variable sites in each tree:
+We can extract each tree in turn using `ts.trees()`. Here's an example of counting the
+number of variable sites in each tree:
 
 ```python
 print({
@@ -98,4 +109,18 @@ print({
 `{'Tree 0': '1 sites', 'Tree 1': '1 sites', 'Tree 2': '0 sites', 'Tree 3': '0 sites', 'Tree 4': '0 sites', 'Tree 5': '1 sites', 'Tree 6': '0 sites', 'Tree 7': '2 sites', 'Tree 8': '0 sites', 'Tree 9': '1 sites', 'Tree 10': '0 sites', 'Tree 11': '0 sites', 'Tree 12': '0 sites', 'Tree 13': '0 sites', 'Tree 14': '3 sites', 'Tree 15': '5 sites', 'Tree 16': '2 sites', 'Tree 17': '8 sites', 'Tree 18': '1 sites', 'Tree 19': '0 sites', 'Tree 20': '0 sites', 'Tree 21': '2 sites', 'Tree 22': '7 sites', 'Tree 23': '2 sites', 'Tree 24': '1 sites', 'Tree 25': '2 sites', 'Tree 26': '0 sites', 'Tree 27': '0 sites', 'Tree 28': '0 sites', 'Tree 29': '2 sites', 'Tree 30': '0 sites', 'Tree 31': '9 sites', 'Tree 32': '3 sites', 'Tree 33': '6 sites', 'Tree 34': '1 sites', 'Tree 35': '0 sites', 'Tree 36': '6 sites', 'Tree 37': '1 sites', 'Tree 38': '0 sites', 'Tree 39': '8 sites', 'Tree 40': '3 sites', 'Tree 41': '0 sites', 'Tree 42': '0 sites', 'Tree 43': '0 sites', 'Tree 44': '2 sites', 'Tree 45': '0 sites', 'Tree 46': '3 sites', 'Tree 47': '2 sites', 'Tree 48': '2 sites', 'Tree 49': '2 sites', 'Tree 50': '1 sites', 'Tree 51': '2 sites', 'Tree 52': '1 sites', 'Tree 53': '0 sites'}`
 
 Now breaking down statistics into windows along the genome make more sense,
-because they don't all reflect the same tree. For example, here
+because they don't all reflect branches on the same tree. For example, here's diversity 
+along our simulated chromosome in 100kb windows
+
+```python
+fig, ax = plt.subplots(figsize=(12, 3))
+L = int(ts.sequence_length)
+windows = np.linspace(0, L, num=L//100_000 + 1)
+ax.stairs(ts.diversity(windows=windows), windows/1_000, baseline=None)
+ax.set(ylabel="Diversity", xlabel= "Genome position (kb)", yscale="log", ylim=(1e-6, 1e-3))
+plt.show()
+```
+
+![img](../solutions/fwd_recombination_diversity.png)
+
+This will become more exciting when we incorporate selection.
