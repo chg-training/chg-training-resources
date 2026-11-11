@@ -34,7 +34,16 @@ ts.draw_svg(size=(1000, 500), y_axis=True, node_labels=ts.samples())
 ![img](../solutions/fwd_short.svg)
 
 This doesn't look like a single tree. It's a bit like the top of the tree has been cut off.
-In _tskit_ we actually think of this a single tree, but with multiple roots. The associated haplotype matrix is fairly useless:
+In _tskit_ we actually think of this a single tree, but with multiple roots. We can count the roots like this:
+
+```python
+tree = ts.at(0)
+print("There are", tree.num_roots, "roots in the tree at the start of the genome")
+```
+
+**Question.** how many roots are there in this "tree"?
+
+The associated haplotype matrix is fairly useless:
 
 ```python
 plot_ts_haplotypes(ts)
