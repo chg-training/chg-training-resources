@@ -90,7 +90,7 @@ evolve <- function(
 
   # Now decide if any haplotypes should mutate
   # First randomly pick samples to mutate...
-  who.mutates = sample( 1:N, prob = mutation_rate_per_locus )
+  who.mutates = which( rbinom( 1:N, size = 1, prob = mutation_rate_per_locus ) == 1 )
   # ...and mutate them:
   for( i in who.mutates ) {
     new[i] = mutate( new[i] )
