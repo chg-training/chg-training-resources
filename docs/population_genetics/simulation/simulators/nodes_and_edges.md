@@ -241,10 +241,23 @@ plt.close(fig)
 The code above is written as a function, `plot_nodes_and_edges()`, in the `simulation_and_visualisation` file. Additionally, to make the plot a little more like a conventional tree, we've made a `realign_nodes()` function available
 which adjusts the "align" value to make the surviving lineages line up a bit better.
 
+If you don't have that file, you can grab it like this:
+
 <div className="r-py-columns">
 
 ```r
-source( "simulation_and_visualisation.R" )
+source("https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/simulation_and_visualisation.R")
+```
+```python
+# run this in a notebook cell
+!curl -O https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/simulation_and_visualisation.py
+```
+</div>
+
+<div className="r-py-columns">
+
+```r
+
 
 layout( matrix( 1:2, ncol = 2 ), widths = c(1, 1.5))
 realigned_nodes = realign_nodes(result$nodes, result$edges)
