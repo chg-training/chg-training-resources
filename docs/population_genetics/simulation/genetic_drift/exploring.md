@@ -1,12 +1,17 @@
 ---
 sidebar_position: 6
+hide_table_of_contents: true
 ---
 
 # Exploring the simulations
 
-In this file: [on github](https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/simulation_and_visualisation.R) (right click and choose 'Save as' to save it).
+In these files on github:
+* [for R](https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/simulation_and_visualisation.R), or
+* [for python](https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/simulation_and_visualisation.py)
 
-I've wrapped up the above simulation into two key functions:
+(right click and choose 'Save as' to save them)
+
+...I've wrapped up the above simulation into two key functions:
 
 * `simulatePopulation()` which simulates from the model as above.
 * `plotSimulation()` which makes a multi-panel plot of the result.

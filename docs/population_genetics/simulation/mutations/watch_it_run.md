@@ -18,7 +18,12 @@ images.  I'll call it 'simulation' but, for later reference, will also keep the 
 the filename:
 
 ```r
-mutation_rate = 0.1
+L = 5000                      # number of sites
+H = highest.haplotype = 10    # number of haplotypes at start
+N = 250                       # number of individuals in the population
+G = 1000                      # number of generations
+mutation_rate = 0.05          # mutation rate per locus per generation
+
 image_dir = sprintf( "simulation/N=%d,L=%d,mu=%.3f", N, L, mutation_rate )
 
 dir.create( image_dir, recursive = TRUE,  showWarnings = FALSE )
@@ -32,20 +37,21 @@ echo = function( message, ... ) {
 }
 ```
 
-Here's the complete program.  This time we'll start with a not-very-diverse set of haplotypes:
+Here's the complete program - let's run it now:
 ```r
-L = 5000                      # number of sites
-H = highest.haplotype = 10    # number of haplotypes at start
-N = 250                       # number of individuals in the population
-G = 1000                      # number of generations
-mutation_rate = 0.05          # mutation rate per locus per generation
+L = 5000                   # number of sites
+H = 10                     # number of haplotypes at start
+N = 250                    # number of individuals in the population
+G = 1000                   # number of generations
+mutation_rate = 0.05       # mutation rate per locus per generation
 
 image_dir = sprintf( "simulation/N=%d,L=%d,mu=%.3f", N, L, mutation_rate )
 dir.create( sprintf( "%s/haplotypes", image_dir), recursive = TRUE,  showWarnings = FALSE )
 
 # initialise haplotypes
-haplotypes       = matrix( NA, nrow = 25000, ncol = L )
+haplotypes       = matrix( NA, nrow = 250000, ncol = L )
 haplotypes[1:H,] = rbinom( n = H*L, size = 1, prob = 0.001 )
+highest.haplotype <- H
 
 # initialise population
 population = matrix(
@@ -78,13 +84,13 @@ for( generation in 2:G ) {
     dev.off()
   
     # !! IMPORTANT!! Use gc() to return memory to operating system!
-	  # Without this you may use up all your RAM
+    # Without this you may use up all your RAM
     gc()
   }
 
   if( highest.haplotype > nrow( haplotypes )) {
-	echo( "++ Uh-oh!  I ran out of haplotype storage.  Quitting the simulation." )
-	break ;
+    echo( "++ Uh-oh!  I ran out of haplotype storage.  Quitting the simulation." )
+    break ;
   }
 }
 ```

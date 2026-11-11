@@ -1,5 +1,6 @@
 ---
 sidebar_position: 6
+hide_table_of_contents: true
 ---
 
 # Tracking inheritance
@@ -161,25 +162,43 @@ And now we could add the lines of inheritance:
 **Argh!**  To make this understandable we need to somehow sort the columns in each generation so that the children are
 nearer the parents.
 
-This is a bit fiddly to do, but luckily we've got you covered with a pre-written function:
-
-<div className="r-py-columns">
+This is a bit fiddly to do, but luckily we've got you covered with a pre-written function.  You can get it [on github](https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/plot_population_with_tree.R) (right click, save, and `source()` into R).  Or do it in one line:
 
 ```r
 source( "https://raw.githubusercontent.com/chg-training/chg-training-resources/refs/heads/main/docs/population_genetics/simulation/plot_population_with_tree.R" )
 
 plot.population.with.tree( population, parents )
 ```
-</div>
 
 ![image](../solutions/trees.png)
-
-:::tip Note
 
 If you think about this plot a bit, it's showing how **changes in haplotype frequency** and **inheritance** are really
 two sides of the same coin (at least in populations that stay roughly the same size).  For example, haplotypes that
 increase in frequency do so because lots of individuals inherit the same allele.  
 
 In these pages we've explored **random genetic drift**, which is one effect of these inheritance patterns.  Of course, another is **natural selection** where the number of offspring carrying each haplotype might systematically depend on the haplotype itself.
+
+:::caution Note
+
+If you look at the code for the above function you'll see that one of the main things it has to do is convert our matrices into **long form**.  In other words, instead of a wide matrix, it makes a table like this:
+
+| generation | individual | haplotype | parent |
+| ---------- | ---------- | --------- | ------ |
+| 1          | 1          | 5         | NA     |
+| 1          | 2          | 9         | NA     |
+| ...        | ...        | ...       | ...    |
+| 2          | 1          | 2         | 94     |
+| 2          | 2          | 3         | 17     |
+| 2          | 3          | 2         | 162    |
+| ...        | ...        | ...       | ...    |
+
+and so on.
+
+This is instead of our `population` and `parents` matrices, which have one row per
+generation and one column per individual.
+
+There is a great deal to like about this 'long form' which is more flexible than the matrices, begging the question: why not just write the simulation that way in the first place?
+
+Maybe we should have!
 
 :::
