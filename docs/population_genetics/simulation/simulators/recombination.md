@@ -42,8 +42,8 @@ one breakpoint per chromosome, and we aren't modelling gene conversion. All thes
 can be done in more advanced simulators like SLiM, but the version decribed above is
 a surprisingly good approximation.
 
-Now all we need to do is run it! As before we'll output a sample of 10 nodes
-from a simulated population of 1000 haploids.
+Now all we need to do is run it! As before we'll output a sample of 10 genomes (nodes) of 
+1Mb from a simulated population of 1000 haploids:
 
 ```python
 RHO = 1e-8   # A roughly human-like recombination rate
@@ -124,4 +124,32 @@ plt.show()
 
 ![img](../solutions/fwd_recombination_diversity.png)
 
-This will become more exciting when we incorporate selection.
+Not only is this a bit boring (it will become more exciting when we incorporate selection), but because this is a forward-time simulation, we aren't guaranteed that every tree has fully coalesced (i.e. some of the trees might have multiple roots).
+
+```python
+for tree in ts.trees():
+    if tree.num_roots > 1:
+        print(
+            f"Tree {tree.index} covering {tree.interval}",
+            f"has not coalesced (has {tree.num_roots} roots)"
+        )
+```
+
+```
+Tree 12 from Interval(left=87182.0, right=89267.0) has not coalesced (has 2 roots)
+Tree 13 from Interval(left=89267.0, right=100501.0) has not coalesced (has 2 roots)
+Tree 18 from Interval(left=346321.0, right=351653.0) has not coalesced (has 2 roots)
+Tree 21 from Interval(left=363533.0, right=389247.0) has not coalesced (has 2 roots)
+Tree 33 from Interval(left=697134.0, right=740666.0) has not coalesced (has 2 roots)
+Tree 34 from Interval(left=740666.0, right=748815.0) has not coalesced (has 2 roots)
+Tree 35 from Interval(left=748815.0, right=750010.0) has not coalesced (has 2 roots)
+Tree 45 from Interval(left=888703.0, right=894733.0) has not coalesced (has 2 roots)
+Tree 46 from Interval(left=894733.0, right=909094.0) has not coalesced (has 2 roots)
+Tree 47 from Interval(left=909094.0, right=932991.0) has not coalesced (has 2 roots)
+Tree 48 from Interval(left=932991.0, right=952213.0) has not coalesced (has 2 roots)
+Tree 53 from Interval(left=999350.0, right=1000000.0) has not coalesced (has 2 roots)
+```
+
+So the simulated diversity in those regions is likely to be too small, and the plot
+could be misleading. It looks like we should have simulated for even more generations,
+but there's a clever workaround involving backward-time simulation.
