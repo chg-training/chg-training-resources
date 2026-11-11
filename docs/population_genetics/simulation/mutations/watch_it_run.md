@@ -37,75 +37,62 @@ echo = function( message, ... ) {
 }
 ```
 
-Here's the complete program, wrapped up as a function:
+Here's the complete program - let's run it now:
 ```r
-simulate_with_mutation = function(
-  L,                      # number of sites
-  H,                      # number of haplotypes at start
-  N,                      # number of individuals in the population
-  G,                      # number of generations
-  mutation_rate = 0.05    # mutation rate per locus per generation
-) {
-  image_dir = sprintf( "simulation/N=%d,L=%d,mu=%.3f", N, L, mutation_rate )
-  dir.create( sprintf( "%s/haplotypes", image_dir), recursive = TRUE,  showWarnings = FALSE )
+L = 5000                   # number of sites
+H = 10                     # number of haplotypes at start
+N = 250                    # number of individuals in the population
+G = 1000                   # number of generations
+mutation_rate = 0.05       # mutation rate per locus per generation
 
-  # initialise haplotypes
-  haplotypes       = matrix( NA, nrow = 250000, ncol = L )
-  haplotypes[1:H,] = rbinom( n = H*L, size = 1, prob = 0.001 )
-  highest.haplotype <- H
+image_dir = sprintf( "simulation/N=%d,L=%d,mu=%.3f", N, L, mutation_rate )
+dir.create( sprintf( "%s/haplotypes", image_dir), recursive = TRUE,  showWarnings = FALSE )
 
-  # initialise population
-  population = matrix(
-    NA, nrow = G, ncol = N,
-    dimnames = list(
-      sprintf( "generation=%d", 1:G ),
-      sprintf( "individual=%d", 1:N )
-    )
+# initialise haplotypes
+haplotypes       = matrix( NA, nrow = 250000, ncol = L )
+haplotypes[1:H,] = rbinom( n = H*L, size = 1, prob = 0.001 )
+highest.haplotype <- H
+
+# initialise population
+population = matrix(
+  NA, nrow = G, ncol = N,
+  dimnames = list(
+    sprintf( "generation=%d", 1:G ),
+    sprintf( "individual=%d", 1:N )
   )
-  population[1,] = sample( 1:H, N, replace = TRUE )
+)
+population[1,] = sample( 1:H, N, replace = TRUE )
 
-  # Evolve population!
-  for( generation in 2:G ) {
-    echo( "++ generation %d of %d...\n", generation, G )
+# Evolve population!
+for( generation in 2:G ) {
+  echo( "++ generation %d of %d...\n", generation, G )
 
-    # Evolve the population, now with mutations
-    population[generation,] = evolve( population[generation-1,], mutation_rate )
+  # Evolve the population, now with mutations
+  population[generation,] = evolve( population[generation-1,], mutation_rate )
 
-    # Let's just plot every 5th generation to avoid too many plots!
-    if( generation %% 5 == 1 ) {
-      filename = sprintf( "%s/haplotypes/generation_%04d.png", image_dir, generation )
-      echo( "++ Plotting generation %d to \"%s\"...\n", generation, filename )
-      echo(
-        "   (%d different haplotypes seen so far, %d still present.)\n",
-        highest.haplotype,
-        length( unique( population[generation, ]))
-      )
-      png( file = filename, width = 1000, height = 400 )
-      plot.haplotypes( haplotypes[population[generation,],], sort = TRUE )
-      dev.off()
-    
-      # !! IMPORTANT!! Use gc() to return memory to operating system!
-      # Without this you may use up all your RAM
-      gc()
-    }
+  # Let's just plot every 5th generation to avoid too many plots!
+  if( generation %% 5 == 1 ) {
+    filename = sprintf( "%s/haplotypes/generation_%04d.png", image_dir, generation )
+    echo( "++ Plotting generation %d to \"%s\"...\n", generation, filename )
+    echo(
+      "   (%d different haplotypes seen so far, %d still present.)\n",
+      highest.haplotype,
+      length( unique( population[generation, ]))
+    )
+    png( file = filename, width = 1000, height = 400 )
+    plot.haplotypes( haplotypes[population[generation,],], sort = TRUE )
+    dev.off()
+  
+    # !! IMPORTANT!! Use gc() to return memory to operating system!
+    # Without this you may use up all your RAM
+    gc()
+  }
 
-    if( highest.haplotype > nrow( haplotypes )) {
-      echo( "++ Uh-oh!  I ran out of haplotype storage.  Quitting the simulation." )
-      break ;
-    }
+  if( highest.haplotype > nrow( haplotypes )) {
+    echo( "++ Uh-oh!  I ran out of haplotype storage.  Quitting the simulation." )
+    break ;
   }
 }
-```
-
-Let's run it.  This time we'll start wiht a not-very-diverse set of haploypes:
-```r
-simulate_with_mutation(
-  L = 5000,                   # number of sites
-  H = 10,                     # number of haplotypes at start
-  N = 250,                    # number of individuals in the population
-  G = 1000,                   # number of generations
-  mutation_rate = 0.05       # mutation rate per locus per generation
-)
 ```
 
 This will take a while to run.  Leave it running while it goes.
