@@ -324,13 +324,13 @@ realign_nodes <- function(nodes, edges, spread = 0.1) {
     nodes
 }
 
-plot_nodes_and_edges <- function(nodes, edges) {
+plot_nodes_and_edges <- function(nodes, edges, title=NULL, label_mrca=FALSE) {
     nodes_time = nodes[, "time"]
     nodes_align = nodes[, "align"]
     edges_parent = edges[, "parent"]
     edges_child = edges[, "child"]
 
-    plot(nodes, type="n", ylim = c(max(nodes_time), 0), xlab="", xaxt = "n")
+    plot(nodes, type="n", ylim = c(max(nodes_time), 0), xlab="", xaxt = "n", main = title)
     segments(
         nodes_align[edges_parent], nodes_time[edges_parent],
         nodes_align[edges_child], nodes_time[edges_child],
@@ -342,8 +342,30 @@ plot_nodes_and_edges <- function(nodes, edges) {
     segments(
         nodes_align[edges_parent[use_edge]], nodes_time[edges_parent[use_edge]],
         nodes_align[edges_child[use_edge]], nodes_time[edges_child[use_edge]],
-        col = "red", lwd = 2
+        col = "blue", lwd = 2
     )
     points(nodes, pch = 16, cex=0.5)  # plot points on top
+
+    if (label_mrca) {
+        lineage_ids = which(ancestral_nodes)
+        lineage_times = nodes_time[lineage_ids]
+        unique_times = sort(unique(lineage_times))
+        first_at_time = match(unique_times, lineage_times)
+        counts = tabulate(match(lineage_times, unique_times), nbins=length(unique_times))
+        singleton_times = which(counts == 1)
+
+        if (!length(singleton_times)) {
+            warning("No MRCA found: every time has multiple ancestral nodes")
+        } else {
+            # Match the Python function: select the singleton time whose first
+            # ancestral node occurs latest in the node table.
+            mrca_id = lineage_ids[max(first_at_time[singleton_times])]
+            text(
+                nodes_align[mrca_id], nodes_time[mrca_id],
+                labels = sprintf("MRCA\nnode\n#%d", mrca_id),
+                pos = 1, offset = 0.5, cex = 0.8
+            )
+        }
+    }
 }
 
