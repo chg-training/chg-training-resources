@@ -12,13 +12,10 @@ the population (not just the genomes in the smaller sample).
 Using `simplify()`, it's easy to pick a smaller sample from the simulated 
 population. Below we simulate a half a megabase from a population of 1000
 individuals each generation, for 3000 generations (so we save roughly 3 million
-individuals!). As this might take some time, we show a progressbar.
+individuals!). As this might take some time, we show a progressbar. We then simplify
+to a random selection of 10 individuals from the current day. 
 
-As normal, we save the result as `ts`, but then overwrite that with a version that
-is simplified to a random selection of 10 individuals from the current day. We then add 
-mutations at a human-like rate ($1.3\times 10^{-8}$ mutations per basepair per generation).
-It's assumed that you have already imported numpy and msprime.
-
+In the code below it's assumed that you have already imported `numpy` and `msprime`.
 
 ```python
 ts = simForwardWF(1000, 3000, chrom_length=500000, show_progressbar=True, random_seed=321)
@@ -28,11 +25,8 @@ ts = ts.simplify(rng.choice(current_nodes, 10))  # pick the first 10
 ts = msprime.sim_mutations(ts, rate=1.3e-8, random_seed=43) # Add mutations
 ```
 
-We simulated for 3000 generations because as a rough rule, in simple models like this,
-the depth of ancestry in generations is expected to be about two times the population size.
-
 Here is the ancestry with mutations. You can see that the ancestry stretches back
-between 2000 and 3000 generations...
+about 3000 generations, in keeping with the expected 2N to 4N...
 
 ```python
 ts.draw_svg(size=(400, 500), y_axis=True, node_labels=ts.samples(), y_ticks=np.arange(0, 3001, 500))
@@ -54,7 +48,7 @@ calculate population genetic statistics on the tree sequence. This is often
 *much* faster than conventional methods used to compare genomes, because it
 can use the tree structure.
 
-For example, here is an LD matrix
+For example, here is an LD matrix:
 
 ```
 LD = ts.ld_matrix()
@@ -105,7 +99,7 @@ plt.show()
 ![img](../solutions/fwd_sampled_pca.png)
 
 (for this simulation, the PCA results are very unimpressive, because we don't
-have any recombination; we'll revisit this once we have added that to the model)
+have any recombination; we'll add that to the model on the next page)
 
 The available _tskit_ statistics are described in the
 [statistics section](https://tskit.dev/tskit/docs/stable/stats.html)

@@ -19,12 +19,12 @@ region of a chromosome (i.e. the first L basepairs).
 ```python
 # The recombination rate per base per generation (for simplicity we save
 # it as a global constant, although that's generally bad programming style.
-# To do this properly, redefine simForwardWF() to take a `rho` parameter)
-RHO = 1e-8   # A roughly human-like recombination rate
+# To do this properly, we should redefine simForwardWF() to take a `rho` parameter)
+RHO = None  # set this to something sensible before running
 
 def add_ancestry(edges, child_id, parent_ids, L, rng):
     parent1, parent2 = rng.choice(parent_ids, size=2, replace=False)
-    prob_recomb = Rp.clip(RHO * L, 0, 1)
+    prob_recomb = np.clip(RHO * L, 0, 1)
     has_crossover = rng.binomial(n=1, p=prob_recomb)
     if has_crossover:
         X = rng.integers(1, L-1)  # breakpoint must be >0 and <L
@@ -41,21 +41,35 @@ one breakpoint per chromosome, and we aren't modelling gene conversion. All thes
 can be done in more advanced simulators like SLiM, but the version decribed above is
 a surprisingly good approximation.
 
-Now all we need to do is run it!
+Now all we need to do is run it! As before we'll output a sample of 10 nodes
+from a simulated population of 1000 haploids.
 
 ```python
-# let's use a larger number of individuals, and simulate a megabase of genome
-ts = simForwardWF(1000, 2000, chrom_length = 1e6, show_progressbar=True)
-```
-
-You previously saw that 
-
-Simplify to a subset of the current day individuals
-
-```
+RHO = 1e-8   # A roughly human-like recombination rate
+ts = simForwardWF(1000, 3000, chrom_length = 1e6, random_seed=321, show_progressbar=True)
 current_nodes = ts.samples(time=0)
-current_subset = current_nodes(10)
-ts_min = ts.simplify(current_subset)
+rng = np.random.default_rng(123)
+ts = ts.simplify(rng.choice(current_nodes, 10))  # pick the first 10  
+ts = msprime.sim_mutations(ts, rate=1.3e-8, random_seed=43) # Add mutations
 ```
 
+Now let's plot it out:
 
+```python
+ts.draw_svg(y_axis=True, node_labels=ts.samples(), y_ticks=np.arange(0, 3001, 500))
+```
+
+<div className="fixed-300px-image-height">
+
+![img](../solutions/fwd_recombination.svg)
+
+</div>
+
+Woah - what's going on here. Suddenly we have lots of trees!
+
+That's because every time a recombination occurs
+
+These are called "local trees" - the bar at the bottom of the plot is 
+
+
+The shaded background is meant to show you

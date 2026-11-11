@@ -172,11 +172,10 @@ plot_ts_haplotypes(fully_simplified_ts)
 
 ![img](../solutions/fwd_simplified_tskit_haps.png)
 
-We'll finish this page by noting two things. Firstly, we we could have saved a
-little bit of effort by calling `sim_mutations()` *after* simplifying, which would
-avoid creating the non-ancestral mutations in the first place. Secondly, for long running
+We'll finish this page by noting that for long running
 forward-time simulations, in which we are only interested in the final genomes,
 it can save a great deal of computer time and memory if
 the tables are simplified at periodic intervals *during* the simulation process itself.
 This is what is implemented in the SLiM forward-time simulator, but
-because simplification itself takes time, there's a balance for how often to perform it.
+because simplification itself takes time, there's a balance for how often to perform it,
+and we won't add that to our bespoke simulation code.

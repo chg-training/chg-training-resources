@@ -112,3 +112,13 @@ body {
 .simulation-option__example figcaption {
   font-size: 0.9rem;
 }
+
+.fixed-300px-image-height {
+  overflow-x: auto;
+}
+
+.fixed-300px-image-height img {
+  height: 300px;
+  width: auto;
+  max-width: none;
+}

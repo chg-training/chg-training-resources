@@ -258,6 +258,7 @@ fig, axes = plt.subplots(ncols=2, figsize=(20, 12), width_ratios=[1, 1.5])
 realigned_nodes = realign_nodes(nodes, edges)
 plot_nodes_and_edges(nodes, edges, axes[0], "Original")
 plot_nodes_and_edges(realigned_nodes, edges, axes[1], "Realigned", label_mrca=True)
+plt.show()
 ```
 </div>
 
