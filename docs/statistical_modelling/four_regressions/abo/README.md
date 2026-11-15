@@ -204,7 +204,7 @@ showing the estimates and 95% intervals for each country.
 
 ## Controlling for possible confounders
 
-Association [could be caused by confounding](../appendices/guidance_on_Q3.md).  You should check to see if your results
+Association [could be caused by confounding](../appendices/guidance_on_predictors_to_include.md).  You should check to see if your results
 are affected by inclusion of confounders.
 
 :::tip Note
