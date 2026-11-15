@@ -74,9 +74,9 @@ print("π = {pi}")
 ```
 
 For reference, in humans about 1 base in 1000 differs between genomes,
-i.e. $\pi \approx 1\times 10^{-3}$. Our value is about 20 times smaller,
+i.e. $\pi \approx 1\times 10^{-3}$. Our value is about 25 times smaller,
 which implies that to simulate humans, we want an ancestry that stretches back
-20 times longer (giving 20 times longer for mutations to accumulate).
+25 times longer (giving 25 times longer for mutations to accumulate).
 
 **Question.** Given that estimate, for a semi-realistic simulation of modern
 humans, what should the population size `N` be set to in our `simForwardWF()`
