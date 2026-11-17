@@ -303,7 +303,7 @@ plot_haplotypes <- function(
 	ys = c( 0, 0.25, 0.75, 1 )
 
 	# In case there are too many SNPs, let's just take a subset.
-	by = 10^(floor( log10( nrow( metadata )))-2)
+	by = 10^(floor( log10( nrow( metadata ) * 2 ))-2)
 	indices = (1:nrow(metadata))[seq( from = 1, to = nrow(metadata), by = by )]
 	segments(
 		x0 = metadata$position[indices], x1 = metadata$position[indices],
