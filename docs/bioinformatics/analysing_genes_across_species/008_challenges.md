@@ -35,7 +35,7 @@ of human chromosomes appears to be inversely related to chromosome length.
 
 **Question** Could this be due to gene density?  That is - maybe shorter chromosomes have higher densities of genes - and genes are [known to be associated with higher GC content](https://en.wikipedia.org/wiki/GC-content).
 
-**Challenge 1** If you haven't already done so, quantify this relationship by fitting a [linear regression](../../statistical_modelling/regression_modelling/linear_regression_1.md) of the GC content on the chromosome length.  What is the estimated decrease in %GC per Mb increase in chromosome length?
+**Challenge 1** If you haven't already done so, quantify this relationship by fitting a [linear regression](../../statistical_modelling/regression_101/README.md) of the GC content on the chromosome length.  What is the estimated decrease in %GC per Mb increase in chromosome length?
 
 **Challenge 2**: use the techniques of this tutorial to compute the gene density on each chromosome - that is, the
 proportion of each chromosome that is in genes.  Now repeat the linear regression including the gene density as a

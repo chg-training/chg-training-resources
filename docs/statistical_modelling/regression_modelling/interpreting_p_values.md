@@ -11,9 +11,8 @@ think about this problem.
 
 ## Example
 
-For example, in our [linear regression example](./linear_regression_1.md) we observed a possible association between the
-genotypes of a SNP in the gene *ATP2B4* and expression of *ATP2B4*. The fitted coefficients (including a covariate, `stage`)
-were:
+For example, in one linear regression challenge example we observed a possible association between the genotypes of a
+SNP in the gene *ATP2B4* and expression of *ATP2B4*. The fitted coefficients (including a covariate, `stage`) were:
 
                    Estimate  Std. Error   Pr(>|t|)
     (Intercept)      0.0447      0.0165     0.0131

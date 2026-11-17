@@ -1,8 +1,8 @@
 ---
-sidebar_position: 4
+sidebar_position: 40000
 ---
 
-# Some regression challenges
+# Next steps
 
 The best way to learn how to use regression is... to use regression!
 
