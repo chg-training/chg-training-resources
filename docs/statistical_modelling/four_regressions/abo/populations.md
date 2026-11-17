@@ -8,9 +8,7 @@ Fitting across the whole dataset like this is probably a **bit dodgy** because t
 countries.
 
 In fact, each of the countries involves a different study site, with different people involved and different sampling
-schemes.  And moreover the locations differ widely in terms e.g. of their environmental settings (for example, the local
-rates of malaria infection).  Thus, even though the study took care to make 'severe malaria' as homogeneous a phenotype
-as possible, there could still be a lot of variation between sites.
+schemes.  And moreover the locations differ widely in terms e.g. of their environmental settings (for example, the local rates of malaria infection).  Thus, even though the study took care to make 'severe malaria' as homogeneous a phenotype as possible, there could still be a lot of variation between sites.
 
 One way you could perhaps handle this is to include `country` as a predictor:
 ```r

@@ -6,7 +6,8 @@ sidebar_position: 3
 
 But there's another problem!  What's all that `rs8176719-/C` and `rs8176719C/C` in the output?
 
-If you want control over your regression, you must **think carefully** about how your variables are encoded.
+If you want control over your regression, you must **think carefully** about how your variables are encoded.  In particular you should decide on what 'baseline' level you want to use, against which the other levelswill be compared.
+
 For an autosomal genetic variant like `rs8176719`, some useful approaches are as follows:
 
 First, you could encode it as $0$, $1$, or $2$ copies of the O blood group deletion - which we'll call an 'additive' encoding:

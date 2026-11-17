@@ -17,7 +17,7 @@ Here are some hints to get started.  Three possible lines of attack are:
 
 1. Encode `rs8176746` appropriately and try it on its own, just as you did for `rs8176719`.  Is it associated?
 2. Try it included in the model **alongside rs8176719**.  Does this make a difference?
-3. Or, you could try encoding it together with the O blood type mutation to create a combined call of 'blood type' for each individual.
+3. Or, you could try encoding it together with the O blood type mutation to create a combined call of 'blood type' for each individual (see below for more on this).
 
 Whatever you do you should of course start by encoding the genotype in a sensible way (or sensible ways).
 
@@ -36,7 +36,8 @@ For more information, you can look this up e.g. on [UCSC Genome Browser](https:/
 :::
 
 ## A combined A/B/O call
-You may well want to make a combined A/B/O call though.  Here's a tip on doing that too:
+
+You might want to try making a combined A/B/O call for this.  Here's a tip on doing that:
 
 The overall ABO blood type of a person is generally determined by both these variants (plus other, rarer variants that
 we're not considering) on both copies of chromosome 9 in the genome.  So you could try to make a call of this like this:
@@ -112,4 +113,15 @@ abo_data = (
 
 :::
 
-Good luck!
+You could now use this as a predictor in the regression instead of the individual variables.
+
+:::warning Question
+
+Is there any difference between doing this and just including the two variants seperately?
+
+Which do you find easire to interpret?  Do they give the same overall conclusions?
+
+:::
+
+
+Good luck!  Some [worked solutions](./solutions/README.md) are also available if you get stuck.
