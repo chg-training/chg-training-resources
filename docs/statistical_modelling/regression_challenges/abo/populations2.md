@@ -52,7 +52,7 @@ Use `ggplot` to make a **forest plot** of the association across populations.  I
 
 So it'll look something like this:
 
-![image](../images/forest_plot_example.png)
+![image](../../regression_101/images/forest_plot_example.png)
 
 For extra kudos think carefully about how to encode the x axis.  Should it be on the log-odds scale that the parameter
 is on?  Or should it be on the odds ratio scale?  *Or*, perhaps it could be on the odds ratio scale, but visually

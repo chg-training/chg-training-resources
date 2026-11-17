@@ -2,10 +2,11 @@
 sidebar_position: 3.1
 ---
 
-# Example: Poisson regression
+# Example: poisson regression
 
 Another example is poisson regression, which is useful if $Y$ is a count variable, like the count of events -
-infections, occuring over a fixed period of time.
+infections, occuring over a fixed period of time.  To handle this, it models $Y$ using a [Poisson
+distribution](https://en.wikipedia.org/wiki/Poisson_distribution).
 
 The key parameter of the Poisson distribution is the *rate*, or the average number of events in the given time period. For example if an average of $5$ events appear in the given time period, the Poisson distribution models event counts like this:
 ```r

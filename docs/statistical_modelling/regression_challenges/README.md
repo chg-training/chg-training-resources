@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# Some regression challenges
+# Four regression challenges
 
 The best way to learn how to use regression is... to use regression!
 

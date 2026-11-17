@@ -18,7 +18,7 @@ Hmm!
 
 ## Interpreting the odds ratios
 
-To interpret these results though, you have to remember the [scale that logistic regression estimates are on](../interpreting_regression.md).
+To interpret these results though, you have to remember the [scale that logistic regression estimates are on](../../regression_101/interpreting_regression.md).
 
 It goes like this:
 

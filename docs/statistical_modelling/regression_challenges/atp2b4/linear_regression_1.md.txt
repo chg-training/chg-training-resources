@@ -25,30 +25,17 @@ The data can be found in [this
 folder](https://github.com/chg-training/chg-training-resources/tree/main/docs/statistical_modelling/regression_modelling/data/) -
 download the file `atp2b4_per_gene_data.tsv` and place it in your folder:
 
-```
-curl -O https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/regression_modelling/data/atp2b4_per_gene_data.tsv
-```
 
-(Or use the [direct link](./data/atp2b4_per_gene_data.tsv).)
-
-Start an R session and make sure you are working in this directory (e.g. using `setwd()` or `Session` -> `Set Working Directory`
-in RStudio).  Let's load the data now and take a look:
-
+Start an R session now and load the data:
 ```
 library( tidyverse )
-data = read_delim( "atp2b4_per_gene_data.tsv", delim = "\t" )
+atp2b4_data = readr::read_tsv( "https://raw.githubusercontent.com/chg-training/chg-training-resources/main/docs/statistical_modelling/regression_modelling/data/atp2b4_per_gene_data.tsv" )
 ```
 
-:::tip Note
-I am using the [tidyverse](https://www.tidyverse.org) for these examples. If you don't
-have it installed, either install it or use base R (e.g. `read.delim()`) instead.
-:::
-
-### What's in the data?
-
-The data represents gene expression values (expressed as the mean number of RNA-seq reads per base, averaged across the gene
-exons) for the gene *ATP2B4*. The data comes from [this paper](https://doi.org/10.1172/JCI94378) which reported that local
-genotypes - including at the SNP rs1419114 - are associated with expression changes. Let's see if we can reconstruct this.
+The data represents gene expression values (reported as the number of RNA-seq reads per base, averaged across the gene
+exons) for the gene *ATP2B4*. The data comes from [this paper](https://doi.org/10.1172/JCI94378) which reported that
+local genotypes - including at the SNP rs1419114 - are associated with expression changes. Let's see if we can
+reconstruct this.
 
 :::tip Note
 
@@ -395,7 +382,7 @@ estimate, like this:
 ![img](images/sampling_distribution_shaded.png)
 
 As the plot shows, the P-value that `lm()` reports is a **two-tailed** p-value, meaning that it accounts for all values
-that are $> |\beta|$ (in either direction).  To compute it, just [compute this mass](../introduction/distributions/pdf_cdf_quantiles.md):
+that are $> |\beta|$ (in either direction).  To compute it, just [compute this mass](../../introduction/distributions/pdf_cdf_quantiles.md):
 
 ```
 print(
@@ -604,7 +591,3 @@ Compute a P-value for the residuals against the fitted model.
 How far out in the tail is the sum of observed residuals?
 
 :::
-
-## Next steps
-
-Now let's look at a slightly different example using [logistic regression](./logistic_regression_1.md).

@@ -1,0 +1,387 @@
+---
+sidebar_position: 3
+---
+
+# Linear regression example: revisiting GC content and chromosome length
+
+Remember that [example in the R
+tutorial](../skills_training/402_introduction_to_R/working_with_data.md#plotting-the-data)? We saw that, for the
+human genome, GC content seems to be inversely related to chromosome length.
+
+Let's use **linear regression** to estimate this relationship now.  We'll do it for humans and also for a couple of
+other organisms.
+
+The data can be found
+[here](https://users.ox.ac.uk/~whgu0376/training/msc_gm/2026/data/organism_chromosome_summary.tsv).  To load
+into R, right-click and choose 'copy link' and then load in R using the `read_tsv()` function as follows:
+
+```r
+library( tidyverse )
+gc_data = readr::read_tsv( "https://users.ox.ac.uk/~whgu0376/training/msc_gm/2026/data/organism_chromosome_summary.tsv" )
+```
+
+Print out the data frame to see what variables it holds.  You should see several columns reflecting the organism,
+chromosome, chromosome length, and gc percent.  There are also columns representing the number of genes, and how much of
+the chromosome is covered by genes, or by coding sequence and so on.
+
+:::tip Question
+
+Use `table()` to see what values the `organism` column holds.  What organisms are in there?
+
+:::
+
+## Plotting
+
+Before going further let's plot the data again.  We'll use ggplot for this so we can see all the organisms at once.  First, I like the 'minimal' theme so let's set that now:
+
+```r
+ggplot2::theme_set(theme_minimal( 16 ))
+```
+
+Now let's plot.  First let's create a theme:
+
+```r
+mytheme <- function() {
+	theme_minimal()
+	+ theme(
+		axis.title.y = element_text( angle = 0, hjust = 1, vjust = 0.5 )
+	)
+}
+```
+
+The `facet_grid()` function can be used to split the plot over the different organisms:
+
+```r
+p = (
+	ggplot( data = data )
+	+ geom_point( aes( x = length_in_mb, y = gc_percent ))
+	+ facet_grid( organism ~ . )
+	+ mytheme()
+)
+print(p)
+```
+
+## Fitting linear regression
+
+Ok, let's estimate the relationship between the two variables (GC content and chromosome length).  We'll do this by fitting a **linear regession model**, using the function `lm()`.
+
+Fitting the model is in fact really easy.  We use the `lm()` function and give it a **formula** relating the **outcome variable** (`gc_percent`, i.e. the 'y axis' variable) to the **predictor variables**.  For us, we'll just use the chromosome `length_in_mb` as predictor.  Let's try it now:
+```R
+fit = lm(
+	gc_percent ~ length_in_mb,
+	data  = data %>% filter( organism == 'human' )
+)
+```
+
+Ok!  The `lm()` function has found the 'best fitting' straight line to the data.  It returns an object that can be
+accessed to see what the best-fit line is.  
+
+The best way to look at the fit is to get the **coefficients**, that is, the estimated parameters. This can be done like
+this:
+
+```
+coefficients( summary( fit ))
+```
+
+
+Your coefficients should look something like this:
+```
+> coefficients( summary( fit ))
+                Estimate  Std. Error   t value     Pr(>|t|)
+(Intercept)  44.31484709 1.088899945 40.696895 3.324169e-22
+length_in_mb -0.02365607 0.007746123 -3.053924 5.818152e-03
+```
+
+:::tip Note
+An even nicer way to get the coefficients is to use the `tidy()` function from the `broom()` library:
+```r
+coefficients = broom::tidy( fit )
+print( coefficients )
+```
+
+It's nicer because it returns a **data frame** so lets us manipulate it with our usual tools.
+
+:::
+
+## Interpreting the point estimates
+
+Ignore the last two columns just now - in fact let's chuck them out for now:
+```
+coefficients[,1:3]
+```
+
+```
+                Estimate  Std. Error
+(Intercept)  44.31484709 1.088899945
+length_in_mb -0.02365607 0.007746123
+```
+
+What you see there are the **parameter estimates** and their **standard errors**.
+
+There are in fact two parameters.  There's an **intercept** and a **slope**, which in the output is labelled 'length_in_mb'.
+
+Essentially, `lm()` has fit a straight line of the form
+
+$$
+\text{GC percent} = 44.3 - 0.024 \times \text{length of chromosome in Mb}
+$$
+
+to the data.  That means it has estimated that *an increase in length by 1Mb is associated with a decrease in gc
+percentage of 0.02%*.
+
+
+We can visualise this by plotting the line onto the graph using `geom_abline()` .  Let's restrict just to humans and plot again:
+```
+human_data = data %>% filter( organism == 'human' ) 
+p = (
+	ggplot( human_data )
+	+ geom_point( aes( x = length_in_mb, y = gc_percent ))
+	+ geom_abline( intercept = 44.3, slope = -0.024, col = 'red' )
+)
+print(p)
+```
+
+![img](images/data_and_fit.png)
+
+Does it look like a good fit?
+
+:::tip Note
+
+The longest chromosome is around 250Mb long, while the shortest is under 50Mb.  So this estimate would correspond to
+about five percent difference in GC content between the longest and shortest chromosomes.  
+
+Look back at the plot - does this work about right?
+
+:::
+
+
+## The model
+
+As you'll have noticed, the points don't lie exactly on the line.  This is natural for linear regression and works as
+follows.  Linear regression models the outcome variable (`gc_percent`) as a linear function of the predictor variable
+(chromosome length) plus some 'residuals'.  Roughly speaking, the model fitting process finds the line that minimises
+these residuals as much as possible.
+
+:::tip Note
+
+To be specific, standard linear regression minimises the **sum of squared errors** - that is, it minimises 'squared residuals'.
+
+:::
+
+The residuals (difference of the true `gc_percent` to the line) can be obtained using `residuals(fit)`.  Let's use that now to plot them:
+
+```r
+hist( residuals(fit), xlab = "Residual" )
+```
+
+We could also **compare the residuals to expected residuals (if the model were true):
+```r
+residual_data = tibble(
+	expected = qnorm(
+		1:nrow(human_data) / (nrow(human_data)+1),
+		sd = sigma(fit)
+	),
+	residual = sort( residuals( fit ))
+)
+ggplot( data = residual_data ) + geom_point( aes( x = expected, y = residual ))
+```
+
+This is known as a **quantile-quantile** plot.  It plots the **expected quantiles** of the residual (x axis) against the
+**observed quantiles** (y axis).  
+
+:::tip Question
+
+If the model fits well, you should roughtly see a diagonal line - do you?  (Try adding a `geom_abline()` to see.)
+
+:::
+
+## Interpreting the standard errors
+
+In this output:
+```
+coefficients[,1:3]
+```
+
+```
+# A tibble: 2 × 3
+  term         estimate std.error
+  <chr>           <dbl>     <dbl>
+1 (Intercept)   44.3      1.09   
+2 length_in_mb  -0.0237   0.00775
+```
+
+The second column are the **standard errors**.  What are they?
+
+The standard errors **express the uncertainty we should have in the parameter estimates**.  In other words, even though
+the line $y = 44.32 - 0.024 x$ is the *best* fit, other lines might also be possible.
+
+:::tip Note
+The distributions here are not exactly normal - but by interpreting the standard error this way, we are effectively treating them as normal.
+That's ok due to the [normal approximation](./02_normal_approximations.md).
+:::
+
+Probably the simplest way to interpret the standard errors is to **convert them to credible/confidence intervals**.
+This is easy.  If the parameter estimate is $\hat{\beta}$ and the standard error is $\text{se}$, the 95% confidence
+interval is:
+
+$$
+\beta \pm 1.96 * \text{se}
+$$
+
+:::tip Question
+Why is the value 1.96 here?
+
+**Hint**: see the [normal approximation](./02_normal_approximations.md) page.
+
+To re-emphasise: this is an **approximation** which happens to hold well for all the models we'll look at.  We'll assume
+it is accurate for this module.
+
+Theoretically the approximation holds when the likelihood function is well-approximated by a [normal
+distribution](./distributions.md).  Because likelihoods sum over lots of data points, this approximation usually works
+well as long as there is lots of data.
+
+:::
+
+Let's plot that now.  We'll take the opportunity to set up a dataframe for all three organisms, but let's start with the estimates in humans:
+
+```r
+forest_plot_data = tibble(
+	organism = c( "human" ),
+	beta = c( -0.02365607 ),
+	se = c( 0.007746123 )
+)
+```
+
+Let's make the forest plot like in the lecture.  We can use `geom_segment()` to draw lines, and `geom_point()` to draw
+the points:
+
+```
+p = (
+	ggplot( data = forest_plot_data )
+	+ geom_segment(
+		aes(
+			x = beta - 1.96 * se,
+			xend = beta + 1.96 * se,
+			y = organism,
+			yend = organism
+		)
+	)
+	+ geom_point(
+		aes(
+			x = beta,
+			y = organism
+		),
+		size = 2
+	)
+)
+print(p)
+```
+
+Hmm... to make this better, let's fix the x axis scale and add a line at 'no association'. And while we're at it, let's
+make it into a re-useable function as well so we can use it later:
+
+```r
+draw_forest_plot = function(
+	forest_plot_data,
+	xlim = c( -0.05, 0.02 )
+) {
+	forest_plot_data$lower = forest_plot_data$beta - 1.96 * forest_plot_data$se
+	forest_plot_data$upper = forest_plot_data$beta + 1.96 * forest_plot_data$se
+	print( forest_plot_data )
+	p = (
+		ggplot( data = forest_plot_data )
+		+ geom_segment(
+			aes(
+				x = lower,
+				xend = upper,
+				y = organism,
+				yend = organism
+			)
+		)
+		+ geom_point(
+			aes(
+				x = beta,
+				y = organism
+			),
+			size = 2
+		)
+		+ xlab( "Slope of association" )
+		+ xlim( xlim[1], xlim[2] )
+		+ geom_vline( xintercept = 0, linetype = 2 )
+		+ theme( axis.title.y = element_text( angle = 0, vjust = 0.5 ))
+	)
+	return(p)
+}
+draw_forest_plot( forest_plot_data )
+```
+
+![img](images/forest_plot_1.png)
+
+Cool!
+
+This plot shows us - as long as we believe the model - that:
+
+* The *point estimate* of the association is -0.024, over to the left of the 'no association' line
+* The 95% confidence interval is *also* over to the left of the 'no association' line.  In other words (if we believe the model) there is evidence that the slope really is nonzero.
+
+How much evidence is there?  This is usually summed up by the P-value, which is in the fourth column of those coeffiencts:
+
+```r
+coefficients
+```
+
+The value is $5.8\times 10^{-3}$.  
+
+:::tip Note
+
+The formal way to interpret this is that
+
+- *if* a linear model really held for this data
+- and *if* the true slope were zero
+- then we'd expect to observe such a big estimated slope only about 0.6% of the time.
+
+:::
+
+:::tip Note
+
+This is the [**bayesian interpretation**](./COVID.md) of these results.  In effect, 99.4% of the posterior mass lies to the left of the line.
+
+:::
+
+## All the organisms together
+
+Let's repeat this for the other two organism. 
+
+The simplest way to do this is write a function to return the `beta` and `se` estimates and then have dplyr run it over each organism in the data:
+```
+fit = function( data ) {
+    result = lm(
+        gc_percent ~ length_in_mb,
+        data = data
+    )
+    coeffs = summary(result)$coefficients
+    return(
+        tibble(
+            beta = coeffs[2,1],
+            se = coeffs[2,2]
+        )
+    )
+}
+forest_plot_data  = (
+	data
+	%>% group_by( organism )
+	%>% summarise( fit( cur_data() ))
+)
+```
+
+Look at the `forest_plot_data` data frame and make sure it has estimates for all three populations.  And let's plot them:
+```r
+draw_forest_plot( forest_plot_data )
+```
+
+How do you interpret this plot?
+
+:::tip Note
+
+Why is it called a 'forest plot'?  Apparently it's because it shows a 'forest' of lines - as described [in this paper](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1120528).  But the term only came into use in the 1990s.
+:::
