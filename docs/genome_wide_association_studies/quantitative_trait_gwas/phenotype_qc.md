@@ -5,8 +5,8 @@ sidebar_position: 6.5
 # Part 2: Transforming the phenotype data
 
 Most commonly-used GWAS software implement
-[logistic](../../statistical_modelling/regression_modelling/logistic_regression_1.md) or [linear
-regression](../../statistical_modelling/regression_modelling/linear_regression_1.md) models to determine whether a SNP
+logistic or linear
+[regression](../../statistical_modelling/regression_101/README.md) models to determine whether a SNP
 is associated with the trait of interest.  Logistic models are used for categorical trait data such as case-control
 studies, while linear models are used for continuous trait data (e.g. height).  Here, we will analyse a quantitative
 phenotype (antibody response to Norovirus) so will focus on a linear model.
