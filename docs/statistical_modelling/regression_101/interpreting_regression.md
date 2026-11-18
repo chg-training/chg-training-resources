@@ -63,17 +63,19 @@ variable, it becomes multi-dimensional, so it's a 'plane' rather than a line.)
 
 ### Logistic regression
 
-For logistic regression, there's a nontrivial link function to worry about - the logistic function:
+For logistic regression, there's a nontrivial link function to worry about.  In short, the logistic function
 $$
 \text{logistic}(x) = \frac{e^x}{1+e^x}
 $$
 
-The logistic function maps the linear predictor to a probability, which is then used in the binomial distribution.  Here it is again:
+is used to map the linear predictor, which is on the log-odds scale, to a probability, which is then used in the
+binomial distribution.  Here it is again:
 
 ![image](../regression_modelling/images/logistic.png)
 
-To understand this, let's try going the other way, from a probability $p$ to the predictor scale.  It turns out this
-mapping works like this.  First, convert the probability to an odds:
+To understand this, let's try going the other way, from a probability $p$ to the predictor scale.  It works like this:
+first, convert the probability to an odds:
+
 $$
 \text{odds}(p) = \frac{p}{1-p} \qquad\text{(this lies in the range $[0, \infty]$)}
 $$
@@ -85,6 +87,8 @@ $$
 This probability-to-logodds mapping looks like this:
 
 ![image](../regression_modelling/images/logodds.png)
+
+In the regression model terminology this is the **link function**, and the logistic function is its inverse.
 
 
 In a sense, log-odds is just a useful way of representing a probability - as something that can take any real number
@@ -100,15 +104,16 @@ Easy?
 
 ### Poisson regression
 
-For Poisson regression, there's also a nontrivial link function to worry about - the exponential function, which looks
-like this:
+For Poisson regression, there's also a nontrivial link function to worry about - the logarithm function. It maps the
+Poisson rate parameter, which is positive, onto $\log(\text{rate})$.  This is helpful, because $\log(\text{rate})$ lies
+in $[-\infty, \infty]$.
+
+The inverse of $\log()$ is the exponential function, which looks like this:
 
 ![image](../regression_modelling/images/exp.png)
 
-(This is good because it ensures the rate parameter is positive.)
-
-The rate is therefore modelled as $\exp()$ of the linear predictor.  To go back from the rate to the linear predictor,
-you of course need the inverse function, that is, $\log()$.
+The rate is therefore modelled as $\exp()$ of the linear predictor.  To go back from the rate to the linear predictor again,
+you use $\log()$.
 
 This means that:
 

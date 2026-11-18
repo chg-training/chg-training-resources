@@ -24,7 +24,7 @@ import identity_thumbnail_url from '@site/static/img/identity_thumbnail.png';
 import exp_thumbnail_url from '@site/static/img/exp_thumbnail.png';
 import logistic_thumbnail_url from '@site/static/img/logistic_thumbnail.png';
 
-| Outcome variable        | Regression model name | $Y$ modelled as<br/><small>(a distribution)</small>    |   'Link' function | Interpretation of the parameter |
+| Outcome variable        | Regression model name | $Y$ modelled as<br/><small>(a distribution)</small>    |  <small>(Inverse of)</small><br/> 'Link' function | Interpretation of the parameter |
 | -------                 | ---             | ---        | --- | -- |
 | $Y$ is a real number<br/><small>and reasonably gaussian</small>    | **Linear regression** |  [Normal](../introduction/distributions/normal.md) |  <img src={identity_thumbnail_url} style = {{ width: '200px' }} /><br/>Identity $y = x$ | Estimated change in $Y$<br/> for unit change in $X$ |
 | $Y$ is $0$ or $1$   | **Logistic regression** |  [Binomial](../introduction/distributions/binomial.md) with $N = 1$<br/><small>Also known as 'Bernoulli'</small> | <img src={logistic_thumbnail_url} style={{width:'200px'}} /><br/>Logistic $y=\frac{e^x}{1+e^x}$ | Estimated change<br/>in **log-odds of $Y$**<br/> for unit change in $X$ |

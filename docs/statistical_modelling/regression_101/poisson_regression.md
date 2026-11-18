@@ -35,6 +35,12 @@ $$
 \text{rate} = \text{average number of events} = e^{\text{linear predictor}}
 $$
 
+The inverse function, known in regression terminology as the **link function**, is of course the logarithm
+
+$$
+\text{linear predictor} = \log(\text{rate})
+$$
+
 Fitting Poisson regression is also easy.  For example, here's a simulated dataset from an infectious disease vaccine trial:
 ```r
 simulated_data = tibble::tibble(
